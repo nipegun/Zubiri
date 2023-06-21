@@ -6,10 +6,10 @@
 # No tienes que aceptar ningún tipo de términos de uso o licencia para utilizarlo o modificarlo porque va sin CopyLeft.
 
 # ----------
-# Script de NiPeGun para instalar y configurar xxxxxxxxx en Debian
+# Script de NiPeGun para buscar posibles proxmox corriendo en la IP pública de Zubiri Manteo
 #
 # Ejecución remota:
-#   curl -sL x | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/asir/main/zubiri/PVEs-BuscarEnIPWAN.sh | bash
 # ----------
 
 # Definir variables de color
