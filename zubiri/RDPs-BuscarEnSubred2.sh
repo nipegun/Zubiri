@@ -34,7 +34,7 @@
   fi
 
 # Determinar la IP WAN
-  vSubRed="172.16.0.0/16"
+  vSubRed="172.16.2.0/16"
   #vIPWAN=$(curl --silent ipinfo.io/ip)
   
 # Escanear puertos y salvar a un archivo
