@@ -53,5 +53,5 @@
 #
   for vLinea in $(cat /tmp/IPsConRDPActivo.txt)
     do
-      echo $vLinea
+      nmap -sVn $vLinea -p 3389
     done
