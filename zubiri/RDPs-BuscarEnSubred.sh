@@ -9,7 +9,7 @@
 # Script de NiPeGun para buscar posibles proxmox corriendo en la IP pública de Zubiri Manteo
 #
 # Ejecución remota:
-#   curl -sL https://raw.githubusercontent.com/nipegun/asir/main/zubiri/PVEs-BuscarEnIPWAN.sh | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/asir/main/zubiri/RDPs-BuscarEnSubred.sh | bash
 # ----------
 
 # Definir variables de color
@@ -21,35 +21,34 @@
 
 # Notificar inicio de ejecución del script
   echo ""
-  echo -e "${vColorAzulClaro}  Iniciando el script de búsqueda de posibles proxmox corriendo en la IP pública de Zubiri Manteo...${vFinColor}"
+  echo -e "${vColorAzulClaro}  Iniciando el script de búsqueda de posibles RDPs corriendo en la subred de cyber...${vFinColor}"
   echo ""
 
 # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
   if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
     echo ""
-    echo -e "${vColorRojo}  El paquete curl no está instalado. Iniciando su instalación...${vFinColor}"
+    echo -e "${vColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${vFinColor}"
     echo ""
-    apt-get -y update
-    apt-get -y install curl
+    apt-get -y update && apt-get -y install curl
     echo ""
   fi
 
 # Determinar la IP WAN
-  vIPWAN=88.10.220.167
+  vSubRed="172.16.0.0/16"
   #vIPWAN=$(curl --silent ipinfo.io/ip)
   
 # Escanear puertos y salvar a un archivo
-  echo "  Escaneando puertos posibles ..."
+  echo "
+  Escaneando puertos posibles ..."
   # Comprobar si el paquete nmap está instalado. Si no lo está, instalarlo.
     if [[ $(dpkg-query -s nmap 2>/dev/null | grep installed) == "" ]]; then
       echo ""
       echo -e "${vColorRojo}    El paquete nmap no está instalado. Iniciando su instalación...${vFinColor}"
       echo ""
-      apt-get -y update
-      apt-get -y install nmap
+      apt-get -y update && apt-get -y install nmap
       echo ""
     fi
-  nmap $vIPWAN -p 9000-12000 | grep ^1 | cut -d'/' -f1 > /tmp/puertos.txt
+  nmap $vIPWAN -p 3389 | grep ^1 | cut -d'/' -f1 > /tmp/puertos.txt
 
 #
   for line in $(cat /tmp/puertos.txt)
