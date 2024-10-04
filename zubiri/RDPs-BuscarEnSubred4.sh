@@ -47,7 +47,7 @@
       apt-get -y update && apt-get -y install nmap
       echo ""
     fi
-  nmap $vSubRed -p 3389 | cut -d'/' -f1 > /tmp/IPsConRDPActivo.txt
+  nmap $vSubRed -p 3389 | grep 172 | sed 's/^[^0-9]*//' > /tmp/IPsConRDPActivo.txt
 
 #
   for vLinea in $(cat /tmp/IPsConRDPActivo.txt)
