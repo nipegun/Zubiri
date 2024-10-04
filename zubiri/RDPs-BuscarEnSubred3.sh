@@ -47,15 +47,10 @@
       apt-get -y update && apt-get -y install nmap
       echo ""
     fi
-  nmap $vSubRed -p 3389 | grep ^1 | cut -d'/' -f1 > /tmp/puertos.txt
+  nmap $vSubRed -p 3389 | cut -d'/' -f1 > /tmp/IPsConRDPActivo.txt
 
 #
-  for line in $(cat /tmp/puertos.txt)
+  for vLinea in $(cat /tmp/IPsConRDPActivo.txt)
     do
-      vRespuestaHTTPS=$(curl -H 'Cache-Control: no-cache, no-store' --silent --max-time 10 --insecure -s -o /dev/null -w "%{http_code}" "https://$vIPWAN:$line")
-      if [ $vRespuestaHTTPS != "000" ]; then
-        #echo  "  Escaneando https://$vIPWAN:$line - Respuesta: $vRespuestaHTTPS"
-        echo  "  Escaneando https://$vIPWAN:$line" $(curl --silent --max-time 10 --insecure "https://$vIPWAN:$line" | grep "itle>")
-      fi
-      #sudo nmap -sV -O -sSU $vIPWAN -p $line
+      echo $vLinea
     done
