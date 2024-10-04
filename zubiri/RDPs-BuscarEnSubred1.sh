@@ -38,7 +38,7 @@
   #vIPWAN=$(curl --silent ipinfo.io/ip)
   
 # Escanear puertos y salvar a un archivo
-  echo "   Escaneando puertos posibles ..."
+  echo "    Escaneando puertos posibles ..."
   # Comprobar si el paquete nmap está instalado. Si no lo está, instalarlo.
     if [[ $(dpkg-query -s nmap 2>/dev/null | grep installed) == "" ]]; then
       echo ""
