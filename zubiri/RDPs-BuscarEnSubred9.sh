@@ -53,5 +53,6 @@
 #
   for vLinea in $(cat /tmp/IPsConRDPActivo.txt)
     do
-      nmap -sV $vLinea -p 3389
+      echo "$vLinea"
+      nmap -sV $vLinea -p 3389 | sed 's/^[^0-9]*//'
     done
