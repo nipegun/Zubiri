@@ -53,6 +53,5 @@
 #
   for vLinea in $(cat /tmp/IPsConRDPActivo.txt)
     do
-      echo "$vLinea"
-      nmap -sV $vLinea -p 3389 | grep -v ^MAC | grep -v atency | grep -v scan | grep -v ^PORT | grep -v map
+      echo "$vLinea: $(nmap -sV $vLinea -p 3389 | grep -v ^MAC | grep -v atency | grep -v scan | grep -v ^PORT | grep -v map)"
     done
