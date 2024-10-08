@@ -30,7 +30,7 @@
   # Definir fecha de ejecución del script
     cFechaDeEjec=$(date +a%Ym%md%d)
   # Crear la carpeta en con la fecha
-    mkdir ~/Escritorio/$cFechaDeEjec/
+    mkdir ~/Escritorio/Ex$cFechaDeEjec/
   # Crear los archivos
     # main.py
       echo "from functions import *"     > ~/Escritorio/Ex"$cFechaDeEjec"/main.py
