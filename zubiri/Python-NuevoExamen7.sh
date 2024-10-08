@@ -40,6 +40,6 @@
       echo ''                           >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
       echo 'def x():'                   >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
       echo -e "\tpass"                  >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
-      echo ''                           >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
+      echo '# Pruebas'                  >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
       echo 'if __name__ == "__main__":' >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
       echo -e "\tprint('')"             >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
