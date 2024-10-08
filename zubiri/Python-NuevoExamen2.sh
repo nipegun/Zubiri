@@ -28,7 +28,7 @@
 
 # Crear la carpeta
   # Definir fecha de ejecución del script
-    cFechaDeEjec=$(date +a%Ym%md%d@%T)
+    cFechaDeEjec=$(date +a%Ym%md%d)
   # Crear la carpeta en con la fecha
     mkdir ~/Escritorio/$cFechaDeEjec/
   # Crear los archivos
