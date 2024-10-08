@@ -30,6 +30,7 @@
   # Definir fecha de ejecución del script
     cFechaDeEjec=$(date +a%Ym%md%d)
   # Crear la carpeta en con la fecha
+    rm -rf ~/Escritorio/Ex$cFechaDeEjec/ 2> /dev/null
     mkdir ~/Escritorio/Ex$cFechaDeEjec/
   # Crear los archivos
     # main.py
