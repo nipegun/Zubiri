@@ -33,13 +33,13 @@
     mkdir ~/Escritorio/$cFechaDeEjec/
   # Crear los archivos
     # main.py
-      echo "from functions import *"     > ~/Escritorio/$cFechaDeEjec/main.py
-      echo ""                           >> ~/Escritorio/$cFechaDeEjec/main.py
+      echo "from functions import *"     > ~/Escritorio/Ex"$cFechaDeEjec"/main.py
+      echo ""                           >> ~/Escritorio/Ex"$cFechaDeEjec"/main.py
     # functions.py
-      echo 'import csv'                  > ~/Escritorio/$cFechaDeEjec/functions.py
-      echo ''                           >> ~/Escritorio/$cFechaDeEjec/functions.py
-      echo 'def x():'                   >> ~/Escritorio/$cFechaDeEjec/functions.py
-      echo -e "\tpass"                  >> ~/Escritorio/$cFechaDeEjec/functions.py
-      echo ''                           >> ~/Escritorio/$cFechaDeEjec/functions.py
-      echo 'if __name__ == "__main__":' >> ~/Escritorio/$cFechaDeEjec/functions.py
-      echo -e "\tprint('')"             >> ~/Escritorio/$cFechaDeEjec/functions.py
+      echo 'import csv'                  > ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
+      echo ''                           >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
+      echo 'def x():'                   >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
+      echo -e "\tpass"                  >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
+      echo ''                           >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
+      echo 'if __name__ == "__main__":' >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
+      echo -e "\tprint('')"             >> ~/Escritorio/Ex"$cFechaDeEjec"/functions.py
