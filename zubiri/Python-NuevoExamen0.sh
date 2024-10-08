@@ -39,6 +39,6 @@
       echo 'import csv'                  > ~/Escritorio/$cFechaDeEjec/functions.py
       echo ''                           >> ~/Escritorio/$cFechaDeEjec/functions.py
       echo 'def x():'                   >> ~/Escritorio/$cFechaDeEjec/functions.py
-      echo "\tpass"                     >> ~/Escritorio/$cFechaDeEjec/functions.py
+      echo -e "\tpass"                  >> ~/Escritorio/$cFechaDeEjec/functions.py
       echo 'if __name__ == "__main__":' >> ~/Escritorio/$cFechaDeEjec/functions.py
-      echo "\tprint('')"                >> ~/Escritorio/$cFechaDeEjec/functions.py
+      echo -e "\tprint('')"             >> ~/Escritorio/$cFechaDeEjec/functions.py
