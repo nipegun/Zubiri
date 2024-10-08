@@ -9,10 +9,7 @@
 # Script de NiPeGun para preparar en el escritorio una carpeta con los archivos para un nuevo examen de Python
 #
 # Ejecución remota:
-#   curl -sL x | bash
-#
-# Ejecución remota sin caché:
-#   curl -sL -H 'Cache-Control: no-cache, no-store' x | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/asir/refs/heads/main/zubiri/Python-NuevoExamen.sh | bash
 # ----------
 
 # Definir constantes de color
