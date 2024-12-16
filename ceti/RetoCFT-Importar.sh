@@ -9,13 +9,13 @@
 # Script de NiPeGun para importar el laboratorio del reto CTF a proxmox
 #
 # Ejecución remota:
-#   curl -sL https://raw.githubusercontent.com/nipegun/p-scripts/refs/heads/master/MVs/Packs/Lab-CyberSec-Importar.sh | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/ceti/RetoCFT-Importar.sh | bash
 #
 # Ejecución remota con parámetros:
-#   curl sL https://raw.githubusercontent.com/nipegun/p-scripts/refs/heads/master/MVs/Packs/Lab-CyberSec-Importar.sh | bash -s Almacenamiento
+#   curl sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/ceti/RetoCFT-Importar.sh | bash -s Almacenamiento
 #
 # Bajar y editar directamente el archivo en nano
-#   curl -sL https://raw.githubusercontent.com/nipegun/p-scripts/refs/heads/master/MVs/Packs/Lab-CyberSec-Importar.sh | nano -
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/ceti/RetoCFT-Importar.sh | nano -
 # ----------
 
 # Definir el almacenamiento
@@ -29,11 +29,6 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   # Para el color rojo también:
     #echo "$(tput setaf 1)Mensaje en color rojo. $(tput sgr 0)"
   cFinColor='\033[0m'
-
-# Notificar inicio de ejecución del script
-  echo ""
-  echo -e "${cColorAzulClaro}  Iniciando el script de creación de laboratorio de ciberseguridad para Promxox...${cFinColor}"
-  echo ""
 
 # Comprobar si el script está corriendo como root
   #if [ $(id -u) -ne 0 ]; then     # Sólo comprueba si es root
@@ -69,7 +64,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   if [ $cVerSO == "13" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack CyberSecLab para Proxmox 9...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación de laboratorio del reto del CTF paraa Proxmox 9...${cFinColor}"
     echo ""
 
     echo ""
@@ -79,7 +74,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   elif [ $cVerSO == "12" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack CyberSecLab para Proxmox 8...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación de laboratorio del reto del CTF para Proxmox 8...${cFinColor}"
     echo ""
 
     # Crear el menú
@@ -403,7 +398,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   elif [ $cVerSO == "11" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack CyberSecLab para Proxmox 7...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación de laboratorio del reto del CTF para Proxmox 7...${cFinColor}"
     echo ""
 
     echo ""
@@ -413,7 +408,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   elif [ $cVerSO == "10" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack CyberSecLab para Proxmox 6...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación de laboratorio del reto del CTF para Proxmox 6...${cFinColor}"
     echo ""
 
     echo ""
@@ -423,7 +418,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   elif [ $cVerSO == "9" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack CyberSecLab para Proxmox 5...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación de laboratorio del reto del CTF para Proxmox 5...${cFinColor}"
     echo ""
 
     echo ""
@@ -433,7 +428,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   elif [ $cVerSO == "8" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack CyberSecLab para Proxmox 4...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación de laboratorio del reto del CTF para Proxmox 4...${cFinColor}"
     echo ""
 
     echo ""
@@ -443,7 +438,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
   elif [ $cVerSO == "7" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack CyberSecLab para Proxmox 3...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación de laboratorio del reto del CTF para para Proxmox 3...${cFinColor}"
     echo ""
 
     echo ""
