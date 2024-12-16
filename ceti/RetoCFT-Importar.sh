@@ -116,30 +116,30 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
               echo "  Creando los puentes..."
               echo ""
               # Crear el puente vmbr100
-                ip link add name vmbr100 type bridge
-                ip link set dev vmbr100 up
+                ip link add name vmbr1 type bridge
+                ip link set dev vmbr1 up
               # Crear el puente vmbr200
-                ip link add name vmbr200 type bridge
-                ip link set dev vmbr200 up
+                ip link add name vmbr2 type bridge
+                ip link set dev vmbr2 up
 
               echo ""
               echo "    Haciendo los puentes persistentes..."
               echo ""
-              echo ""                                         >> /etc/network/interfaces
-              echo "auto vmbr100"                             >> /etc/network/interfaces
-              echo "iface vmbr100 inet manual"                >> /etc/network/interfaces
-              echo "    bridge-ports none"                    >> /etc/network/interfaces
-              echo "    bridge-stp off"                       >> /etc/network/interfaces
-              echo "    bridge-fd 0"                          >> /etc/network/interfaces
-              echo "# Switch para la red LAN del laboratorio" >> /etc/network/interfaces
-              echo ""                                         >> /etc/network/interfaces
-              echo "auto vmbr200"                             >> /etc/network/interfaces
-              echo "iface vmbr200 inet manual"                >> /etc/network/interfaces
-              echo "    bridge-ports none"                    >> /etc/network/interfaces
-              echo "    bridge-stp off"                       >> /etc/network/interfaces
-              echo "    bridge-fd 0"                          >> /etc/network/interfaces
-              echo "# Switch para la red LAB del laboratorio" >> /etc/network/interfaces
-              echo ""                                         >> /etc/network/interfaces
+              echo ""                         >> /etc/network/interfaces
+              echo "auto vmbr1"               >> /etc/network/interfaces
+              echo "iface vmbr1 inet manual"  >> /etc/network/interfaces
+              echo "    bridge-ports none"    >> /etc/network/interfaces
+              echo "    bridge-stp off"       >> /etc/network/interfaces
+              echo "    bridge-fd 0"          >> /etc/network/interfaces
+              echo "# Switch para la red LAN" >> /etc/network/interfaces
+              echo ""                         >> /etc/network/interfaces
+              echo "auto vmbr2"               >> /etc/network/interfaces
+              echo "iface vmbr2 inet manual"  >> /etc/network/interfaces
+              echo "    bridge-ports none"    >> /etc/network/interfaces
+              echo "    bridge-stp off"       >> /etc/network/interfaces
+              echo "    bridge-fd 0"          >> /etc/network/interfaces
+              echo "# Switch para la red DMZ" >> /etc/network/interfaces
+              echo ""                         >> /etc/network/interfaces
 
             ;;
 
@@ -148,7 +148,7 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
               echo ""
               echo "  Creando la máquina virtual de OpenWrt..."
               echo ""
-              qm create 1000 \
+              qm create 100 \
                 --name openwrt \
                 --machine q35 \
                 --bios ovmf \
@@ -159,8 +159,8 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
                 --memory 1024 \
                 --balloon 0 \
                 --net0 virtio,bridge=vmbr0,firewall=1 \
-                --net1 virtio=00:aa:aa:aa:10:01,bridge=vmbr100,firewall=1 \
-                --net2 virtio=00:aa:aa:aa:20:01,bridge=vmbr200,firewall=1 \
+                --net1 virtio=00:aa:aa:aa:10:01,bridge=vmbr1,firewall=1 \
+                --net2 virtio=00:aa:aa:aa:20:01,bridge=vmbr2,firewall=1 \
                 --boot order=sata0 \
                 --scsihw virtio-scsi-single \
                 --ostype l26 \
@@ -182,10 +182,10 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
                   apt-get -y install curl
                   echo ""
                 fi
-              curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/CyberSecLab/openwrtlab.vmdk -o /tmp/openwrtlab.vmdk
-              qm importdisk 1000 /tmp/openwrtlab.vmdk "$vAlmacenamiento" && rm -f /tmp/openwrtlab.vmdk
-              vRutaAlDisco=$(qm config 1000 | grep unused | cut -d' ' -f2)
-              qm set 1000 --sata0 $vRutaAlDisco
+              curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/CyberSecLab/openwrtlab.vmdk -o /tmp/openwrtrlab.vmdk
+              qm importdisk 100 /tmp/openwrtlab.vmdk "$vAlmacenamiento" && rm -f /tmp/openwrtlab.vmdk
+              vRutaAlDisco=$(qm config 100 | grep unused | cut -d' ' -f2)
+              qm set 100 --sata0 $vRutaAlDisco
 
             ;;
 
