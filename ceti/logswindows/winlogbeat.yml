@@ -1,0 +1,36 @@
+# Configuración general de Winlogbeat
+winlogbeat.event_logs:
+  - name: Application
+    ignore_older: 72h
+  - name: Security
+    ignore_older: 72h
+  - name: System
+    ignore_older: 72h
+  - name: Setup
+    ignore_older: 72h
+  - name: ForwardedEvents
+    ignore_older: 72h
+
+# Salida de logs a archivos locales
+output.file:
+  path: "C:/Logs/"              # Carpeta donde se guardarán los logs
+  filename: "winlogbeat"        # Nombre base de los archivos
+  rotate_every_kb: 10240        # Rotación del archivo cada 10 MB
+  number_of_files: 5            # Mantener un máximo de 5 archivos
+
+# Procesadores para añadir metadata adicional
+processors:
+  - add_host_metadata: ~        # Añade información del host
+  - add_cloud_metadata: ~       # Añade información de la nube (si aplica)
+
+# Configuración adicional
+setup.template.settings:
+  index.number_of_shards: 1
+
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: "C:/Program Files/Winlogbeat/logs"
+  name: winlogbeat
+  keepfiles: 7
+  permissions: 0644
