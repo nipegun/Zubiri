@@ -29,3 +29,16 @@ scrape_configs:
       - source_labels: ['computer']
         target_label: 'winserver'
 
+  - job_name: windows-system
+    windows_events:
+      locale: 1033
+      use_incoming_timestamp: true
+      exclude_event_data: false
+      exclude_event_message: false
+      exclude_user_data: false
+      bookmark_path: ./bookmark_sys.xml
+      eventlog_name: "System"
+      xpath_query: '*'
+      labels:
+        logsource: windows-eventlog
+        job: windows-system
