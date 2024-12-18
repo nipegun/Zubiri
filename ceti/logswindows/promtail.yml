@@ -17,3 +17,15 @@ scrape_configs:
           job: "windows-logs"
           host: "windows-machine"
           __path__: "C:/Logs/*.log"
+  - job_name: windows
+    windows_events:
+      use_incoming_timestamp: false
+      bookmark_path: "./bookmark.xml"
+      eventlog_name: "Application"
+      xpath_query: '*'
+      labels:
+        job: windows
+    relabel_configs:
+      - source_labels: ['computer']
+        target_label: 'winserver'
+
