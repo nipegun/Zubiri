@@ -9,23 +9,23 @@ clients:
 - url: http://192.168.1.10:3100/loki/api/v1/push
 
 scrape_configs:
-- job_name: windows_events_application
-  windows_events:
-    eventlog_name: Application
-    use_incoming_timestamp: true
-  pipeline_stages:
-  - eventlogmessage:
+  - job_name: windows_events_application
+    windows_events:
+      eventlog_name: Application
+      use_incoming_timestamp: true
+    pipeline_stages:
+      - eventlogmessage:
 
-- job_name: windows_events_system
-  windows_events:
-    eventlog_name: System
-    use_incoming_timestamp: true
-  pipeline_stages:
-  - eventlogmessage:
+  - job_name: windows_events_system
+    windows_events:
+      eventlog_name: System
+      use_incoming_timestamp: true
+    pipeline_stages:
+      - eventlogmessage:
 
-- job_name: windows_events_security
-  windows_events:
-    eventlog_name: Security
-    use_incoming_timestamp: true
-  pipeline_stages:
-  - eventlogmessage:
+  - job_name: windows_events_security
+    windows_events:
+      eventlog_name: Security
+      use_incoming_timestamp: true
+    pipeline_stages:
+      - eventlogmessage:
