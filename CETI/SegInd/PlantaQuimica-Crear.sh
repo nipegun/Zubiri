@@ -405,7 +405,7 @@
                         echo "  Iniciando máquinas virtuales en el orden correcto..."
                         echo ""
                         VBoxManage startvm "pq-pfSense"
-                        sleep 5
+                        sleep 15
                         VBoxManage startvm "pq-Simulation"
                         sleep 5
                         VBoxManage startvm "pq-PLC"
