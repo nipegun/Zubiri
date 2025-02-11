@@ -131,16 +131,18 @@
                 menu=(dialog --checklist "Marca las opciones que quieras instalar:" 22 70 16)
                   opciones=(
 
-                    1 "Importar máquina virtual de HMI (ScadaBR)"              off
-                    2 "Importar máquina virtual de Kali"                       off
+                    1 "Descargar y descomprimir discos duros virtuales"        off
 
-                    3 "Importar máquina virtual de pfSense"                    off
+                    2 "Importar máquina virtual de HMI (ScadaBR)"              off
+                    3 "Importar máquina virtual de Kali"                       off
+                    4 "Importar máquina virtual de pfSense"                    off
+                    5 "Importar máquina virtual de Simulation (ChemicalPlant)" off
+                    6 "Importar máquina virtual de PLC"                        off
+                    7 "Importar máquina virtual de Workstation"                off
                     
-                    4 "Importar máquina virtual de Simulation (ChemicalPlant)" off
-                    5 "Importar máquina virtual de PLC"                        off
-                    6 "Importar máquina virtual de Workstation"                off
-                    
-                    7 "Agrupar máquinas virtuales"                             off
+                    8 "Agrupar máquinas virtuales"                             off
+                    9 "Iniciando las máquinas virtuales en orden"              off
+
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
 
@@ -148,7 +150,35 @@
                   do
                     case $choice in
 
-                      1)
+                      2)
+
+                          echo ""
+                          echo "    Descargando y descomprimiendo discos virtuales..."
+                          echo ""
+                          # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
+                            if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
+                              echo ""
+                              echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
+                              echo ""
+                              sudo apt-get -y update
+                              sudo apt-get -y install curl
+                              echo ""
+                            fi
+                          curl -L DiscosPlantaQuim.tar.xz -o /tmp/DiscosPlantaQuim.tar.xz
+                          # Comprobar si el paquete tar está instalado. Si no lo está, instalarlo.
+                            if [[ $(dpkg-query -s tar 2>/dev/null | grep installed) == "" ]]; then
+                              echo ""
+                              echo -e "${cColorRojo}    El paquete tar no está instalado. Iniciando su instalación...${cFinColor}"
+                              echo ""
+                              sudo apt-get -y update
+                              sudo apt-get -y install tar
+                              echo ""
+                            fi
+                          tar -xvJf /tmp/DiscosPlantaQuim.tar.xz -C ~/
+
+                      ;;
+
+                      2)
 
                           echo ""
                           echo "    Importando máquina virtual de HMIScadaBR..."
@@ -176,17 +206,12 @@
 
                         # Disco duro
                           mv ~/DiscosPlantaQuim/pq-HMIScadaBR.vdi ~/"VirtualBox VMs/pq-HMIScadaBR/"
-                          #cd ~/"VirtualBox VMs/pq-HMIScadaBR/"
-                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-HMIScadaBR.vdi
-                          # Asignar un UUID aleatorio al disco
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi"
-                          # Asignar un UUID específico al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
                           VBoxManage storageattach "pq-HMIScadaBR" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi"
 
                       ;;
 
-                      2)
+                      3)
 
                           echo ""
                           echo "    Importando máquina virtual de Kali..."
@@ -214,17 +239,12 @@
 
                         # Disco duro
                           mv ~/DiscosPlantaQuim/pq-Kali.vdi ~/"VirtualBox VMs/pq-Kali/"
-                          #cd ~/"VirtualBox VMs/pq-Kali/"
-                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-Kali.vdi
-                          # Asignar un UUID aleatorio al disco
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi"
-                          # Asignar un UUID específico al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi" 43333a85-6b4c-420c-99ee-0567adcb16a3
                           VBoxManage storageattach "pq-Kali" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi"
 
                       ;;
 
-                      3)
+                      4)
 
                           echo ""
                           echo "    Importando máquina virtual de pfSense..."
@@ -249,22 +269,15 @@
                               VBoxManage storagectl "pq-pfSense" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
                               VBoxManage storageattach "pq-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
-                            # Controladora de disco duro
-                              VBoxManage storagectl "pq-pfSense" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # Disco duro
                           mv ~/DiscosPlantaQuim/pq-pfSense.vdi ~/"VirtualBox VMs/pq-pfSense/"
-                          #cd ~/"VirtualBox VMs/pq-pfSense/"
-                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-pfSense.vdi
-                          # Asignar un UUID aleatorio al disco
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi"
-                          # Asignar un UUID específico al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi" d2d48e12-6454-41fb-919d-4127f84459e9
-                          VBoxManage storageattach "pq-pfSense" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi"
+                          VBoxManage storageattach "pq-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi"
 
                       ;;
 
-                      4)
+                      5)
 
                           echo ""
                           echo "    Importando máquina virtual de Simulation..."
@@ -292,17 +305,12 @@
 
                         # Disco duro
                           mv ~/DiscosPlantaQuim/pq-Simulation.vdi ~/"VirtualBox VMs/pq-Simulation/"
-                          #cd ~/"VirtualBox VMs/pq-Simulation/"
-                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-Simulation.vdi
-                          # Asignar un UUID aleatorio al disco
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi"
-                          # Asignar un UUID específico al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
                           VBoxManage storageattach "pq-Simulation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi"
 
                       ;;
 
-                      5)
+                      6)
 
                           echo ""
                           echo "    Importando máquina virtual de PLC..."
@@ -330,17 +338,12 @@
 
                         # Disco duro
                           mv ~/DiscosPlantaQuim/pq-PLC.vdi ~/"VirtualBox VMs/pq-PLC/"
-                          #cd ~/"VirtualBox VMs/pq-PLC/"
-                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-PLC.vdi
-                          # Asignar un UUID aleatorio al disco
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi"
-                          # Asignar un UUID específico al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi" df3195b7-7cb0-4848-be56-1e96ebecbc52
                           VBoxManage storageattach "pq-PLC" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi"
 
                       ;;
 
-                      6)
+                      7)
 
                           echo ""
                           echo "    Importando máquina virtual de Workstation..."
@@ -368,17 +371,12 @@
 
                         # Disco duro
                           mv ~/DiscosPlantaQuim/pq-Workstation.vdi ~/"VirtualBox VMs/pq-Workstation/"
-                          #cd ~/"VirtualBox VMs/pq-Workstation/"
-                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-Workstation.vdi
-                          # Asignar un UUID aleatorio al disco
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi"
-                          # Asignar un UUID específico al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi" 79e7d4fb-1d24-476b-bc12-e4f31554e3e3
                           VBoxManage storageattach "pq-Workstation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi"
 
                       ;;
 
-                      7)
+                      8)
 
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
@@ -389,6 +387,20 @@
                         VBoxManage modifyvm "pq-Simulation"  --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-PLC"         --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-Workstation" --groups "/PlantaQuímica" 2> /dev/null
+
+                      ;;
+
+                      9)
+
+                        echo ""
+                        echo "  Iniciando máquinas virtuales en orden..."
+                        echo ""
+                        pq-HMIScadaBR
+                        pq-Kali
+                        pq-pfSense
+                        pq-Simulation
+                        pq-PLC
+                        pq-Workstation
 
                       ;;
 
