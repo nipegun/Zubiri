@@ -357,7 +357,7 @@
                           echo ""
                           echo "    Importando máquina virtual de Workstation..."
                           echo ""
-                          VBoxManage createvm --name "pq-Workstation" --ostype "Ubuntu" --register
+                          VBoxManage createvm --name "pq-Workstation" --ostype "Ubuntu_64" --register
                           # Procesador
                             VBoxManage modifyvm "pq-Workstation" --cpus 2
                           # RAM
