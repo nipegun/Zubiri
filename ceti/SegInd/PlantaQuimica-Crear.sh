@@ -129,11 +129,17 @@
                   fi
                 menu=(dialog --checklist "Marca las opciones que quieras instalar:" 22 70 16)
                   opciones=(
-                    1 "Importar máquina virtual de OpenWrt" on
-                    2 "Importar máquina virtual de Kali"    off
-                    3 "Importar máquina virtual de Sift"    off
-                    4 "Importar máquina virtual de Pruebas" off
-                    5 "Agrupar máquinas virtuales"          on
+
+                    1 "Importar máquina virtual de HMI"         off
+                    2 "Importar máquina virtual de Kali"        off
+
+                    3 "Importar máquina virtual de pfSense"     off
+                    
+                    4 "Importar máquina virtual de Sim"         off
+                    5 "Importar máquina virtual de PLC"         off
+                    6 "Importar máquina virtual de Workstation" off
+                    
+                    7 "Agrupar máquinas virtuales"              off
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
 
@@ -144,66 +150,64 @@
                       1)
 
                           echo ""
-                          echo "    Importando máquina virtual de OpenWrt..."
+                          echo "    Importando máquina virtual de HMI..."
                           echo ""
-                          VBoxManage createvm --name "openwrtlab" --ostype "Linux_64" --register
-                          VBoxManage modifyvm "openwrtlab" --firmware efi
+                          VBoxManage createvm --name "pq-HMI" --ostype "Ubuntu_64" --register
+                          VBoxManage modifyvm "pq-HMI" --firmware efi
                           # Procesador
-                            VBoxManage modifyvm "openwrtlab" --cpus 2
+                            VBoxManage modifyvm "pq-HMI" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "openwrtlab" --memory 2048
+                            VBoxManage modifyvm "pq-HMI" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "openwrtlab" --graphicscontroller vmsvga --vram 16 
+                            VBoxManage modifyvm "pq-HMI" --graphicscontroller vmsvga --vram 128 --accelerate3d on
                           # Audio
-                            VBoxManage modifyvm "openwrtlab" --audio none
+                            VBoxManage modifyvm "pq-HMI" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "openwrtlab" --nictype1 virtio
-                              VBoxManage modifyvm "openwrtlab" --nic1 "NAT"
-                            VBoxManage modifyvm "openwrtlab" --nictype2 virtio
-                              VBoxManage modifyvm "openwrtlab" --nic2 intnet --intnet2 "redintlan"
-                            VBoxManage modifyvm "openwrtlab" --nictype3 virtio
-                              VBoxManage modifyvm "openwrtlab" --nic3 intnet --intnet3 "redintlab"
+                            VBoxManage modifyvm "pq-HMI" --nictype1 virtio
+                              VBoxManage modifyvm "pq-HMI" --nic1 intnet --intnet1 "RedIntOper"
+
                           # Almacenamiento
+                            # Controlador
+                              VBoxManage storagectl "pq-HMI" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storagectl "openwrtlab" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-                              VBoxManage storageattach "openwrtlab" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-HMI" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "openwrtlab" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-HMI" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # OpenWrt
-                          cd ~/"VirtualBox VMs/openwrtlab/"
-                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/CyberSecLab/openwrtlab.vmdk
-                          VBoxManage storageattach "openwrtlab" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/openwrtlab/openwrtlab.vmdk"
+                          cd ~/"VirtualBox VMs/pqHMI/"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/ChemicalPlant/pqHMI.vmdk
+                          VBoxManage storageattach "HMI" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pqHMI/pqHMI.vmdk"
 
                       ;;
 
                       2)
 
                           echo ""
-                          echo "    Importando máquina virtual de Kali..."
+                          echo "    Importando máquina virtual de ScadaBR..."
                           echo ""
-                          VBoxManage createvm --name "kali" --ostype "Debian_64" --register
-                          VBoxManage modifyvm "kali" --firmware efi
+                          VBoxManage createvm --name "ScadaBR" --ostype "Debian_64" --register
+                          VBoxManage modifyvm "ScadaBR" --firmware efi
                           # Procesador
-                            VBoxManage modifyvm "kali" --cpus 4
+                            VBoxManage modifyvm "ScadaBR" --cpus 4
                           # RAM
-                            VBoxManage modifyvm "kali" --memory 4096
+                            VBoxManage modifyvm "ScadaBR" --memory 4096
                           # Gráfica
-                            VBoxManage modifyvm "kali" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "ScadaBR" --graphicscontroller vmsvga --vram 128 --accelerate3d on
                           # Red
-                           VBoxManage modifyvm "kali" --nictype1 virtio
-                              VBoxManage modifyvm "kali" --nic1 intnet --intnet1 "redintlan"
+                           VBoxManage modifyvm "ScadaBR" --nictype1 virtio
+                              VBoxManage modifyvm "ScadaBR" --nic1 intnet --intnet1 "redintlan"
                           # Almacenamiento
                             # CD
-                              VBoxManage storagectl "kali" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-                              VBoxManage storageattach "kali" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storagectl "ScadaBR" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+                              VBoxManage storageattach "ScadaBR" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "kali" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "ScadaBR" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # Disco duro
                           cd ~/"VirtualBox VMs/kali/"
-                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/CyberSecLab/kali.vmdk
-                          VBoxManage storageattach "kali" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/kali/kali.vmdk"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/ChemicalPlant/ScadaBR.vmdk
+                          VBoxManage storageattach "ScadaBR" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/ScadaBR/ScadaBR.vmdk"
 
                       ;;
 
@@ -264,13 +268,40 @@
 
                       5)
 
+                          echo ""
+                          echo "    Importando máquina virtual de Pruebas..."
+                          echo ""
+                          VBoxManage createvm --name "pruebas" --ostype "Other_64" --register
+                          VBoxManage modifyvm "pruebas" --firmware efi
+                          # Procesador
+                            VBoxManage modifyvm "pruebas" --cpus 4
+                          # RAM
+                            VBoxManage modifyvm "pruebas" --memory 4096
+                          # Gráfica
+                            VBoxManage modifyvm "pruebas" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                          # Red
+                            VBoxManage modifyvm "pruebas" --nictype1 virtio
+                              VBoxManage modifyvm "pruebas" --nic1 intnet --intnet1 "redintlab"
+                          # Almacenamiento
+                            # CD
+                              VBoxManage storagectl "pruebas" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+                              VBoxManage storageattach "pruebas" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                            # Controladora de disco duro
+                              VBoxManage storagectl "pruebas" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+
+                      ;;
+
+                      7)
+
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
                         echo ""
-                        VBoxManage modifyvm "openwrtlab" --groups "/CyberSecLab" 2> /dev/null
-                        VBoxManage modifyvm "kali"       --groups "/CyberSecLab" 2> /dev/null
-                        VBoxManage modifyvm "sift"       --groups "/CyberSecLab" 2> /dev/null
-                        VBoxManage modifyvm "pruebas"    --groups "/CyberSecLab" 2> /dev/null
+                        VBoxManage modifyvm "pq-HMI"         --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-Kali"        --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-pfSense"     --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-Sim"         --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-PLC"         --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-Workstation" --groups "/PlantaQuímica" 2> /dev/null
 
                       ;;
 
