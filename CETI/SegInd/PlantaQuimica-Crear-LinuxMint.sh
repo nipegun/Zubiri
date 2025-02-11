@@ -9,13 +9,13 @@
 # Script de NiPeGun para descargar e importar el pack PlantaQuimica para VirtualBox en Debian
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PlantaQuimica-Crear.sh | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PlantaQuimica-Crear-LinuxMint.sh | bash
 #
 # Ejecución remota como root:
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PlantaQuimica-Crear.sh | sed 's-sudo--g' | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PlantaQuimica-Crear-LinuxMint.sh | sed 's-sudo--g' | bash
 #
 # Bajar y editar directamente el archivo en nano
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PlantaQuimica-Crear.sh | nano -
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PlantaQuimica-Crear-LinuxMint.sh | nano -
 # ----------
 
 #
@@ -132,7 +132,7 @@
                           echo ""
                           echo "      Descargando..."
                           echo ""
-                          curl -L DiscosPlantaQuim.tar.xz -o /tmp/DiscosPlantaQuim.tar.xz
+                          curl -L http://hacks4geeks.com/_/zubiri/DiscosPlantaQuim.tar.xz -o /tmp/DiscosPlantaQuim.tar.xz
                           # Comprobar si el paquete tar está instalado. Si no lo está, instalarlo.
                             if [[ $(dpkg-query -s tar 2>/dev/null | grep installed) == "" ]]; then
                               echo ""
