@@ -144,7 +144,7 @@
                     7 "Importar máquina virtual de Workstation"                off
                     
                     8 "Agrupar máquinas virtuales"                             off
-                    9 "Iniciando las máquinas virtuales en orden"              off
+                    9 "Iniciar las máquinas virtuales en orden"                off
 
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
