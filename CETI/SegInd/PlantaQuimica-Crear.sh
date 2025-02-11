@@ -115,7 +115,7 @@
             2)
 
               echo ""
-              echo "  Creando laboratorio completo de ciberseguridad en VirtualBox..."
+              echo "  Creando laboratorio completo de planta química para VirtualBox..."
               echo ""
 
               # Definir fecha de ejecución del script
@@ -125,7 +125,7 @@
                 # Comprobar si el paquete dialog está instalado. Si no lo está, instalarlo.
                   if [[ $(dpkg-query -s dialog 2>/dev/null | grep installed) == "" ]]; then
                     echo ""
-                    echo -e "${cColorRojo}  El paquete dialog no está instalado. Iniciando su instalación...${cFinColor}"
+                    echo -e "${cColorRojo}   El paquete dialog no está instalado. Iniciando su instalación...${cFinColor}"
                     echo ""
                     sudo apt-get -y update
                     sudo apt-get -y install dialog
@@ -167,6 +167,9 @@
                               sudo apt-get -y install curl
                               echo ""
                             fi
+                          echo ""
+                          echo "      Descargando..."
+                          echo ""
                           curl -L DiscosPlantaQuim.tar.xz -o /tmp/DiscosPlantaQuim.tar.xz
                           # Comprobar si el paquete tar está instalado. Si no lo está, instalarlo.
                             if [[ $(dpkg-query -s tar 2>/dev/null | grep installed) == "" ]]; then
@@ -177,6 +180,9 @@
                               sudo apt-get -y install tar
                               echo ""
                             fi
+                          echo ""
+                          echo "      Descomprimiendo..."
+                          echo ""
                           tar -xvJf /tmp/DiscosPlantaQuim.tar.xz -C ~/
 
                       ;;
