@@ -383,7 +383,7 @@
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
                         echo ""
-                        VBoxManage modifyvm "pq-HMI"         --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-HMIScadaBR"  --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-Kali"        --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-pfSense"     --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-Simulation"  --groups "/PlantaQuímica" 2> /dev/null
