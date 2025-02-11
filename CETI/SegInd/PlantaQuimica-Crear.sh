@@ -151,38 +151,38 @@
                       1)
 
                           echo ""
-                          echo "    Importando máquina virtual de HMI..."
+                          echo "    Importando máquina virtual de HMIScadaBR..."
                           echo ""
-                          VBoxManage createvm --name "pq-HMI" --ostype "Ubuntu_64" --register
+                          VBoxManage createvm --name "pq-HMIScadaBR" --ostype "Ubuntu_64" --register
                           # Procesador
-                            VBoxManage modifyvm "pq-HMI" --cpus 2
+                            VBoxManage modifyvm "pq-HMIScadaBR" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "pq-HMI" --memory 2048
+                            VBoxManage modifyvm "pq-HMIScadaBR" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "pq-HMI" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "pq-HMIScadaBR" --graphicscontroller vmsvga --vram 128 --accelerate3d on
                           # Audio
-                            VBoxManage modifyvm "pq-HMI" --audio-driver none
+                            VBoxManage modifyvm "pq-HMIScadaBR" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "pq-HMI" --nictype1 virtio
-                              VBoxManage modifyvm "pq-HMI" --nic1 intnet --intnet1 "RedIntOper"
+                            VBoxManage modifyvm "pq-HMIScadaBR" --nictype1 virtio
+                              VBoxManage modifyvm "pq-HMIScadaBR" --nic1 intnet --intnet1 "RedIntOper"
 
                           # Almacenamiento
                             # Controlador
-                              VBoxManage storagectl "pq-HMI" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+                              VBoxManage storagectl "pq-HMIScadaBR" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storageattach "pq-HMI" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-HMIScadaBR" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "pq-HMI" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-HMIScadaBR" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # Disco duro
-                          mv ~/DiscosPlantaQuim/pq-HMI.vdi ~/"VirtualBox VMs/pq-HMI/"
-                          #cd ~/"VirtualBox VMs/pq-HMI/"
-                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-HMI.vdi
+                          mv ~/DiscosPlantaQuim/pq-HMIScadaBR.vdi ~/"VirtualBox VMs/pq-HMIScadaBR/"
+                          #cd ~/"VirtualBox VMs/pq-HMIScadaBR/"
+                          #wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-HMIScadaBR.vdi
                           # Asignar un UUID aleatorio al disco
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMI/pq-HMI.vdi"
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi"
                           # Asignar un UUID específico al disco
-                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMI/pq-HMI.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
-                          VBoxManage storageattach "pq-HMI" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-HMI/pq-HMI.vdi"
+                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                          VBoxManage storageattach "pq-HMIScadaBR" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi"
 
                       ;;
 
