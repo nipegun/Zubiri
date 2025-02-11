@@ -239,9 +239,9 @@
                           # Audio
                             VBoxManage modifyvm "pq-pfSense" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "pq-pfSense" --nictype1 virtio
+                            VBoxManage modifyvm "pq-pfSense" --nictype1 82540EM
                               VBoxManage modifyvm "pq-pfSense" --nic1 intnet --intnet1 "RedIntOper"
-                            VBoxManage modifyvm "pq-pfSense" --nictype2 virtio
+                            VBoxManage modifyvm "pq-pfSense" --nictype2 82540EM
                               VBoxManage modifyvm "pq-pfSense" --nic2 intnet --intnet2 "RedIntInd"
 
                           # Almacenamiento
