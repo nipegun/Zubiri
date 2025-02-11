@@ -181,7 +181,7 @@
                           # Asignar un UUID aleatorio al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi"
                           # Asignar un UUID específico al disco
-                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
                           VBoxManage storageattach "pq-HMIScadaBR" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-HMIScadaBR/pq-HMIScadaBR.vdi"
 
                       ;;
@@ -219,7 +219,7 @@
                           # Asignar un UUID aleatorio al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi"
                           # Asignar un UUID específico al disco
-                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi" 43333a85-6b4c-420c-99ee-0567adcb16a3
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi" 43333a85-6b4c-420c-99ee-0567adcb16a3
                           VBoxManage storageattach "pq-Kali" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi"
 
                       ;;
@@ -259,7 +259,7 @@
                           # Asignar un UUID aleatorio al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi"
                           # Asignar un UUID específico al disco
-                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi" d2d48e12-6454-41fb-919d-4127f84459e9
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi" d2d48e12-6454-41fb-919d-4127f84459e9
                           VBoxManage storageattach "pq-pfSense" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi"
 
                       ;;
@@ -297,7 +297,7 @@
                           # Asignar un UUID aleatorio al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi"
                           # Asignar un UUID específico al disco
-                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
                           VBoxManage storageattach "pq-Simulation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi"
 
                       ;;
@@ -335,7 +335,7 @@
                           # Asignar un UUID aleatorio al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi"
                           # Asignar un UUID específico al disco
-                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi" df3195b7-7cb0-4848-be56-1e96ebecbc52
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi" df3195b7-7cb0-4848-be56-1e96ebecbc52
                           VBoxManage storageattach "pq-PLC" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi"
 
                       ;;
@@ -373,7 +373,7 @@
                           # Asignar un UUID aleatorio al disco
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi"
                           # Asignar un UUID específico al disco
-                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi" 79e7d4fb-1d24-476b-bc12-e4f31554e3e3
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi" 79e7d4fb-1d24-476b-bc12-e4f31554e3e3
                           VBoxManage storageattach "pq-Workstation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi"
 
                       ;;
