@@ -130,16 +130,16 @@
                 menu=(dialog --checklist "Marca las opciones que quieras instalar:" 22 70 16)
                   opciones=(
 
-                    1 "Importar máquina virtual de HMI"         off
-                    2 "Importar máquina virtual de Kali"        off
+                    1 "Importar máquina virtual de HMI (ScadaBR)"              off
+                    2 "Importar máquina virtual de Kali"                       off
 
-                    3 "Importar máquina virtual de pfSense"     off
+                    3 "Importar máquina virtual de pfSense"                    off
                     
-                    4 "Importar máquina virtual de Sim"         off
-                    5 "Importar máquina virtual de PLC"         off
-                    6 "Importar máquina virtual de Workstation" off
+                    4 "Importar máquina virtual de Simulation (ChemicalPlant)" off
+                    5 "Importar máquina virtual de PLC"                        off
+                    6 "Importar máquina virtual de Workstation"                off
                     
-                    7 "Agrupar máquinas virtuales"              off
+                    7 "Agrupar máquinas virtuales"                             off
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
 
@@ -153,7 +153,6 @@
                           echo "    Importando máquina virtual de HMI..."
                           echo ""
                           VBoxManage createvm --name "pq-HMI" --ostype "Ubuntu_64" --register
-                          VBoxManage modifyvm "pq-HMI" --firmware efi
                           # Procesador
                             VBoxManage modifyvm "pq-HMI" --cpus 2
                           # RAM
@@ -174,120 +173,201 @@
                             # Controladora de disco duro
                               VBoxManage storagectl "pq-HMI" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
-                        # OpenWrt
-                          cd ~/"VirtualBox VMs/pqHMI/"
-                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/ChemicalPlant/pqHMI.vmdk
-                          VBoxManage storageattach "HMI" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pqHMI/pqHMI.vmdk"
+                        # Disco duro
+                          cd ~/"VirtualBox VMs/pq-HMI/"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-HMI.vdi
+                          # Asignar un UUID aleatorio al disco
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMI/pq-HMI.vdi"
+                          # Asignar un UUID específico al disco
+                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-HMI/pq-HMI.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                          VBoxManage storageattach "pq-HMI" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-HMI/pq-HMI.vdi"
 
                       ;;
 
                       2)
 
                           echo ""
-                          echo "    Importando máquina virtual de ScadaBR..."
+                          echo "    Importando máquina virtual de Kali..."
                           echo ""
-                          VBoxManage createvm --name "ScadaBR" --ostype "Debian_64" --register
-                          VBoxManage modifyvm "ScadaBR" --firmware efi
+                          VBoxManage createvm --name "pq-Kali" --ostype "Debian_64" --register
                           # Procesador
-                            VBoxManage modifyvm "ScadaBR" --cpus 4
+                            VBoxManage modifyvm "pq-Kali" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "ScadaBR" --memory 4096
+                            VBoxManage modifyvm "pq-Kali" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "ScadaBR" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "pq-Kali" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                          # Audio
+                            VBoxManage modifyvm "pq-Kali" --audio-driver none
                           # Red
-                           VBoxManage modifyvm "ScadaBR" --nictype1 virtio
-                              VBoxManage modifyvm "ScadaBR" --nic1 intnet --intnet1 "redintlan"
+                            VBoxManage modifyvm "pq-Kali" --nictype1 virtio
+                              VBoxManage modifyvm "pq-Kali" --nic1 intnet --intnet1 "RedIntOper"
+
                           # Almacenamiento
+                            # Controlador
+                              VBoxManage storagectl "pq-Kali" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storagectl "ScadaBR" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-                              VBoxManage storageattach "ScadaBR" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-Kali" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "ScadaBR" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-Kali" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # Disco duro
-                          cd ~/"VirtualBox VMs/kali/"
-                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/ChemicalPlant/ScadaBR.vmdk
-                          VBoxManage storageattach "ScadaBR" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/ScadaBR/ScadaBR.vmdk"
+                          cd ~/"VirtualBox VMs/pq-Kali/"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-Kali.vdi
+                          # Asignar un UUID aleatorio al disco
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi"
+                          # Asignar un UUID específico al disco
+                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                          VBoxManage storageattach "pq-Kali" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Kali/pq-Kali.vdi"
 
                       ;;
 
                       3)
 
                           echo ""
-                          echo "    Importando máquina virtual de Sift..."
+                          echo "    Importando máquina virtual de pfSense..."
                           echo ""
-                          VBoxManage createvm --name "sift" --ostype "Ubuntu_64" --register
-                          VBoxManage modifyvm "sift" --firmware efi
+                          VBoxManage createvm --name "pq-pfSense" --ostype "Linux_64" --register
                           # Procesador
-                            VBoxManage modifyvm "sift" --cpus 4
+                            VBoxManage modifyvm "pq-pfSense" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "sift" --memory 4096
+                            VBoxManage modifyvm "pq-pfSense" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "sift" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "pq-pfSense" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                          # Audio
+                            VBoxManage modifyvm "pq-pfSense" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "sift" --nictype1 virtio
-                              VBoxManage modifyvm "sift" --nic1 intnet --intnet1 "redintlan"
+                            VBoxManage modifyvm "pq-pfSense" --nictype1 virtio
+                              VBoxManage modifyvm "pq-pfSense" --nic1 intnet --intnet1 "RedIntOper"
+                            VBoxManage modifyvm "pq-pfSense" --nictype2 virtio
+                              VBoxManage modifyvm "pq-pfSense" --nic2 intnet --intnet2 "RedIntInd"
+
                           # Almacenamiento
+                            # Controlador
+                              VBoxManage storagectl "pq-pfSense" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storagectl "sift" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-                              VBoxManage storageattach "sift" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "sift" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-pfSense" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # Disco duro
-                          cd ~/"VirtualBox VMs/sift/"
-                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/CyberSecLab/sift.vmdk
-                          VBoxManage storageattach "sift" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/sift/sift.vmdk"
+                          cd ~/"VirtualBox VMs/pq-pfSense/"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-pfSense.vdi
+                          # Asignar un UUID aleatorio al disco
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi"
+                          # Asignar un UUID específico al disco
+                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                          VBoxManage storageattach "pq-pfSense" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-pfSense/pq-pfSense.vdi"
 
                       ;;
 
                       4)
 
                           echo ""
-                          echo "    Importando máquina virtual de Pruebas..."
+                          echo "    Importando máquina virtual de Simulation..."
                           echo ""
-                          VBoxManage createvm --name "pruebas" --ostype "Other_64" --register
-                          VBoxManage modifyvm "pruebas" --firmware efi
+                          VBoxManage createvm --name "pq-Simulation" --ostype "Ubuntu_64" --register
                           # Procesador
-                            VBoxManage modifyvm "pruebas" --cpus 4
+                            VBoxManage modifyvm "pq-Simulation" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "pruebas" --memory 4096
+                            VBoxManage modifyvm "pq-Simulation" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "pruebas" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "pq-Simulation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                          # Audio
+                            VBoxManage modifyvm "pq-Simulation" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "pruebas" --nictype1 virtio
-                              VBoxManage modifyvm "pruebas" --nic1 intnet --intnet1 "redintlab"
+                            VBoxManage modifyvm "pq-Simulation" --nictype1 virtio
+                              VBoxManage modifyvm "pq-Simulation" --nic1 intnet --intnet1 "RedIntInd"
+
                           # Almacenamiento
+                            # Controlador
+                              VBoxManage storagectl "pq-Simulation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storagectl "pruebas" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-                              VBoxManage storageattach "pruebas" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-Simulation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "pruebas" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-Simulation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+
+                        # Disco duro
+                          cd ~/"VirtualBox VMs/pq-Simulation/"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-Simulation.vdi
+                          # Asignar un UUID aleatorio al disco
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi"
+                          # Asignar un UUID específico al disco
+                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                          VBoxManage storageattach "pq-Simulation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi"
 
                       ;;
 
                       5)
 
                           echo ""
-                          echo "    Importando máquina virtual de Pruebas..."
+                          echo "    Importando máquina virtual de PLC..."
                           echo ""
-                          VBoxManage createvm --name "pruebas" --ostype "Other_64" --register
-                          VBoxManage modifyvm "pruebas" --firmware efi
+                          VBoxManage createvm --name "pq-PLC" --ostype "Ubuntu" --register
                           # Procesador
-                            VBoxManage modifyvm "pruebas" --cpus 4
+                            VBoxManage modifyvm "pq-PLC" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "pruebas" --memory 4096
+                            VBoxManage modifyvm "pq-PLC" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "pruebas" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "pq-PLC" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                          # Audio
+                            VBoxManage modifyvm "pq-PLC" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "pruebas" --nictype1 virtio
-                              VBoxManage modifyvm "pruebas" --nic1 intnet --intnet1 "redintlab"
+                            VBoxManage modifyvm "pq-PLC" --nictype1 virtio
+                              VBoxManage modifyvm "pq-PLC" --nic1 intnet --intnet1 "RedIntInd"
+
                           # Almacenamiento
+                            # Controlador
+                              VBoxManage storagectl "pq-PLC" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storagectl "pruebas" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-                              VBoxManage storageattach "pruebas" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-PLC" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "pruebas" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-PLC" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+
+                        # Disco duro
+                          cd ~/"VirtualBox VMs/pq-PLC/"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-PLC.vdi
+                          # Asignar un UUID aleatorio al disco
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi"
+                          # Asignar un UUID específico al disco
+                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                          VBoxManage storageattach "pq-PLC" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-PLC/pq-PLC.vdi"
+
+                      ;;
+
+                      6)
+
+                          echo ""
+                          echo "    Importando máquina virtual de Workstation..."
+                          echo ""
+                          VBoxManage createvm --name "pq-Workstation" --ostype "Ubuntu" --register
+                          # Procesador
+                            VBoxManage modifyvm "pq-Workstation" --cpus 2
+                          # RAM
+                            VBoxManage modifyvm "pq-Workstation" --memory 2048
+                          # Gráfica
+                            VBoxManage modifyvm "pq-Workstation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                          # Audio
+                            VBoxManage modifyvm "pq-Workstation" --audio-driver none
+                          # Red
+                            VBoxManage modifyvm "pq-Workstation" --nictype1 virtio
+                              VBoxManage modifyvm "pq-Workstation" --nic1 intnet --intnet1 "RedIntInd"
+
+                          # Almacenamiento
+                            # Controlador
+                              VBoxManage storagectl "pq-Workstation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+                            # CD
+                              VBoxManage storageattach "pq-Workstation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                            # Controladora de disco duro
+                              VBoxManage storagectl "pq-Workstation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+
+                        # Disco duro
+                          cd ~/"VirtualBox VMs/pq-Workstation/"
+                          wget http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/PlantaQuimica/pq-Workstation.vdi
+                          # Asignar un UUID aleatorio al disco
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi"
+                          # Asignar un UUID específico al disco
+                            VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
+                          VBoxManage storageattach "pq-Workstation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Workstation/pq-Workstation.vdi"
 
                       ;;
 
@@ -299,7 +379,7 @@
                         VBoxManage modifyvm "pq-HMI"         --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-Kali"        --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-pfSense"     --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "pq-Sim"         --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-Simulation"  --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-PLC"         --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-Workstation" --groups "/PlantaQuímica" 2> /dev/null
 
