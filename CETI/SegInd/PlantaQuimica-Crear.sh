@@ -170,7 +170,7 @@
                           echo ""
                           echo "      Descargando..."
                           echo ""
-                          curl -L DiscosPlantaQuim.tar.xz -o /tmp/DiscosPlantaQuim.tar.xz
+                          curl -L http://hacks4geeks.com/_/zubiri/DiscosPlantaQuim.tar.xz -o /tmp/DiscosPlantaQuim.tar.xz
                           # Comprobar si el paquete tar está instalado. Si no lo está, instalarlo.
                             if [[ $(dpkg-query -s tar 2>/dev/null | grep installed) == "" ]]; then
                               echo ""
