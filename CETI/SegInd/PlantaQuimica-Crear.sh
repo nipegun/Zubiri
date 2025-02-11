@@ -153,7 +153,7 @@
                   do
                     case $choice in
 
-                      2)
+                      1)
 
                           echo ""
                           echo "    Descargando y descomprimiendo discos virtuales..."
