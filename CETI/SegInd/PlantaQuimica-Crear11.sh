@@ -5,7 +5,6 @@
 # Si se te llena la boca hablando de libertad entonces hazlo realmente libre.
 # No tienes que aceptar ningún tipo de términos de uso o licencia para utilizarlo o modificarlo porque va sin CopyLeft.
 
-
 # ----------
 # Script de NiPeGun para descargar e importar el pack PlantaQuimica para VirtualBox en Debian
 #
@@ -18,6 +17,10 @@
 # Bajar y editar directamente el archivo en nano
 #   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PlantaQuimica-Crear.sh | nano -
 # ----------
+
+#
+#  Referencia: https://github.com/Fortiphyd/GRFICSv2
+#
 
 # Definir constantes de color
   cColorAzul="\033[0;34m"
@@ -393,14 +396,19 @@
                       9)
 
                         echo ""
-                        echo "  Iniciando máquinas virtuales en orden..."
+                        echo "  Iniciando máquinas virtuales en el orden correcto..."
                         echo ""
-                        pq-HMIScadaBR
-                        pq-Kali
-                        pq-pfSense
-                        pq-Simulation
-                        pq-PLC
-                        pq-Workstation
+                        VBoxManage startvm "pq-pfSense"
+                        sleep 5
+                        VBoxManage startvm "pq-Simulation"
+                        sleep 5
+                        VBoxManage startvm "pq-PLC"
+                        sleep 5
+                        VBoxManage startvm "pq-Workstation"
+                        sleep 5
+                        VBoxManage startvm "pq-HMIScadaBR"
+                        sleep 5
+                        VBoxManage startvm "pq-Kali"
 
                       ;;
 
