@@ -166,8 +166,8 @@
                           # Red
                             VBoxManage modifyvm "pq-HMIScadaBR" --nictype1 virtio
                               VBoxManage modifyvm "pq-HMIScadaBR" --nic1 intnet --intnet1 "RedIntOper"
-                              # Poner en modo promiscuo
-                                VBoxManage modifyvm "pq-HMIScadaBR" --nicpromisc1 allow-all
+                            # Poner en modo promiscuo
+                              VBoxManage modifyvm "pq-HMIScadaBR" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
@@ -201,8 +201,8 @@
                           # Red
                             VBoxManage modifyvm "pq-Kali" --nictype1 virtio
                               VBoxManage modifyvm "pq-Kali" --nic1 intnet --intnet1 "RedIntOper"
-                              # Poner en modo promiscuo
-                                VBoxManage modifyvm "pq-Kali" --nicpromisc1 allow-all
+                            # Poner en modo promiscuo
+                              VBoxManage modifyvm "pq-Kali" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
@@ -238,10 +238,10 @@
                               VBoxManage modifyvm "pq-pfSense" --nic1 intnet --intnet1 "RedIntOper"
                             VBoxManage modifyvm "pq-pfSense" --nictype2 82540EM
                               VBoxManage modifyvm "pq-pfSense" --nic2 intnet --intnet2 "RedIntInd"
-                              # Poner en modo promiscuo
-                                VBoxManage modifyvm "pq-pfSense" --nicpromisc1 allow-all
-                              # Poner en modo promiscuo
-                                VBoxManage modifyvm "pq-pfSense" --nicpromisc2 allow-all
+                            # Poner en modo promiscuo
+                              VBoxManage modifyvm "pq-pfSense" --nicpromisc1 allow-all
+                            # Poner en modo promiscuo
+                              VBoxManage modifyvm "pq-pfSense" --nicpromisc2 allow-all
 
                           # Almacenamiento
                             # Controlador
@@ -273,8 +273,8 @@
                           # Red
                             VBoxManage modifyvm "pq-Simulation" --nictype1 virtio
                               VBoxManage modifyvm "pq-Simulation" --nic1 intnet --intnet1 "RedIntInd"
-                              # Poner en modo promiscuo
-                                VBoxManage modifyvm "pq-Simulation" --nicpromisc1 allow-all
+                            # Poner en modo promiscuo
+                              VBoxManage modifyvm "pq-Simulation" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
@@ -308,8 +308,8 @@
                           # Red
                             VBoxManage modifyvm "pq-PLC" --nictype1 virtio
                               VBoxManage modifyvm "pq-PLC" --nic1 intnet --intnet1 "RedIntInd"
-                              # Poner en modo promiscuo
-                                VBoxManage modifyvm "pq-PLC" --nicpromisc1 allow-all
+                            # Poner en modo promiscuo
+                              VBoxManage modifyvm "pq-PLC" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
@@ -343,8 +343,8 @@
                           # Red
                             VBoxManage modifyvm "pq-Workstation" --nictype1 virtio
                               VBoxManage modifyvm "pq-Workstation" --nic1 intnet --intnet1 "RedIntInd"
-                              # Poner en modo promiscuo
-                                VBoxManage modifyvm "pq-Workstation" --nicpromisc1 allow-all
+                            # Poner en modo promiscuo
+                              VBoxManage modifyvm "pq-Workstation" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
