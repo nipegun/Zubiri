@@ -236,10 +236,10 @@
                           # Red
                             VBoxManage modifyvm "pq-pfSense" --nictype1 82540EM
                               VBoxManage modifyvm "pq-pfSense" --nic1 intnet --intnet1 "RedIntOper"
-                            VBoxManage modifyvm "pq-pfSense" --nictype2 82540EM
-                              VBoxManage modifyvm "pq-pfSense" --nic2 intnet --intnet2 "RedIntInd"
                             # Poner en modo promiscuo
                               VBoxManage modifyvm "pq-pfSense" --nicpromisc1 allow-all
+                            VBoxManage modifyvm "pq-pfSense" --nictype2 82540EM
+                              VBoxManage modifyvm "pq-pfSense" --nic2 intnet --intnet2 "RedIntInd"
                             # Poner en modo promiscuo
                               VBoxManage modifyvm "pq-pfSense" --nicpromisc2 allow-all
 
@@ -383,13 +383,13 @@
                         VBoxManage startvm "pq-pfSense"
                         sleep 15
                         VBoxManage startvm "pq-Simulation"
-                        sleep 5
+                        sleep 15
                         VBoxManage startvm "pq-PLC"
-                        sleep 5
+                        sleep 15
                         VBoxManage startvm "pq-Workstation"
-                        sleep 5
+                        sleep 15
                         VBoxManage startvm "pq-HMIScadaBR"
-                        sleep 5
+                        sleep 15
                         VBoxManage startvm "pq-Kali"
 
                       ;;
