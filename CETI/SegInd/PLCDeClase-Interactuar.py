@@ -301,7 +301,7 @@ def fMenu(stdscr, vHost):
 
 if __name__ == "__main__":
   if len(sys.argv) > 1:
-    vHost = {sys.argv[1]}
+    vHost = sys.argv[1]
     curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
     print(cColorRojo + "\n  No has indicado cual es la IP del PLC. \n" + cFinColor)
