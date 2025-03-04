@@ -22,6 +22,13 @@ import argparse
 import sys
 import io
 
+# Definir constantes para colores
+cColorAzul='\033[0;34m'
+cColorAzulClaro='\033[1;34m'
+cColorVerde='\033[1;32m'
+cColorRojo='\033[1;31m'
+cFinColor='\033[0m' # Vuelve al color normal
+
 def fConectar(vHost):
   print(f"\n  Conectando a {vHost} en el puerto 102... \n")
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -173,7 +180,7 @@ if __name__ == "__main__":
     vHost = {sys.argv[1]}
     curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
-    print("No has indicado cual es la IP del PLC.")
+    print(cColorRojo + "No has indicado cual es la IP del PLC." + cFinColor)
 
   #parser = argparse.ArgumentParser(description='Control de PLC Siemens S7-1200')
   #parser.add_argument('--host', required=True, help='\n Dirección IP del PLC \n')
