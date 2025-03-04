@@ -181,7 +181,7 @@ if __name__ == "__main__":
     curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
     print(cColorRojo + "\n  No has indicado cual es la IP del PLC. \n" + cFinColor)
-    print("  Uso correcto: [Script] [IPDelPLC]")
+    print("  Uso correcto: python3 [RutaAlScript.py] [IPDelPLC] \n)
   #parser = argparse.ArgumentParser(description='Control de PLC Siemens S7-1200')
   #parser.add_argument('--host', required=True, help='\n Dirección IP del PLC \n')
   #args = parser.parse_args()
