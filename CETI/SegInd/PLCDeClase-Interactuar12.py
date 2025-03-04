@@ -32,7 +32,7 @@ cFinColor='\033[0m' # Vuelve al color normal
 
 
 def fConectar(vHost):
-  print(f"\n Conectando con {vHost} en el puerto 102... \n")
+  print(f"Conectando con {vHost} en el puerto 102...")
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.settimeout(5)
   try:
