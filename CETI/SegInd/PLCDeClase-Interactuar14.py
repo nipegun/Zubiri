@@ -32,20 +32,20 @@ cFinColor='\033[0m' # Vuelve al color normal
 
 
 def fConectar(vHost):
-  print(f"Conectando con {vHost} en el puerto 102...")
+  print(f"Intentando conectar con {vHost} en el puerto 102...")
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.settimeout(5)
   try:
     s.connect((vHost, 102))
-    print("\n  Conexión establecida. \n")
+    print("  Conexión establecida.")
     return s
   except socket.error as e:
-    print(f"\n  Error al conectar con el PLC: {e} \n")
+    print(f"  Error al conectar con el PLC: {e}")
     return None
 
 
 def fEnviarPayload(payload, con):
-  #print(f"\n  Enviando: {payload} \n")
+  print(f"Intentando enviar: {payload}")
   con.send(bytearray.fromhex(payload))
   try:
     data = con.recv(1024)
