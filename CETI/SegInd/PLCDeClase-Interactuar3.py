@@ -180,7 +180,7 @@ if __name__ == "__main__":
     vHost = {sys.argv[1]}
     curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
-    print(cColorRojo + "No has indicado cual es la IP del PLC." + cFinColor)
+    print(cColorRojo + "\n  No has indicado cual es la IP del PLC. \n" + cFinColor)
 
   #parser = argparse.ArgumentParser(description='Control de PLC Siemens S7-1200')
   #parser.add_argument('--host', required=True, help='\n Dirección IP del PLC \n')
