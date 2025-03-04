@@ -40,7 +40,7 @@ def fConectar(vHost):
     print("  Conexión establecida.")
     return s
   except socket.error as e:
-    print(f"  Error al conectar con el PLC: {e}")
+    print(cColorRojo + f"\n  Error al conectar con el PLC: {e}" + cFinColor)
     return None
 
 
@@ -56,7 +56,7 @@ def fEnviarPayload(payload, con):
       print("\n  No se recibió respuesta del PLC. \n")
     return data
   except socket.timeout:
-    print("\n  Error: El PLC no respondió en el tiempo esperado. \n")
+    print(cColorRojo + f"\n  Se esperó 5 segundos y el PLC no respondió: {e}" + cFinColor)
     return None
 
 
