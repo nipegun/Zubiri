@@ -287,7 +287,26 @@ def fMenu(stdscr, vHost):
           fEncenderSalida(vHost, 'Q0.4', 'Salida 4')
         elif menu[current_row] == "  Apagar salida 4":
           fApagarSalida(vHost, 'Q0.4', 'Salida 4')
-
+        elif menu[current_row] == "Encender salida 5":
+          fEncenderSalida(vHost, 'Q0.5', 'Salida 5')
+        elif menu[current_row] == "  Apagar salida 5":
+          fApagarSalida(vHost, 'Q0.5', 'Salida 5')
+        elif menu[current_row] == "Encender salida 6":
+          fEncenderSalida(vHost, 'Q0.6', 'Salida 6')
+        elif menu[current_row] == "  Apagar salida 6":
+          fApagarSalida(vHost, 'Q0.6', 'Salida 6')
+        elif menu[current_row] == "Encender salida 7":
+          fEncenderSalida(vHost, 'Q0.7', 'Salida 7')
+        elif menu[current_row] == "  Apagar salida 7":
+          fApagarSalida(vHost, 'Q0.7', 'Salida 7')
+        elif menu[current_row] == "Encender salida 8":
+          fEncenderSalida(vHost, 'Q0.8', 'Salida 8')
+        elif menu[current_row] == "  Apagar salida 8":
+          fApagarSalida(vHost, 'Q0.8', 'Salida 8')
+        elif menu[current_row] == "Encender salida 9":
+          fEncenderSalida(vHost, 'Q0.9', 'Salida 9')
+        elif menu[current_row] == "  Apagar salida 9":
+          fApagarSalida(vHost, 'Q0.9', 'Salida 9')
       except Exception as e:
         print(f"Error: {e}")
 
