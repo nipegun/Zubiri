@@ -169,8 +169,14 @@ def fMenu(stdscr, vHost):
   stdscr.refresh()
 
 if __name__ == "__main__":
-  parser = argparse.ArgumentParser(description='Control de PLC Siemens S7-1200')
-  parser.add_argument('--host', required=True, help='\n Dirección IP del PLC \n')
-  args = parser.parse_args()
-  vHost = args.host
-  curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
+  if len(sys.argv) > 1:
+    vHost = {sys.argv[1]}
+    curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
+  else:
+    print("No has indicado cual es la IP del PLC.")
+
+  #parser = argparse.ArgumentParser(description='Control de PLC Siemens S7-1200')
+  #parser.add_argument('--host', required=True, help='\n Dirección IP del PLC \n')
+  #args = parser.parse_args()
+  #vHost = args.host
+  #curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
