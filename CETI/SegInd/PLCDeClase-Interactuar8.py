@@ -186,7 +186,7 @@ def print_output(stdscr, message):
 
   output_win.addstr(len(output_lines) + 1, 2, " ")
   output_win.addstr(len(output_lines) + 2, 2, "Presiona una tecla para continuar...")
-  output_win.addstr(len(output_lines) + 3, 2, " ")
+  #output_win.addstr(len(output_lines) + 3, 2, " ")
 
   output_win.refresh()
   output_win.getch()
