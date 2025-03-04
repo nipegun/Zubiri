@@ -40,7 +40,7 @@ def fConectar(vHost):
     print("  Conexión establecida.")
     return s
   except socket.error as e:
-    print(cColorRojo + f"\n  Error al conectar con el PLC: {e}" + cFinColor)
+    print(f"\n  Error al conectar con el PLC: {e}")
     return None
 
 
@@ -185,9 +185,8 @@ def print_output(stdscr, message):
   for i, line in enumerate(output_lines):
     output_win.addstr(i + 1, 2, line[:output_win_width - 4])
 
-  output_win.addstr(len(output_lines) + 1, 2, " ")
+  #output_win.addstr(len(output_lines) + 1, 2, " ")
   output_win.addstr(len(output_lines) + 2, 2, "Presiona una tecla para continuar...")
-  #output_win.addstr(len(output_lines) + 3, 2, " ")
 
   output_win.refresh()
   output_win.getch()
