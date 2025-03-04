@@ -112,16 +112,16 @@ def fEncenderSalida(vHost, salida, nombre):
   vSolCommCOTP = '0300001611e00000cfc400c0010ac1020100c2020101'
   vSolCommS7 =   '0300001902f08032010000000000080000f0000008000803c0'
   cSalidas = {
-    'Q0.0':  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010100',
-    'Q0.1':  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010100',
-    'Q0.2':  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010100',
-    'Q0.3':  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010100',
-    'Q0.4':  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010100',
-    'Q0.5':  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010100',
-    'Q0.6':  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010100',
-    'Q0.7':  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010100',
-    'Q0.8':  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010100',
-    'Q0.9':  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010100'
+    '%Q0.0':  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010100',
+    '%Q0.1':  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010100',
+    '%Q0.2':  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010100',
+    '%Q0.3':  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010100',
+    '%Q0.4':  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010100',
+    '%Q0.5':  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010100',
+    '%Q0.6':  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010100',
+    '%Q0.7':  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010100',
+    '%Q0.8':  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010100',
+    '%Q0.9':  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010100'
   }
 
   if salida not in cSalidas:
@@ -144,16 +144,16 @@ def fApagarSalida(vHost, salida, nombre):
   vSolCommCOTP = '0300001611e00000cfc400c0010ac1020100c2020101'
   vSolCommS7 = '0300001902f08032010000000000080000f0000008000803c0'
   comandos = {
-    'Q0.0':  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010000',
-    'Q0.1':  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010000',
-    'Q0.2':  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010000',
-    'Q0.3':  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010000',
-    'Q0.4':  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010000',
-    'Q0.5':  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010000',
-    'Q0.6':  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010000',
-    'Q0.7':  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010000',
-    'Q0.8':  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010000',
-    'Q0.9':  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010000',
+    '%Q0.0':  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010000',
+    '%Q0.1':  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010000',
+    '%Q0.2':  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010000',
+    '%Q0.3':  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010000',
+    '%Q0.4':  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010000',
+    '%Q0.5':  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010000',
+    '%Q0.6':  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010000',
+    '%Q0.7':  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010000',
+    '%Q0.8':  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010000',
+    '%Q0.9':  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010000',
   }
 
   if salida not in comandos:
@@ -201,26 +201,26 @@ def fMenu(stdscr, vHost):
 
   menu = [
     "Encender PLC", "  Apagar PLC",
-    "Encender salida 0",
-    "  Apagar salida 0",
-    "Encender salida 1",
-    "  Apagar salida 1",
-    "Encender salida 2",
-    "  Apagar salida 2",
-    "Encender salida 3",
-    "  Apagar salida 3",
-    "Encender salida 4",
-    "  Apagar salida 4",
-    "Encender salida 5",
-    "  Apagar salida 5",
-    "Encender salida 6",
-    "  Apagar salida 6",
-    "Encender salida 7",
-    "  Apagar salida 7",
-    "Encender salida 8",
-    "  Apagar salida 8",
-    "Encender salida 9",
-    "  Apagar salida 9",
+    "Encender salida %Q0.0",
+    "  Apagar salida %Q0.0",
+    "Encender salida %Q0.1",
+    "  Apagar salida %Q0.1",
+    "Encender salida %Q0.2",
+    "  Apagar salida %Q0.2",
+    "Encender salida %Q0.3",
+    "  Apagar salida %Q0.3",
+    "Encender salida %Q0.4",
+    "  Apagar salida %Q0.4",
+    "Encender salida %Q0.5",
+    "  Apagar salida %Q0.5",
+    "Encender salida %Q0.6",
+    "  Apagar salida %Q0.6",
+    "Encender salida %Q0.7",
+    "  Apagar salida %Q0.7",
+    "Encender salida %Q0.8",
+    "  Apagar salida %Q0.8",
+    "Encender salida %Q0.9",
+    "  Apagar salida %Q0.9",
     "Salir"
   ]
   
@@ -267,46 +267,46 @@ def fMenu(stdscr, vHost):
           fEncenderPLC(vHost)
         elif menu[current_row] == "  Apagar PLC":
           fApagarPLC(vHost)
-        elif menu[current_row] == "Encender salida 0":
-          fEncenderSalida(vHost, 'Q0.0', 'Salida 0')
-        elif menu[current_row] == "  Apagar salida 0":
-          fApagarSalida(vHost, 'Q0.0', 'Salida 0')
-        elif menu[current_row] == "Encender salida 1":
-          fEncenderSalida(vHost, 'Q0.1', 'Salida 1')
-        elif menu[current_row] == "  Apagar salida 1":
-          fApagarSalida(vHost, 'Q0.1', 'Salida 1')
-        elif menu[current_row] == "Encender salida 2":
-          fEncenderSalida(vHost, 'Q0.2', 'Salida 2')
-        elif menu[current_row] == "  Apagar salida 2":
-          fApagarSalida(vHost, 'Q0.2', 'Salida 2')
-        elif menu[current_row] == "Encender salida 3":
-          fEncenderSalida(vHost, 'Q0.3', 'Salida 3')
-        elif menu[current_row] == "  Apagar salida 3":
-          fApagarSalida(vHost, 'Q0.3', 'Salida 3')
-        elif menu[current_row] == "Encender salida 4":
-          fEncenderSalida(vHost, 'Q0.4', 'Salida 4')
-        elif menu[current_row] == "  Apagar salida 4":
-          fApagarSalida(vHost, 'Q0.4', 'Salida 4')
-        elif menu[current_row] == "Encender salida 5":
-          fEncenderSalida(vHost, 'Q0.5', 'Salida 5')
-        elif menu[current_row] == "  Apagar salida 5":
-          fApagarSalida(vHost, 'Q0.5', 'Salida 5')
-        elif menu[current_row] == "Encender salida 6":
-          fEncenderSalida(vHost, 'Q0.6', 'Salida 6')
-        elif menu[current_row] == "  Apagar salida 6":
-          fApagarSalida(vHost, 'Q0.6', 'Salida 6')
-        elif menu[current_row] == "Encender salida 7":
-          fEncenderSalida(vHost, 'Q0.7', 'Salida 7')
-        elif menu[current_row] == "  Apagar salida 7":
-          fApagarSalida(vHost, 'Q0.7', 'Salida 7')
-        elif menu[current_row] == "Encender salida 8":
-          fEncenderSalida(vHost, 'Q0.8', 'Salida 8')
-        elif menu[current_row] == "  Apagar salida 8":
-          fApagarSalida(vHost, 'Q0.8', 'Salida 8')
-        elif menu[current_row] == "Encender salida 9":
-          fEncenderSalida(vHost, 'Q0.9', 'Salida 9')
-        elif menu[current_row] == "  Apagar salida 9":
-          fApagarSalida(vHost, 'Q0.9', 'Salida 9')
+        elif menu[current_row] == "Encender salida %Q0.0":
+          fEncenderSalida(vHost, '%Q0.0', 'Salida %Q0.0')
+        elif menu[current_row] == "  Apagar salida %Q0.0":
+          fApagarSalida(vHost, '%Q0.0', 'Salida %Q0.0')
+        elif menu[current_row] == "Encender salida %Q0.1":
+          fEncenderSalida(vHost, '%Q0.1', 'Salida %Q0.1')
+        elif menu[current_row] == "  Apagar salida %Q0.1":
+          fApagarSalida(vHost, '%Q0.1', 'Salida %Q0.1')
+        elif menu[current_row] == "Encender salida %Q0.2":
+          fEncenderSalida(vHost, '%Q0.2', 'Salida %Q0.2')
+        elif menu[current_row] == "  Apagar salida %Q0.2":
+          fApagarSalida(vHost, '%Q0.2', 'Salida %Q0.2')
+        elif menu[current_row] == "Encender salida %Q0.3":
+          fEncenderSalida(vHost, '%Q0.3', 'Salida %Q0.3')
+        elif menu[current_row] == "  Apagar salida %Q0.3":
+          fApagarSalida(vHost, '%Q0.3', 'Salida %Q0.3')
+        elif menu[current_row] == "Encender salida %Q0.4":
+          fEncenderSalida(vHost, '%Q0.4', 'Salida %Q0.4')
+        elif menu[current_row] == "  Apagar salida %Q0.4":
+          fApagarSalida(vHost, '%Q0.4', 'Salida %Q0.4')
+        elif menu[current_row] == "Encender salida %Q0.5":
+          fEncenderSalida(vHost, '%Q0.5', 'Salida %Q0.5')
+        elif menu[current_row] == "  Apagar salida %Q0.5":
+          fApagarSalida(vHost, '%Q0.5', 'Salida %Q0.5')
+        elif menu[current_row] == "Encender salida %Q0.6":
+          fEncenderSalida(vHost, '%Q0.6', 'Salida %Q0.6')
+        elif menu[current_row] == "  Apagar salida %Q0.6":
+          fApagarSalida(vHost, '%Q0.6', 'Salida %Q0.6')
+        elif menu[current_row] == "Encender salida %Q0.7":
+          fEncenderSalida(vHost, '%Q0.7', 'Salida %Q0.7')
+        elif menu[current_row] == "  Apagar salida %Q0.7":
+          fApagarSalida(vHost, '%Q0.7', 'Salida %Q0.7')
+        elif menu[current_row] == "Encender salida %Q0.8":
+          fEncenderSalida(vHost, '%Q0.8', 'Salida %Q0.8')
+        elif menu[current_row] == "  Apagar salida %Q0.8":
+          fApagarSalida(vHost, '%Q0.8', 'Salida %Q0.8')
+        elif menu[current_row] == "Encender salida %Q0.9":
+          fEncenderSalida(vHost, '%Q0.9', 'Salida %Q0.9')
+        elif menu[current_row] == "  Apagar salida %Q0.9":
+          fApagarSalida(vHost, '%Q0.9', 'Salida %Q0.9')
       except Exception as e:
         print(f"Error: {e}")
 
@@ -325,8 +325,4 @@ if __name__ == "__main__":
   else:
     print(cColorRojo + "\n  No has indicado cual es la IP del PLC. \n" + cFinColor)
     print("  Uso correcto: python3 [RutaAlScript.py] [IPDelPLC] \n")
-  #parser = argparse.ArgumentParser(description='Control de PLC Siemens S7-1200')
-  #parser.add_argument('--host', required=True, help='\n Dirección IP del PLC \n')
-  #args = parser.parse_args()
-  #vHost = args.host
-  #curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
+
