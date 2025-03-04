@@ -45,10 +45,11 @@ def fConectar(vHost):
 
 
 def fEnviarPayload(payload, con):
-  print(f"\n  Enviando: {payload} \n")
+  #print(f"\n  Enviando: {payload} \n")
   con.send(bytearray.fromhex(payload))
   try:
     data = con.recv(1024)
+    print(f"\n  Enviando: {payload} \n")
     if data:
       print(f"\n  Respuesta del PLC: {data.hex()} \n")
     else:
