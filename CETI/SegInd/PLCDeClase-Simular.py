@@ -48,13 +48,13 @@ def handle_client(client_socket):
       # Solicitud de comunicación COTP para encendido/apagado del PLC
       # El cliente debe enviar algo como          '0300001611e00000000100c0010ac1020102c2020100c00109'
       # El servidor debe responder con algo como: '0300001611d00001000100c0010ac1020102c2020100c00109
-'
+
       if data.hex() == '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a':
         vTipoSolicitud = '(Solicitud de comunicación COTP para encendido/apagado del PLC).'
         print(f"      Envió: {data.hex()} " + vTipoSolicitud)
         response = b'\x03\x00\x00\x16\x11\xe0\x00\x00\x00\x01\x00\xc0\x01\x0a\xc1\x02\x01\x00\xc2\x02\x01\x02'
         client_socket.send(response)
-        print("        Se le respondió: " + str(response))
+        print("        Se le respondió: " + str(response.hex()))
 
       # Solicitud de comunicación s7comm
       if data.hex() == '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373':
