@@ -47,5 +47,5 @@ if __name__ == "__main__":
   threading.Thread(target=socket_server, daemon=True).start()
   
   httpd = http.server.ThreadingHTTPServer(("0.0.0.0", 8000), SimpleHTTPRequestHandler)
-  print("Servidor web en http://localhost:8000")
+  print("\n  Servidor web en http://localhost:8000")
   httpd.serve_forever()
