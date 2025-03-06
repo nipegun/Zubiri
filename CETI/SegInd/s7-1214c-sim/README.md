@@ -1,3 +1,3 @@
 #
 
-Simulador del PLC de clase de Zubiri Manteo.
+Simulador del PLC de la clase de CyberRange de Zubiri Manteo.
