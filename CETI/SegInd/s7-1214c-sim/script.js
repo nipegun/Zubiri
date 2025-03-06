@@ -1,21 +1,34 @@
-function updateData() {
-  fetch("/states")
-    .then(response => response.json())
-    .then(states => {
-      for (let key in states) {
-        let element = document.getElementById(key);
-        if (element) {
-          if (states[key] === "on") {
-            element.style.backgroundColor = "green";
-          } else if (states[key] === "off") {
-            element.style.backgroundColor = "red";
-          } else {
-            element.style.backgroundColor = "gray"; // Unknown
-          }
-        }
+async function actualizarColores() {
+  try {
+    const response = await fetch('states.json');
+    if (!response.ok) {
+      throw new Error("No se pudo cargar el archivo JSON");
+    }
+    const data = await response.json();
+    console.log("Datos JSON cargados:", data);
+
+    const colores = {
+      "on": "green",
+      "off": "red",
+      "unknown": "white"
+    };
+
+    for (let id in data.outputs) {
+      let estado = data.outputs[id];
+      console.log("Actualizando", id, "con estado:", estado);
+      let th = document.getElementById(id);
+      if (th) {
+        th.style.backgroundColor = colores[estado] || "gray";
+      } else {
+        console.warn("No se encontró elemento con id:", id);
       }
-    })
-    .catch(err => console.log("Error:", err));
+    }
+  } catch (error) {
+    console.error("Error al cargar el JSON:", error);
+  }
 }
 
-setInterval(updateData, 500); // Actualizar cada 500 ms
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarColores();
+  setInterval(actualizarColores, 3000);
+});
