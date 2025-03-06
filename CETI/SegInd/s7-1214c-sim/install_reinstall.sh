@@ -60,13 +60,13 @@
 
 # Notificar fin de ejecución del script
   echo ""
-  echo "  El script ha finalizado."
+  echo "    El script ha finalizado."
   echo ""
-  echo "    Para ejecutar el servidor:"
+  echo "      Para ejecutar el servidor:"
   echo ""
-  echo "      python3 ~/s7-1214c-sim/server.py"
+  echo "        python3 ~/s7-1214c-sim/server.py"
   echo ""
-  echo "    Para reinstalarlo:"
+  echo "      Para reinstalarlo:"
   echo ""
-  echo "      ~/s7-1214c-sim/install_reinstall.sh"
+  echo "        ~/s7-1214c-sim/install_reinstall.sh"
   echo ""
