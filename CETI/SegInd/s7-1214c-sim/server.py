@@ -71,7 +71,13 @@ def socket_server():
 
   while True:
     conn, addr = s.accept()
-    data = conn.recv(1024).decode().strip()
+    data = conn.recv(1024)
+    try:
+      decoded_data = data.decode("utf-8").strip()
+    except UnicodeDecodeError:
+      print("Advertencia: No se pudo decodificar el mensaje recibido como UTF-8. Ignorando paquete.")
+      return  # Ignorar el paquete recibido
+
     print(f"Datos recibidos: {data}")
 
     if data in payload_mapping:
