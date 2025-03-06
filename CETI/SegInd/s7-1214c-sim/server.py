@@ -54,9 +54,13 @@ states.setdefault("outputs", {
   **{f"%Q0.{i}": "unknown" for i in range(8)},  # %Q0.0 a %Q0.7
   **{f"%Q1.{i}": "unknown" for i in range(2)}   # %Q1.0 a %Q1.1
 })
-
-states.setdefault("inputs", {f"%I{i//10}.{i%10}": "unknown" for i in range(14)})
-states.setdefault("analog_inputs", {f"%A0.{i}": "unknown" for i in range(2)})
+states.setdefault("inputs", {
+  **{f"%I0.{i}": "unknown" for i in range(8)},  # %I0.0 a %I0.7
+  **{f"%I1.{i}": "unknown" for i in range(6)}   # %I1.0 a %I1.5
+})
+states.setdefault("analog_inputs", {
+  f"%A0.{i}": "unknown" for i in range(2)
+})
 
 # Guardar el JSON actualizado si se crearon valores nuevos
 with open(STATES_FILE, "w") as f:
