@@ -54,7 +54,6 @@ states.setdefault("outputs", {
   **{f"%Q0.{i}": "unknown" for i in range(8)},  # %Q0.0 a %Q0.7
   **{f"%Q1.{i}": "unknown" for i in range(2)}   # %Q1.0 a %Q1.1
 })
-
 states.setdefault("outputs", {
   **{f"%I0.{i}": "unknown" for i in range(8)},  # %I0.0 a %I0.7
   **{f"%I1.{i}": "unknown" for i in range(6)}   # %I1.0 a %I1.1
@@ -70,7 +69,7 @@ def socket_server():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.bind(("0.0.0.0", 102))
   s.listen(5)
-  print("\n  Servidor de sockets esperando conexiones en el puerto 102...")
+  print("\n  Esperando conexiones S7CommPlus el puerto 102...")
 
   while True:
     conn, addr = s.accept()
@@ -78,10 +77,10 @@ def socket_server():
 
     try:
       decoded_data = data.decode("utf-8").strip()
-      print(f"Datos recibidos en texto: {decoded_data}")
+      print(f"  Datos recibidos en texto: {decoded_data}")
     except UnicodeDecodeError:
       decoded_data = data.hex()
-      print(f"Datos recibidos en binario (hex): {decoded_data}")
+      print(f"  Datos recibidos en binario (hex): {decoded_data}")
     
     binary_data = bytes.fromhex(decoded_data) if isinstance(decoded_data, str) else data
 
