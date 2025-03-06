@@ -12,6 +12,8 @@ import json
 import os
 
 STATES_FILE = "states.json"
+PORT_SOCKET = 102
+PORT_HTTP = 8000
 
 # Mapeo de payloads a estados SOLO para outputs
 payload_mapping = {
@@ -37,6 +39,20 @@ payload_mapping = {
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000008000300010000'): ("outputs", "%Q1.0", "off"),
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000009000300010000'): ("outputs", "%Q1.1", "off")
 }
+
+# Cerrar cualquier socket abierto previamente
+def close_existing_socket(port):
+  with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    try:
+      s.bind(("0.0.0.0", port))
+    except OSError:
+      print(f"Cerrando socket en el puerto {port}...")
+      os.system(f"fuser -k {port}/tcp")
+
+# Cerrar sockets abiertos antes de iniciar el servidor
+close_existing_socket(PORT_SOCKET)
+close_existing_socket(PORT_HTTP)
 
 # Cargar estados desde el archivo si existe, si no, crearlo
 if os.path.exists(STATES_FILE):
@@ -67,9 +83,9 @@ with open(STATES_FILE, "w") as f:
 # Servidor de sockets
 def socket_server():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  s.bind(("0.0.0.0", 102))
+  s.bind(("0.0.0.0", PORT_SOCKET))
   s.listen(5)
-  print("\n  Esperando conexiones S7CommPlus el puerto 102...")
+  print("\n  Servidor de sockets esperando conexiones en el puerto 102...")
 
   while True:
     conn, addr = s.accept()
@@ -77,10 +93,10 @@ def socket_server():
 
     try:
       decoded_data = data.decode("utf-8").strip()
-      print(f"  Datos recibidos en texto: {decoded_data}")
+      print(f"Datos recibidos en texto: {decoded_data}")
     except UnicodeDecodeError:
       decoded_data = data.hex()
-      print(f"  Datos recibidos en binario (hex): {decoded_data}")
+      print(f"Datos recibidos en binario (hex): {decoded_data}")
     
     binary_data = bytes.fromhex(decoded_data) if isinstance(decoded_data, str) else data
 
@@ -117,13 +133,6 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 # Iniciar servidores
 if __name__ == "__main__":
   threading.Thread(target=socket_server, daemon=True).start()
-  httpd = http.server.ThreadingHTTPServer(("0.0.0.0", 8000), SimpleHTTPRequestHandler)
+  httpd = http.server.ThreadingHTTPServer(("0.0.0.0", PORT_HTTP), SimpleHTTPRequestHandler)
   print("\n  Servidor web en http://localhost:8000")
   httpd.serve_forever()
-
-
-
-
-
-
-
