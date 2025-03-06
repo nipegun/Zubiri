@@ -48,7 +48,7 @@
       sudo apt-get -y install git
       echo ""
     fi
-  git clone http://github.com/nipegun/zubiri.git
+  git clone https://github.com/nipegun/zubiri.git
 
 # Renombar y mover carpetas
   mv ~/zubiri/CETI/SegInd/s7-1214c-sim/ ~/
