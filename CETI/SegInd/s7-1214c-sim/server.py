@@ -13,29 +13,6 @@ import os
 
 STATES_FILE = "states.json"
 
-# Cargar estados desde el archivo si existe, si no, crearlo
-if os.path.exists(STATES_FILE):
-  with open(STATES_FILE, "r") as f:
-    try:
-      states = json.load(f)
-    except json.JSONDecodeError:
-      print("\n  Error: El archivo states.json no es un JSON válido. Se creará de nuevo.")
-      states = {
-        "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
-        "inputs": {f"%I{i//10}.{i%10}": "unknown" for i in range(14)},
-        "analog_inputs": {f"%AI{i}": "unknown" for i in range(2)}
-      }
-      with open(STATES_FILE, "w") as f:
-        json.dump(states, f, indent=2)
-else:
-  states = {
-    "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
-    "inputs": {f"%I{i//10}.{i%10}": "unknown" for i in range(14)},
-    "analog_inputs": {f"%AI{i}": "unknown" for i in range(2)}
-  }
-  with open(STATES_FILE, "w") as f:
-    json.dump(states, f, indent=2)
-
 # Mapeo de payloads a estados SOLO para outputs
 payload_mapping = {
   '0300002502f08032010000001f000e00060501120a10010001000082000000000300010100': ("outputs", "%Q0.0", "on"),
@@ -60,6 +37,30 @@ payload_mapping = {
   '0300002502f08032010000001f000e00060501120a10010001000082000008000300010000': ("outputs", "%Q1.0", "off"),
   '0300002502f08032010000001f000e00060501120a10010001000082000009000300010000': ("outputs", "%Q1.1", "off")
 }
+
+# Cargar estados desde el archivo si existe, si no, crearlo
+if os.path.exists(STATES_FILE):
+  with open(STATES_FILE, "r") as f:
+    try:
+      states = json.load(f)
+    except json.JSONDecodeError:
+      print("\n  Error: El archivo states.json no es un JSON válido. Se creará de nuevo.")
+      states = {}
+else:
+  states = {}
+
+# Inicializar estados si están vacíos o no existen en el JSON
+states.setdefault("outputs", {
+  **{f"%Q0.{i}": "unknown" for i in range(8)},  # %Q0.0 a %Q0.7
+  **{f"%Q1.{i}": "unknown" for i in range(2)}   # %Q1.0 a %Q1.1
+})
+
+states.setdefault("inputs", {f"%I{i//10}.{i%10}": "unknown" for i in range(14)})
+states.setdefault("analog_inputs", {f"%A0.{i}": "unknown" for i in range(2)})
+
+# Guardar el JSON actualizado si se crearon valores nuevos
+with open(STATES_FILE, "w") as f:
+  json.dump(states, f, indent=2)
 
 # Servidor de sockets
 def socket_server():
@@ -91,7 +92,7 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
           content = f.read()
         self.send_response(200)
         self.send_header("Content-type", "application/json")
-        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")  # Evitar caché
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
         self.end_headers()
         self.wfile.write(content.encode())
       except Exception as e:
@@ -105,7 +106,6 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 # Iniciar servidores
 if __name__ == "__main__":
   threading.Thread(target=socket_server, daemon=True).start()
-  
   httpd = http.server.ThreadingHTTPServer(("0.0.0.0", 8000), SimpleHTTPRequestHandler)
   print("\n  Servidor web en http://localhost:8000")
   httpd.serve_forever()
