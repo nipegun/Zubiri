@@ -29,17 +29,20 @@
 
 # Notificar inicio de ejecución del script
   echo ""
-  echo -e "${cColorRojo}  Iniciando el script de instalación/reinstalación del simulador del PLC 1214c de Zubiri...${cFinColor}"
+  echo -e "${cColorAzulClaro}  Iniciando el script de instalación/reinstalación del simulador del PLC 1214c de Zubiri...${cFinColor}"
   echo ""
 
 # Borrar posible carpeta previa
   rm -rf ~/s7-1214c-sim 2>/dev/null
 
 # Clonar el repositorio
+  echo ""
+  echo "    Clonando el repositorio..."
+  echo ""
   # Comprobar si el paquete git está instalado. Si no lo está, instalarlo.
     if [[ $(dpkg-query -s git 2>/dev/null | grep installed) == "" ]]; then
       echo ""
-      echo -e "${cColorRojo}  El paquete git no está instalado. Iniciando su instalación...${cFinColor}"
+      echo -e "${cColorRojo}      El paquete git no está instalado. Iniciando su instalación...${cFinColor}"
       echo ""
       sudo apt-get -y update
       sudo apt-get -y install git
@@ -54,3 +57,9 @@
 # Asignar permisos de ejecución a los scripts
   chmod +x ~/s7-1214c-sim/*.sh
   chmod +x ~/s7-1214c-sim/*.py
+
+# Notificar fin de ejecución del script
+  echo ""
+  echo ""
+  echo ""
+
