@@ -134,5 +134,5 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 if __name__ == "__main__":
   threading.Thread(target=socket_server, daemon=True).start()
   httpd = http.server.ThreadingHTTPServer(("0.0.0.0", PORT_HTTP), SimpleHTTPRequestHandler)
-  print("\n  Servidor web en http://localhost:8000")
+  print("\n  Servidor web en http://localhost:8000 \n")
   httpd.serve_forever()
