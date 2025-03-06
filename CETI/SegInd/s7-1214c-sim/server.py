@@ -47,7 +47,7 @@ def close_existing_socket(port):
     try:
       s.bind(("0.0.0.0", port))
     except OSError:
-      print(f"Cerrando socket en el puerto {port}...")
+      print(f"\n  Cerrando socket en el puerto {port}...")
       os.system(f"fuser -k {port}/tcp")
 
 # Cerrar sockets abiertos antes de iniciar el servidor
@@ -93,10 +93,10 @@ def socket_server():
 
     try:
       decoded_data = data.decode("utf-8").strip()
-      print(f"Datos recibidos en texto: {decoded_data}")
+      print(f"  Datos recibidos en texto: {decoded_data}")
     except UnicodeDecodeError:
       decoded_data = data.hex()
-      print(f"Datos recibidos en binario (hex): {decoded_data}")
+      print(f"  Datos recibidos en binario (hex): {decoded_data}")
     
     binary_data = bytes.fromhex(decoded_data) if isinstance(decoded_data, str) else data
 
@@ -113,7 +113,7 @@ def socket_server():
 # Servidor HTTP para servir el JSON correctamente
 class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
   def do_GET(self):
-    if self.path == "/states" or self.path == "/api/json":
+    if self.path == "/api/json":
       try:
         with open(STATES_FILE, "r") as f:
           content = f.read()
