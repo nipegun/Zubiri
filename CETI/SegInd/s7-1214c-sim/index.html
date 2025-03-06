@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador Siemens s7-1214c</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Siemens s7-1214c</title>
     <style>
       table {
         border-collapse: separate;
@@ -17,9 +17,9 @@
         text-align: center;
       }
     </style>
-</head>
-<body>
-  <h1>Siemens 1214c:</h1>
+  </head>
+  <body>
+    <h1>Siemens 1214c:</h1>
 
     <table>
       <tr>
@@ -37,19 +37,9 @@
     </table>
 
 
-  <p id="data">Esperando datos...</p>
+    <p id="data">Esperando datos...</p>
 
-  <script>
-    function updateData() {
-      fetch("/data")
-        .then(response => response.text())
-        .then(text => {
-          document.getElementById("data").innerText = text;
-        })
-        .catch(err => console.log("Error:", err));
-    }
+    <script src="script.js"></script>
 
-    setInterval(updateData, 500); // Actualizar cada segundo
-  </script>
-</body>
+  </body>
 </html>
