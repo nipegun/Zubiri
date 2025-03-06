@@ -19,7 +19,7 @@ if os.path.exists(STATES_FILE):
     try:
       states = json.load(f)
     except json.JSONDecodeError:
-      print("Error: El archivo states.json no es un JSON válido. Se creará de nuevo.")
+      print("\n  Error: El archivo states.json no es un JSON válido. Se creará de nuevo.")
       states = {
         "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
         "inputs": {f"%I{i//10}.{i%10}": "unknown" for i in range(14)},
@@ -66,7 +66,7 @@ def socket_server():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.bind(("0.0.0.0", 12345))
   s.listen(5)
-  print("Servidor de sockets esperando conexiones en el puerto 12345...")
+  print("\n  Servidor de sockets esperando conexiones en el puerto 12345...")
 
   while True:
     conn, addr = s.accept()
@@ -98,7 +98,7 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(500)
         self.send_header("Content-type", "text/plain")
         self.end_headers()
-        self.wfile.write(f"Error al leer states.json: {str(e)}".encode())
+        self.wfile.write(f"\n  Error al leer states.json: {str(e)}".encode())
     else:
       super().do_GET()
 
@@ -107,5 +107,5 @@ if __name__ == "__main__":
   threading.Thread(target=socket_server, daemon=True).start()
   
   httpd = http.server.ThreadingHTTPServer(("0.0.0.0", 8000), SimpleHTTPRequestHandler)
-  print("Servidor web en http://localhost:8000")
+  print("\n  Servidor web en http://localhost:8000")
   httpd.serve_forever()
