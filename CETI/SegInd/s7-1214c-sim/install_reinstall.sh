@@ -60,6 +60,9 @@
 
 # Notificar fin de ejecución del script
   echo ""
+  echo "  El script ha finalizado."
   echo ""
+  echo "  Para ejecutar el servidor:"
   echo ""
-
+  echo "    python3 ~/s7-1214c-sim/server.py"
+  echo ""
