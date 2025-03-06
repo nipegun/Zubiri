@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador Siemens s7-1214c</title>
+    <style>
+      table {
+        border-collapse: separate;
+        border-spacing: 10px;
+        width: 100%;
+        border: 1px solid black;
+      }
+      th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+  <h1>Siemens 1214c:</h1>
+
+    <table>
+      <tr>
+        <th bgcolor="red">%Q0.0</th>
+        <th bgcolor="red">%Q0.1</th>
+        <th bgcolor="red">%Q0.2</th>
+        <th bgcolor="red">%Q0.3</th>
+        <th bgcolor="red">%Q0.4</th>
+        <th bgcolor="red">%Q0.5</th>
+        <th bgcolor="red">%Q0.6</th>
+        <th bgcolor="red">%Q0.7</th>
+        <th bgcolor="red">%Q0.8</th>
+        <th bgcolor="red">%Q0.9</th>
+      </tr>
+    </table>
+
+
+  <p id="data">Esperando datos...</p>
+
+  <script>
+    function updateData() {
+      fetch("/data")
+        .then(response => response.text())
+        .then(text => {
+          document.getElementById("data").innerText = text;
+        })
+        .catch(err => console.log("Error:", err));
+    }
+
+    setInterval(updateData, 500); // Actualizar cada segundo
+  </script>
+</body>
+</html>
