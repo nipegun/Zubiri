@@ -64,7 +64,7 @@
   echo ""
   echo "      Para ejecutar el servidor:"
   echo ""
-  echo "        python3 ~/s7-1214c-sim/server.py"
+  echo "        cd ~/s7-1214c-sim/ && python3 ~/s7-1214c-sim/server.py"
   echo ""
   echo "      Para reinstalarlo:"
   echo ""
