@@ -10,7 +10,7 @@ Para instalarlo, ejecutamos en la CLI de una distro GNU/Linux basada en Debian:
 curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/s7-1214c-sim/install_reinstall_update.sh | bash
 ```
 
-Las instruccionesde ejecución aparecerán en la terminal una vez finalizada la instalación.
+Las instrucciones de ejecución aparecerán en la terminal una vez finalizada la instalación.
 
 ## Re-instalación o actualización
 
