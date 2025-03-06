@@ -10,8 +10,6 @@ import http.server
 import threading
 import json
 import os
-import asyncio
-import websockets
 
 STATES_FILE = "states.json"
 
@@ -23,52 +21,45 @@ if os.path.exists(STATES_FILE):
     except json.JSONDecodeError:
       print("Error: El archivo states.json no es un JSON válido. Se creará de nuevo.")
       states = {
-        "outputs": {f"%Q0.{i}": "unknown" for i in range(10)}
+        "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
+        "inputs": {f"%I{i//10}.{i%10}": "unknown" for i in range(14)},
+        "analog_inputs": {f"%AI{i}": "unknown" for i in range(2)}
       }
       with open(STATES_FILE, "w") as f:
         json.dump(states, f, indent=2)
 else:
   states = {
-    "outputs": {f"%Q0.{i}": "unknown" for i in range(10)}
+    "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
+    "inputs": {f"%I{i//10}.{i%10}": "unknown" for i in range(14)},
+    "analog_inputs": {f"%AI{i}": "unknown" for i in range(2)}
   }
   with open(STATES_FILE, "w") as f:
     json.dump(states, f, indent=2)
 
 # Mapeo de payloads a estados SOLO para outputs
 payload_mapping = {
-  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010100': ("%Q0.0", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010100': ("%Q0.1", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010100': ("%Q0.2", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010100': ("%Q0.3", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010100': ("%Q0.4", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010100': ("%Q0.5", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010100': ("%Q0.6", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010100': ("%Q0.7", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010100': ("%Q0.8", "on"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010100': ("%Q0.9", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010100': ("outputs", "%Q0.0", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010100': ("outputs", "%Q0.1", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010100': ("outputs", "%Q0.2", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010100': ("outputs", "%Q0.3", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010100': ("outputs", "%Q0.4", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010100': ("outputs", "%Q0.5", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010100': ("outputs", "%Q0.6", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010100': ("outputs", "%Q0.7", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010100': ("outputs", "%Q0.8", "on"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010100': ("outputs", "%Q0.9", "on"),
 
-  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010000': ("%Q0.0", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010000': ("%Q0.1", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010000': ("%Q0.2", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010000': ("%Q0.3", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010000': ("%Q0.4", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010000': ("%Q0.5", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010000': ("%Q0.6", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010000': ("%Q0.7", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010000': ("%Q0.8", "off"),
-  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010000': ("%Q0.9", "off")
+  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010000': ("outputs", "%Q0.0", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010000': ("outputs", "%Q0.1", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010000': ("outputs", "%Q0.2", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000003000300010000': ("outputs", "%Q0.3", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000004000300010000': ("outputs", "%Q0.4", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000005000300010000': ("outputs", "%Q0.5", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000006000300010000': ("outputs", "%Q0.6", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000007000300010000': ("outputs", "%Q0.7", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000008000300010000': ("outputs", "%Q0.8", "off"),
+  '0300002502f08032010000001f000e00060501120a10010001000082000009000300010000': ("outputs", "%Q0.9", "off")
 }
-
-# Lista de clientes WebSocket
-clients = set()
-
-async def websocket_handler(websocket, path):
-  clients.add(websocket)
-  try:
-    async for message in websocket:
-      pass  # No necesitamos recibir mensajes del cliente
-  finally:
-    clients.remove(websocket)
 
 # Servidor de sockets
 def socket_server():
@@ -83,25 +74,38 @@ def socket_server():
     print(f"Datos recibidos: {data}")
 
     if data in payload_mapping:
-      key, state = payload_mapping[data]
-      states["outputs"][key] = state
+      category, key, state = payload_mapping[data]
+      states[category][key] = state
 
       with open(STATES_FILE, "w") as f:
         json.dump(states, f, indent=2)
 
-      # Enviar actualización a todos los clientes WebSocket
-      asyncio.run(broadcast(data))
-
     conn.close()
 
-async def broadcast(message):
-  if clients:
-    await asyncio.gather(*(client.send(message) for client in clients))
+# Servidor HTTP para servir el JSON correctamente
+class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+  def do_GET(self):
+    if self.path == "/states":
+      try:
+        with open(STATES_FILE, "r") as f:
+          content = f.read()
+        self.send_response(200)
+        self.send_header("Content-type", "application/json")
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")  # Evitar caché
+        self.end_headers()
+        self.wfile.write(content.encode())
+      except Exception as e:
+        self.send_response(500)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(f"Error al leer states.json: {str(e)}".encode())
+    else:
+      super().do_GET()
 
 # Iniciar servidores
 if __name__ == "__main__":
   threading.Thread(target=socket_server, daemon=True).start()
-
-  start_server = websockets.serve(websocket_handler, "0.0.0.0", 8001)
-  asyncio.get_event_loop().run_until_complete(start_server)
-  asyncio.get_event_loop().run_forever()
+  
+  httpd = http.server.ThreadingHTTPServer(("0.0.0.0", 8000), SimpleHTTPRequestHandler)
+  print("Servidor web en http://localhost:8000")
+  httpd.serve_forever()
