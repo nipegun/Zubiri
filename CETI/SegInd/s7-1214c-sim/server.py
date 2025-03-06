@@ -13,10 +13,20 @@ import os
 
 STATES_FILE = "states.json"
 
-# Cargar el estado inicial desde states.json si existe, si no, crearlo
+# Cargar estados desde el archivo si existe, si no, crearlo
 if os.path.exists(STATES_FILE):
   with open(STATES_FILE, "r") as f:
-    states = json.load(f)
+    try:
+      states = json.load(f)
+    except json.JSONDecodeError:
+      print("Error: El archivo states.json no es un JSON válido. Se creará de nuevo.")
+      states = {
+        "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
+        "inputs": {f"%I{i//10}.{i%10}": "unknown" for i in range(14)},
+        "analog_inputs": {f"%AI{i}": "unknown" for i in range(2)}
+      }
+      with open(STATES_FILE, "w") as f:
+        json.dump(states, f, indent=2)
 else:
   states = {
     "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
@@ -72,16 +82,23 @@ def socket_server():
 
     conn.close()
 
-# Servidor HTTP para servir el JSON
+# Servidor HTTP para servir el JSON correctamente
 class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
   def do_GET(self):
     if self.path == "/states":
-      with open(STATES_FILE, "r") as f:
-        content = f.read()
-      self.send_response(200)
-      self.send_header("Content-type", "application/json")
-      self.end_headers()
-      self.wfile.write(content.encode())
+      try:
+        with open(STATES_FILE, "r") as f:
+          content = f.read()
+        self.send_response(200)
+        self.send_header("Content-type", "application/json")
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")  # Evitar caché
+        self.end_headers()
+        self.wfile.write(content.encode())
+      except Exception as e:
+        self.send_response(500)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(f"Error al leer states.json: {str(e)}".encode())
     else:
       super().do_GET()
 
