@@ -9,7 +9,7 @@
 # Script de NiPeGun para interactuar con un PLC Siemens S7-1200, versión 1214c
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   wget -q -N --no-cache https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLCDeClase-Simular.py && python3 PLCDeClase-Simular.py
+#   wget -q -N --no-cache https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLCDeClase-Simular.py && sudo python3 PLCDeClase-Simular.py
 #
 # Bajar y editar directamente el archivo en nano:
 #   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLCDeClase-Simular.py | nano -
@@ -19,11 +19,11 @@ import socket
 import struct
 
 # Definir constantes para colores
-cColorAzul = '\033[0;34m'
+cColorAzul =      '\033[0;34m'
 cColorAzulClaro = '\033[1;34m'
-cColorVerde = '\033[1;32m'
-cColorRojo = '\033[1;31m'
-cFinColor = '\033[0m'  # Vuelve al color normal
+cColorVerde =     '\033[1;32m'
+cColorRojo =      '\033[1;31m'
+cFinColor =       '\033[0m'  # Vuelve al color normal
 
 # Definir la memoria del PLC simulado
 E = bytearray(2)   # Entradas digitales %I0.0 - %I0.13
