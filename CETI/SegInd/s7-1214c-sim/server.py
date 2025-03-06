@@ -10,6 +10,8 @@ import http.server
 import threading
 import json
 import os
+import asyncio
+import websockets
 
 STATES_FILE = "states.json"
 
@@ -57,6 +59,17 @@ payload_mapping = {
   '0300002502f08032010000001f000e00060501120a10010001000082000009000300010000': ("%Q0.9", "off")
 }
 
+# Lista de clientes WebSocket
+clients = set()
+
+async def websocket_handler(websocket, path):
+  clients.add(websocket)
+  try:
+    async for message in websocket:
+      pass  # No necesitamos recibir mensajes del cliente
+  finally:
+    clients.remove(websocket)
+
 # Servidor de sockets
 def socket_server():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -76,16 +89,19 @@ def socket_server():
       with open(STATES_FILE, "w") as f:
         json.dump(states, f, indent=2)
 
+      # Enviar actualización a todos los clientes WebSocket
+      asyncio.run(broadcast(data))
+
     conn.close()
 
-# Servidor HTTP simple para servir la página web
-class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
-  pass
+async def broadcast(message):
+  if clients:
+    await asyncio.gather(*(client.send(message) for client in clients))
 
 # Iniciar servidores
 if __name__ == "__main__":
   threading.Thread(target=socket_server, daemon=True).start()
-  
-  httpd = http.server.ThreadingHTTPServer(("0.0.0.0", 8000), SimpleHTTPRequestHandler)
-  print("Servidor web en http://localhost:8000")
-  httpd.serve_forever()
+
+  start_server = websockets.serve(websocket_handler, "0.0.0.0", 8001)
+  asyncio.get_event_loop().run_until_complete(start_server)
+  asyncio.get_event_loop().run_forever()
