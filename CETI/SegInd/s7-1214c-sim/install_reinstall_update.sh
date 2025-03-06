@@ -29,8 +29,7 @@
 
 # Notificar inicio de ejecución del script
   echo ""
-  echo -e "${cColorAzulClaro}  Iniciando el script de instalación/reinstalación del simulador del PLC 1214c de Zubiri...${cFinColor}"
-  echo ""
+  echo -e "${cColorAzulClaro}  Iniciando el script de instalación/reinstalación/actualización del simulador del PLC 1214c de Zubiri...${cFinColor}"
 
 # Borrar posible carpeta previa
   cd ~/
