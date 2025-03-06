@@ -16,9 +16,9 @@ async function actualizarColores() {
     for (let id in data.outputs) {
       let estado = data.outputs[id];
       console.log("Actualizando", id, "con estado:", estado);
-      let th = document.getElementById(id);
-      if (th) {
-        th.style.backgroundColor = colores[estado] || "gray";
+      let td = document.getElementById(id);
+      if (td) {
+        td.style.backgroundColor = colores[estado] || "gray";
       } else {
         console.warn("No se encontró elemento con id:", id);
       }
