@@ -66,7 +66,7 @@ def socket_server():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.bind(("0.0.0.0", 102))
   s.listen(5)
-  print("\n  Servidor de sockets esperando conexiones en el puerto 12345...")
+  print("\n  Servidor de sockets esperando conexiones en el puerto 102...")
 
   while True:
     conn, addr = s.accept()
