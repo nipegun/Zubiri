@@ -39,6 +39,7 @@
   echo ""
   echo "    Clonando el repositorio..."
   echo ""
+  cd ~/
   # Comprobar si el paquete git está instalado. Si no lo está, instalarlo.
     if [[ $(dpkg-query -s git 2>/dev/null | grep installed) == "" ]]; then
       echo ""
