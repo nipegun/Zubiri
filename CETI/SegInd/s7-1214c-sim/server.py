@@ -86,7 +86,7 @@ def socket_server():
 # Servidor HTTP para servir el JSON correctamente
 class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
   def do_GET(self):
-    if self.path == "/states":
+    if self.path == "/api/json":
       try:
         with open(STATES_FILE, "r") as f:
           content = f.read()
