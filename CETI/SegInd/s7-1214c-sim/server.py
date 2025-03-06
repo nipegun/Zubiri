@@ -9,48 +9,22 @@ import socket
 import http.server
 import threading
 import json
+import os
 
 STATES_FILE = "states.json"
 
-# Estado inicial de todas las conexiones
-states = {
-  "outputs": {
-    "%Q0.0": "unknown",
-    "%Q0.1": "unknown",
-    "%Q0.2": "unknown",
-    "%Q0.3": "unknown",
-    "%Q0.4": "unknown",
-    "%Q0.5": "unknown",
-    "%Q0.6": "unknown",
-    "%Q0.7": "unknown",
-    "%Q0.8": "unknown",
-    "%Q0.9": "unknown"
-  },
-  "inputs": {
-    "%I0.0": "unknown",
-    "%I0.1": "unknown",
-    "%I0.2": "unknown",
-    "%I0.3": "unknown",
-    "%I0.4": "unknown",
-    "%I0.5": "unknown",
-    "%I0.6": "unknown",
-    "%I0.7": "unknown",
-    "%I0.8": "unknown",
-    "%I0.9": "unknown",
-    "%I1.0": "unknown",
-    "%I1.1": "unknown",
-    "%I1.2": "unknown",
-    "%I1.3": "unknown"
-  },
-  "analog_inputs": {
-    "%AI0": "unknown",
-    "%AI1": "unknown"
+# Cargar el estado inicial desde states.json si existe, si no, crearlo
+if os.path.exists(STATES_FILE):
+  with open(STATES_FILE, "r") as f:
+    states = json.load(f)
+else:
+  states = {
+    "outputs": {f"%Q0.{i}": "unknown" for i in range(10)},
+    "inputs": {f"%I{i//10}.{i%10}": "unknown" for i in range(14)},
+    "analog_inputs": {f"%AI{i}": "unknown" for i in range(2)}
   }
-}
-
-# Guardar el estado inicial en el JSON
-with open(STATES_FILE, "w") as f:
-  json.dump(states, f, indent=2)
+  with open(STATES_FILE, "w") as f:
+    json.dump(states, f, indent=2)
 
 # Mapeo de payloads a estados SOLO para outputs
 payload_mapping = {
