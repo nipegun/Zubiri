@@ -15,31 +15,6 @@ STATES_FILE = "states.json"
 PORT_SOCKET = 102
 PORT_HTTP = 8000
 
-# Mapeo de payloads a estados SOLO para outputs
-payload_mapping = {
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000000000300010100'): ("outputs", "%Q0.0", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000001000300010100'): ("outputs", "%Q0.1", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000002000300010100'): ("outputs", "%Q0.2", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000003000300010100'): ("outputs", "%Q0.3", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000004000300010100'): ("outputs", "%Q0.4", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000005000300010100'): ("outputs", "%Q0.5", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000006000300010100'): ("outputs", "%Q0.6", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000007000300010100'): ("outputs", "%Q0.7", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000008000300010100'): ("outputs", "%Q1.0", "on"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000009000300010100'): ("outputs", "%Q1.1", "on"),
-
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000000000300010000'): ("outputs", "%Q0.0", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000001000300010000'): ("outputs", "%Q0.1", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000002000300010000'): ("outputs", "%Q0.2", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000003000300010000'): ("outputs", "%Q0.3", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000004000300010000'): ("outputs", "%Q0.4", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000005000300010000'): ("outputs", "%Q0.5", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000006000300010000'): ("outputs", "%Q0.6", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000007000300010000'): ("outputs", "%Q0.7", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000008000300010000'): ("outputs", "%Q1.0", "off"),
-  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000009000300010000'): ("outputs", "%Q1.1", "off")
-}
-
 # Cerrar cualquier socket abierto previamente
 def close_existing_socket(port):
   with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -47,8 +22,9 @@ def close_existing_socket(port):
     try:
       s.bind(("0.0.0.0", port))
     except OSError:
-      print(f"\n  Cerrando socket en el puerto {port}...")
+      print(f"Cerrando socket en el puerto {port}...")
       os.system(f"fuser -k {port}/tcp")
+      os.system(f"lsof -ti:{port} | xargs kill -9")
 
 # Cerrar sockets abiertos antes de iniciar el servidor
 close_existing_socket(PORT_SOCKET)
@@ -80,9 +56,35 @@ states.setdefault("analog_inputs", {f"%A0.{i}": "unknown" for i in range(2)})
 with open(STATES_FILE, "w") as f:
   json.dump(states, f, indent=2)
 
+# Mapeo de payloads a estados SOLO para outputs
+payload_mapping = {
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000000000300010100'): ("outputs", "%Q0.0", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000001000300010100'): ("outputs", "%Q0.1", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000002000300010100'): ("outputs", "%Q0.2", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000003000300010100'): ("outputs", "%Q0.3", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000004000300010100'): ("outputs", "%Q0.4", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000005000300010100'): ("outputs", "%Q0.5", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000006000300010100'): ("outputs", "%Q0.6", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000007000300010100'): ("outputs", "%Q0.7", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000008000300010100'): ("outputs", "%Q1.0", "on"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000009000300010100'): ("outputs", "%Q1.1", "on"),
+
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000000000300010000'): ("outputs", "%Q0.0", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000001000300010000'): ("outputs", "%Q0.1", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000002000300010000'): ("outputs", "%Q0.2", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000003000300010000'): ("outputs", "%Q0.3", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000004000300010000'): ("outputs", "%Q0.4", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000005000300010000'): ("outputs", "%Q0.5", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000006000300010000'): ("outputs", "%Q0.6", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000007000300010000'): ("outputs", "%Q0.7", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000008000300010000'): ("outputs", "%Q1.0", "off"),
+  bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000009000300010000'): ("outputs", "%Q1.1", "off")
+}
+
 # Servidor de sockets
 def socket_server():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
   s.bind(("0.0.0.0", PORT_SOCKET))
   s.listen(5)
   print("\n  Servidor de sockets esperando conexiones en el puerto 102...")
@@ -93,10 +95,10 @@ def socket_server():
 
     try:
       decoded_data = data.decode("utf-8").strip()
-      print(f"  Datos recibidos en texto: {decoded_data}")
+      print(f"Datos recibidos en texto: {decoded_data}")
     except UnicodeDecodeError:
       decoded_data = data.hex()
-      print(f"  Datos recibidos en binario (hex): {decoded_data}")
+      print(f"Datos recibidos en binario (hex): {decoded_data}")
     
     binary_data = bytes.fromhex(decoded_data) if isinstance(decoded_data, str) else data
 
@@ -113,7 +115,7 @@ def socket_server():
 # Servidor HTTP para servir el JSON correctamente
 class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
   def do_GET(self):
-    if self.path == "/api/json":
+    if self.path == "/states" or self.path == "/api/json":
       try:
         with open(STATES_FILE, "r") as f:
           content = f.read()
