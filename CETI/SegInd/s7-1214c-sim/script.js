@@ -24,22 +24,30 @@ const payloadMapping = {
 };
 
 function updateData() {
-  fetch("/data")
-    .then(response => response.text())
-    .then(payload => {
-      document.getElementById("data").innerText = payload;
+  // Agregar un parámetro único para evitar la caché del navegador
+  let url = "/states?t=" + new Date().getTime();
 
-      // Verificar si el payload está en la lista
-      if (payload in payloadMapping) {
-        let { id, color } = payloadMapping[payload];
-        let element = document.getElementById(id);
-
+  fetch(url)
+    .then(response => response.json())
+    .then(states => {
+      // Actualizar las salidas
+      for (let key in states.outputs) {
+        let element = document.getElementById(key);
         if (element) {
-          element.style.backgroundColor = color;
+          if (states.outputs[key] === "on") {
+            element.style.backgroundColor = "green";
+          } else if (states.outputs[key] === "off") {
+            element.style.backgroundColor = "red";
+          } else {
+            element.style.backgroundColor = "gray"; // Unknown
+          }
         }
       }
+
+      // Si necesitas actualizar inputs o analog_inputs, agrégalo aquí
     })
     .catch(err => console.log("Error:", err));
 }
 
-setInterval(updateData, 500); // Actualizar cada 500 ms
+// Actualizar cada 500 ms
+setInterval(updateData, 500);
