@@ -32,7 +32,7 @@
     "%I1.5": "unknown"
   },
   "analog_inputs": {
-    "%AI0": "unknown",
-    "%AI1": "unknown"
+    "%A0.0": "unknown",
+    "%A0.1": "unknown"
   }
 }
