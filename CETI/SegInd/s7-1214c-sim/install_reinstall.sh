@@ -27,6 +27,11 @@
     #echo "$(tput setaf 1)Mensaje en color rojo. $(tput sgr 0)"
   cFinColor='\033[0m'
 
+# Notificar inicio de ejecución del script
+  echo ""
+  echo -e "${cColorRojo}  Iniciando el script de instalación/reinstalación del simulador del PLC 1214c de Zubiri...${cFinColor}"
+  echo ""
+
 # Borrar posible carpeta previa
   rm -rf ~/s7-1214c-sim 2>/dev/null
 
@@ -49,4 +54,3 @@
 # Asignar permisos de ejecución a los scripts
   chmod +x ~/s7-1214c-sim/*.sh
   chmod +x ~/s7-1214c-sim/*.py
-
