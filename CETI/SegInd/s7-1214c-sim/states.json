@@ -12,8 +12,8 @@
     "%Q0.5": "unknown",
     "%Q0.6": "unknown",
     "%Q0.7": "unknown",
-    "%Q0.8": "unknown",
-    "%Q0.9": "unknown"
+    "%Q1.0": "unknown",
+    "%Q1.1": "unknown"
   },
   "inputs": {
     "%I0.0": "unknown",
@@ -24,12 +24,12 @@
     "%I0.5": "unknown",
     "%I0.6": "unknown",
     "%I0.7": "unknown",
-    "%I0.8": "unknown",
-    "%I0.9": "unknown",
     "%I1.0": "unknown",
     "%I1.1": "unknown",
     "%I1.2": "unknown",
-    "%I1.3": "unknown"
+    "%I1.3": "unknown",
+    "%I1.4": "unknown",
+    "%I1.5": "unknown"
   },
   "analog_inputs": {
     "%AI0": "unknown",
