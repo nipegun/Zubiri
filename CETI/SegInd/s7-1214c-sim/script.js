@@ -24,13 +24,15 @@ const payloadMapping = {
 };
 
 function updateData() {
-  // Agregar un parámetro único para evitar la caché del navegador
+  // Agregar timestamp para evitar la caché del navegador
   let url = "/states?t=" + new Date().getTime();
 
   fetch(url)
-    .then(response => response.json())
+    .then(response => response.json()) // Obtener los datos de states.json
     .then(states => {
-      // Actualizar las salidas
+      console.log("Estados recibidos:", states); // DEBUG: Verifica en consola
+
+      // Actualizar los colores de los outputs
       for (let key in states.outputs) {
         let element = document.getElementById(key);
         if (element) {
@@ -41,13 +43,13 @@ function updateData() {
           } else {
             element.style.backgroundColor = "gray"; // Unknown
           }
+        } else {
+          console.log("Elemento no encontrado en la tabla:", key); // DEBUG
         }
       }
-
-      // Si necesitas actualizar inputs o analog_inputs, agrégalo aquí
     })
-    .catch(err => console.log("Error:", err));
+    .catch(err => console.log("Error en la actualización:", err));
 }
 
-// Actualizar cada 500 ms
+// Ejecutar updateData() cada 500 ms
 setInterval(updateData, 500);
