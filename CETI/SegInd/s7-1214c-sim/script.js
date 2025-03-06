@@ -30,5 +30,5 @@ async function actualizarColores() {
 
 document.addEventListener("DOMContentLoaded", () => {
   actualizarColores();
-  setInterval(actualizarColores, 3000);
+  setInterval(actualizarColores, 500);
 });
