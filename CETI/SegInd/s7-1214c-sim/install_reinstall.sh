@@ -66,3 +66,7 @@
   echo ""
   echo "    python3 ~/s7-1214c-sim/server.py"
   echo ""
+  echo "  Para reinstalarlo:"
+  echo ""
+  echo "    ~/s7-1214c-sim/install_reinstall.sh"
+  echo ""
