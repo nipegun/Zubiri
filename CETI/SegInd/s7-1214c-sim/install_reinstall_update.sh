@@ -76,3 +76,8 @@
   echo ""
   echo "        ~/s7-1214c-sim/install_reinstall_update.sh"
   echo ""
+  echo "      Para enviar datos:"
+  echo ""
+  vIPServ=$(hostname -I | sed 's- --g')
+  echo '        printf "\x03\x00\x00\x25\x02\xf0\x80\x32\x01\x00\x00\x00\x1f\x00\x0e\x00\x06\x05\x01\x12\x0a\x10\x01\x00\x01\x00\x00\x82\x00\x00\x04\x00\x03\x00\x01\x00\x00" | nc '"$vIPServ"' 102'
+  echo ""
