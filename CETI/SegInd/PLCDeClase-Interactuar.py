@@ -21,6 +21,7 @@ import socket
 import argparse
 import sys
 import io
+import re
 
 
 # Definir constantes para colores
