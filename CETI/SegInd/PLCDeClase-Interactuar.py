@@ -43,16 +43,18 @@ def fConectar(pHost):
     print(f"\n  Error al conectar con el PLC: {e}")
     return None
 
+
 def fEnviarPayload(pData, pSocket):
-  print(f"Intentando enviar: {pData}")
-  pSocket.send(bytearray.fromhex(pData))
+  if pSocket is None:
+    print("\n  Error: No hay conexión establecida.")
+    return None
   try:
+    pSocket.send(bytearray.fromhex(pData))
     vResp = pSocket.recv(1024)
-    print(f"\n  Enviando: {pData} \n")
     if vResp:
-      print(f"\n  Respuesta del PLC: {vResp.hex()} \n")
+      print(f"\n  Respuesta del PLC: {vResp.hex()}\n")
     else:
-      print("\n  No se recibió respuesta del PLC. \n")
+      print("\n  No se recibió respuesta del PLC.\n")
     return vResp
   except socket.timeout:
     print("\n  Se esperó 5 segundos y el PLC no respondió.")
@@ -335,6 +337,5 @@ if __name__ == "__main__":
     vHost = sys.argv[1]
     curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
-    print(cColorRojo + "\n  No has indicado cual es la IP del PLC. \n" + cFinColor)
+    print(cColorRojo + "\n  No has indicado cual es la IP del PLC.\n" + cFinColor)
     print("  Uso correcto: python3 [RutaAlScript.py] [IPDelPLC] \n")
-
