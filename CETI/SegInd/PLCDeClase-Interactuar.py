@@ -31,6 +31,17 @@ cColorRojo='\033[1;31m'
 cFinColor='\033[0m' # Vuelve al color normal
 
 
+def es_ip_o_fqdn(host):
+  # Expresión regular para validar una dirección IP
+  ip_regex = r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+  # Expresión regular para validar un FQDN
+  fqdn_regex = r"^(?=.{1,253}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*$"
+  
+  if re.match(ip_regex, host) or re.match(fqdn_regex, host):
+    return True
+  return False
+
+
 def fConectar(pHost):
   print(f"Intentando conectar con {pHost} en el puerto 102...")
   vSocketPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -332,9 +343,13 @@ def fMenu(stdscr, vHost):
   stdscr.addstr(0, 0, "Saliendo del programa...")
   stdscr.refresh()
 
+
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     vHost = sys.argv[1]
+    if not es_ip_o_fqdn(vHost):
+      print(cColorRojo + "\n  La dirección proporcionada no es una IP válida ni un FQDN.\n" + cFinColor)
+      sys.exit(1)
     curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
     print(cColorRojo + "\n  No has indicado cual es la IP del PLC.\n" + cFinColor)
