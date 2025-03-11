@@ -15,8 +15,10 @@
 #   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLC-Siemens-DeClase-Simular.py | nano -
 # ----------
 
+
 import socket
 import struct
+
 
 # Definir constantes para colores
 cColorAzul =      '\033[0;34m'
@@ -25,12 +27,15 @@ cColorVerde =     '\033[1;32m'
 cColorRojo =      '\033[1;31m'
 cFinColor =       '\033[0m'     # Vuelve al color normal
 
+
 # Configurar el servidor TCP en el puerto 102 (S7comm)
 vSocketServidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 vSocketServidor.bind(("0.0.0.0", 102))
 vSocketServidor.listen(1)
 
+
 print(cColorAzulClaro + "\n  Simulador de PLC Siemens S7-1200 1214c escuchando en el puerto 102...\n" + cFinColor)
+
 
 def fGestionarCliente(pSocketConCliente):
   try:
@@ -39,6 +44,7 @@ def fGestionarCliente(pSocketConCliente):
       if not vPayload:
         break  # Desconexión del cliente
 
+      
       # Solicitud de comunicación COTP para encendido/apagado del PLC)
       # Payload TCP:         03 00 00 23 1e e0 00 00 00 64 00 c1 02 06 00 c2 0f 53 49 4d 41 54 49 43 2d 52 4f 4f 54 2d 45 53 c0 01 0a
       #   TPKT:              03 00 00 23
@@ -71,6 +77,7 @@ def fGestionarCliente(pSocketConCliente):
         print("      Se le respondió:")
         print("        " +  str(vRespuestaCOTP.hex()))
 
+      
       # Solicitud de comunicación COTP para encendido/apagado de salida
       # Payload TCP:         03 00 00 16 11 e0 00 00 cf c4 00 c0 01 0a c1 02 01 00 c2 02 01 01
       #   TPKT:              03 00 00 16
@@ -103,6 +110,7 @@ def fGestionarCliente(pSocketConCliente):
         print("      Se le respondió:")
         print("        " +  str(vRespuestaCOTP.hex()))
 
+
       # Solicitud de comunicación s7comm
       # Payload TCP:        03 00 00 ee 02 f0 80 72 01 00 df 31 00 00 04 ca 00 00 00 01 00 00 01 20 36 00 00 01 1d 00 04 00 00 00 00 00 a1 00 00 00 d3 82 1f 00 00 a3 81 69 00 15 15 53 65 72 76 65 72 53 65 73 73 
       if vPayload.hex() == '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373':
@@ -120,9 +128,11 @@ def fGestionarCliente(pSocketConCliente):
   except Exception as e:
     print(f"Error en comunicación: {e}")
 
+
   finally:
     pSocketConCliente.close()
     print(cColorRojo + "\n    Cliente desconectado.\n" + cFinColor)
+
 
 # Aceptar conexiones de clientes
 while True:
