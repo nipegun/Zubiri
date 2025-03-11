@@ -65,11 +65,11 @@ def fGestionarCliente(pSocketConCliente):
         print("      Envió:")
         print(f"        {vPayload.hex()}")
         print("      Tipo de solicitud:")
-        print("      " + vTipoDeSolicitud)
+        print("        " + vTipoDeSolicitud)
         vRespuestaCOTP = b'\x03\x00\x00\x23\x1e\xd0\x00\x64\x00\x0b\x00\xc0\x01\x0a\xc1\x02\x06\x00\xc2\x0f\x53\x49\x4d\x41\x54\x49\x43\x2d\x52\x4f\x4f\x54\x2d\x45\x53'
         pSocketConCliente.send(vRespuestaCOTP)
         print("      Se le respondió:")
-        print("      " +  str(vRespuestaCOTP.hex()))
+        print("        " +  str(vRespuestaCOTP.hex()))
 
       # Solicitud de comunicación COTP para encendido/apagado de salida
       # Payload TCP:         03 00 00 16 11 e0 00 00 cf c4 00 c0 01 0a c1 02 01 00 c2 02 01 01
@@ -97,11 +97,11 @@ def fGestionarCliente(pSocketConCliente):
         print("      Envió:")
         print(f"        {vPayload.hex()}")
         print("      Tipo de solicitud:")
-        print("      " + vTipoDeSolicitud)
+        print("        " + vTipoDeSolicitud)
         vRespuestaCOTP = b'\x03\x00\x00\x16\x11\xd0\xcf\xc4\x00\x09\x00\xc0\x01\x0a\xc1\x02\x01\x00\xc2\x02\x01\x01'
         pSocketConCliente.send(vRespuestaCOTP)
         print("      Se le respondió:")
-        print("      " +  str(vRespuestaCOTP.hex()))
+        print("        " +  str(vRespuestaCOTP.hex()))
 
       # Solicitud de comunicación s7comm
       # Payload TCP:        03 00 00 ee 02 f0 80 72 01 00 df 31 00 00 04 ca 00 00 00 01 00 00 01 20 36 00 00 01 1d 00 04 00 00 00 00 00 a1 00 00 00 d3 82 1f 00 00 a3 81 69 00 15 15 53 65 72 76 65 72 53 65 73 73 
@@ -110,10 +110,11 @@ def fGestionarCliente(pSocketConCliente):
         print("      Envió:")
         print(f"        {vPayload.hex()}")
         print("      Tipo de solicitud:")
-        print("      " + vTipoDeSolicitud)
+        print("        " + vTipoDeSolicitud)
         vRespuesta = b'\x03\x00\x00\x16\x11\xe0\x00\x00\x00\x01\x00\xc0\x01\x0a\xc1\x02\x01\x00\xc2\x02\x01\x02'
         pSocketConCliente.send(vRespuesta)
-        print("      Se le respondió: " + str(vRespuesta))
+        print("      Se le respondió:")
+        print("        " +  str(vRespuesta.hex()))
 
 
   except Exception as e:
