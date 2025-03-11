@@ -115,10 +115,10 @@ def fGestionarCliente(pSocketConCliente):
         pSocketConCliente.send(vRespuesta)
         print("      Se le respondió: " + str(vRespuesta))
 
-  
+
   except Exception as e:
     print(f"Error en comunicación: {e}")
-  
+
   finally:
     pSocketConCliente.close()
     print(cColorRojo + "\n    Cliente desconectado.\n" + cFinColor)
