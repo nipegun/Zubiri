@@ -9,7 +9,7 @@
 # Script de NiPeGun para interactuar con un PLC Siemens S7-1200, versión 1214c
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   wget -q -N --no-cache https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLC-Siemens-DeClase-Interactuar2.py && python3 PLC-Siemens-DeClase-Interactuar.py [IPDelPLC]
+#   wget -q -N --no-cache https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLC-Siemens-DeClase-Interactuar.py && python3 PLC-Siemens-DeClase-Interactuar.py [IPDelPLC]
 #
 # Bajar y editar directamente el archivo en nano:
 #   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLC-Siemens-DeClase-Interactuar.py | nano -
