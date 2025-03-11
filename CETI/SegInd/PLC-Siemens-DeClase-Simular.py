@@ -65,7 +65,7 @@ def fGestionarCliente(pSocketConCliente):
         print(f"      Envió: {vPayload.hex()} " + vTipoSolicitud)
         vRespuestaCOTP = b'\x03\x00\x00\x23\x1e\xd0\x00\x64\x00\x0b\x00\xc0\x01\x0a\xc1\x02\x06\x00\xc2\x0f\x53\x49\x4d\x41\x54\x49\x43\x2d\x52\x4f\x4f\x54\x2d\x45\x53'
         pSocketConCliente.send(vRespuestaCOTP)
-        print("        Se le respondió: " + str(vRespuesta.hex()))
+        print("        Se le respondió: " + str(vRespuestaCOTP.hex()))
 
 
       # Solicitud de comunicación COTP para encendido/apagado de salida
@@ -94,7 +94,7 @@ def fGestionarCliente(pSocketConCliente):
         print(f"      Envió: {vPayload.hex()} " + vTipoSolicitud)
         vRespuestaCOTP = b'\x03\x00\x00\x16\x11\xd0\xcf\xc4\x00\x09\x00\xc0\x01\x0a\xc1\x02\x01\x00\xc2\x02\x01\x01'
         pSocketConCliente.send(vRespuestaCOTP)
-        print("        Se le respondió: " + str(vRespuesta))
+        print("        Se le respondió: " + str(vRespuestaCOTP))
 
       # Solicitud de comunicación s7comm
       # Payload TCP:        03 00 00 ee 02 f0 80 72 01 00 df 31 00 00 04 ca 00 00 00 01 00 00 01 20 36 00 00 01 1d 00 04 00 00 00 00 00 a1 00 00 00 d3 82 1f 00 00 a3 81 69 00 15 15 53 65 72 76 65 72 53 65 73 73 
