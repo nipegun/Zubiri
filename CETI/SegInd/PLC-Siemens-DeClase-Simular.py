@@ -61,12 +61,15 @@ def fGestionarCliente(pSocketConCliente):
       #     Parameter lenght (1):                                                                                               01
       #     TPDU size (1024):                                                                                                      0a
       if vPayload.hex() == '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a':
-        vTipoSolicitud = '(Solicitud de comunicación COTP para encendido/apagado del PLC).'
-        print(f"      Envió: {vPayload.hex()} " + vTipoSolicitud)
+        vTipoDeSolicitud = 'Solicitud de comunicación COTP para encendido/apagado del PLC.'
+        print("      Envió:")
+        print(f"        {vPayload.hex()}")
+        print("      Tipo de solicitud:")
+        print("      " + vTipoDeSolicitud)
         vRespuestaCOTP = b'\x03\x00\x00\x23\x1e\xd0\x00\x64\x00\x0b\x00\xc0\x01\x0a\xc1\x02\x06\x00\xc2\x0f\x53\x49\x4d\x41\x54\x49\x43\x2d\x52\x4f\x4f\x54\x2d\x45\x53'
         pSocketConCliente.send(vRespuestaCOTP)
-        print("        Se le respondió: " + str(vRespuestaCOTP.hex()))
-
+        print("      Se le respondió:")
+        print("      " +  str(vRespuestaCOTP.hex()))
 
       # Solicitud de comunicación COTP para encendido/apagado de salida
       # Payload TCP:         03 00 00 16 11 e0 00 00 cf c4 00 c0 01 0a c1 02 01 00 c2 02 01 01
@@ -90,20 +93,25 @@ def fGestionarCliente(pSocketConCliente):
       #     Parameter lenght (2):                                                     02
       #     TPDU size (1024):                                                            01 01
       if vPayload.hex() == '0300001611e00000cfc400c0010ac1020100c2020101':
-        vTipoSolicitud = '(Solicitud de comunicación COTP para encendido/apagado de salida).'
-        print(f"      Envió: {vPayload.hex()} " + vTipoSolicitud)
+        vTipoDeSolicitud = 'Solicitud de comunicación COTP para encendido/apagado de salida.'
+        print("      Envió:")
+        print(f"        {vPayload.hex()}")
+        print("      Tipo de solicitud:")
+        print("      " + vTipoDeSolicitud)
         vRespuestaCOTP = b'\x03\x00\x00\x16\x11\xd0\xcf\xc4\x00\x09\x00\xc0\x01\x0a\xc1\x02\x01\x00\xc2\x02\x01\x01'
         pSocketConCliente.send(vRespuestaCOTP)
-        print("        Se le respondió: " + str(vRespuestaCOTP))
-
+        print("      Se le respondió:")
+        print("      " +  str(vRespuestaCOTP.hex()))
+      
       # Solicitud de comunicación s7comm
       # Payload TCP:        03 00 00 ee 02 f0 80 72 01 00 df 31 00 00 04 ca 00 00 00 01 00 00 01 20 36 00 00 01 1d 00 04 00 00 00 00 00 a1 00 00 00 d3 82 1f 00 00 a3 81 69 00 15 15 53 65 72 76 65 72 53 65 73 73 
       if vPayload.hex() == '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373':
         vTipoSolicitud = '(Solicitud de comunicación s7comm para encendido/apagado del PLC).'
-        print(f"      Envió: {vPayload.hex()} " + vTipoSolicitud)
+        print("      Envió: {vPayload.hex()})
+        print("     " + vTipoSolicitud)
         vRespuesta = b'\x03\x00\x00\x16\x11\xe0\x00\x00\x00\x01\x00\xc0\x01\x0a\xc1\x02\x01\x00\xc2\x02\x01\x02'
         pSocketConCliente.send(vRespuesta)
-        print("        Se le respondió: " + str(vRespuesta))
+        print("      Se le respondió: " + str(vRespuesta))
 
   
   except Exception as e:
