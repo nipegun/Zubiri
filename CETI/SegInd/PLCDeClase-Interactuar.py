@@ -24,13 +24,11 @@ import io
 import re
 
 
-
-
-
 def enviar(payload, con):
   con.send(bytearray.fromhex(payload))
   data = con.recv(1024)
   return data
+
 
 def fEncenderPLC2(pHost):
   COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
@@ -54,6 +52,7 @@ def fEncenderPLC2(pHost):
   data = enviar(START7, s)
   print("Starting the PLC... Well Done!")
   s.close()
+
 
 def fApagarPLC2(pHost):
   COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
@@ -88,13 +87,13 @@ cColorRojo='\033[1;31m'
 cFinColor='\033[0m' # Vuelve al color normal
 
 
-def es_ip_o_fqdn(host):
+def fDeterminarSiIPoFQDN(pHost):
   # Expresión regular para validar una dirección IP
   ip_regex = r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
   # Expresión regular para validar un FQDN
   fqdn_regex = r"^(?=.{1,253}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*$"
   
-  if re.match(ip_regex, host) or re.match(fqdn_regex, host):
+  if re.match(ip_regex, pHost) or re.match(fqdn_regex, pHost):
     return True
   return False
 
@@ -407,7 +406,7 @@ def fMenu(stdscr, vHost):
 if __name__ == "__main__":
   if len(sys.argv) > 1:
     vHost = sys.argv[1]
-    if not es_ip_o_fqdn(vHost):
+    if not fDeterminarSiIPoFQDN(vHost):
       print(cColorRojo + "\n  La dirección proporcionada no es una IP válida ni un FQDN.\n" + cFinColor)
       sys.exit(1)
     curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
