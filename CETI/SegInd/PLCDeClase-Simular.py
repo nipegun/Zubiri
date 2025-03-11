@@ -50,21 +50,26 @@ def fGestionarCliente(pSocketConCliente):
       # El servidor debe responder con algo como: '0300001611d00001000100c0010ac1020102c2020100c00109
 
       # Solicitud de comunicación COTP para encendido/apagado del PLC)
-      # Payload TCP:     (03 00 00 23 1e e0 00 00 00 64 00 c1 02 06 00 c2 0f 53 49 4d 41 54 49 43 2d 52 4f 4f 54 2d 45 53 c0 01 0a)
-      #   TPKT:          (03 00 00 23)
-      #     Version (3):  03
-      #     Reserved (0):    00
-      #     Lenght (35):        00 23
-      #   COTP:          (            1e e0 00 00 00 64 00 c1 02 06 00 c2 0f 53 49 4d 41 54 49 43 2d 52 4f 4f 54 2d 45 53 c0 01 0a)
+      # Payload TCP:           03 00 00 23 1e e0 00 00 00 64 00 c1 02 06 00 c2 0f 53 49 4d 41 54 49 43 2d 52 4f 4f 54 2d 45 53 c0 01 0a
+      #   TPKT:                03 00 00 23
+      #     Version (3):       03
+      #     Reserved (0):         00
+      #     Lenght (35):             00 23
+      #   COTP:                            1e e0 00 00 00 64 00 c1 02 06 00 c2 0f 53 49 4d 41 54 49 43 2d 52 4f 4f 54 2d 45 53 c0 01 0a
       #     Length (30):                   1e
-      #     PDU Connect Request (0x0e):    e0
-      #     Destination reference 0x0000): 00 00
-      #
-      #
-      #
-      #
-      #
-      #
+      #     PDU Connect Request (0x0e):       e0
+      #     Destination reference (0x0000):      00 00
+      #     Source reference (0x0064):                 00 64 
+      #     Class (0):                                       00 
+      #     Parameter code src-tsap (0xc1):                     c1
+      #     Parameter lenght (2):                                  02
+      #     Source TSAP (0600):                                       06 00
+      #     Parameter code dst-tsap (0xc2):                                 c2
+      #     Parameter lenght (15):                                             0f
+      #     Destination TSAP (SIMATIC-ROOT-ES):                                   53 49 4d 41 54 49 43 2d 52 4f 4f 54 2d 45 53
+      #     Parameter code tpdu-size (0xc0):                                                                                   c0
+      #     Parameter lenght (1):                                                                                                 01
+      #     TPDU size (1024):                                                                                                        0a
       if vPayload.hex() == '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a':
         vTipoSolicitud = '(Solicitud de comunicación COTP para encendido/apagado del PLC).'
         print(f"      Envió: {vPayload.hex()} " + vTipoSolicitud)
