@@ -28,13 +28,28 @@ cColorRojo =      '\033[1;31m'
 cFinColor =       '\033[0m'     # Vuelve al color normal
 
 
+# Función para obtener la IP local
+def obtener_ip_local():
+  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  try:
+    s.connect(('8.8.8.8', 80))
+    ip_local = s.getsockname()[0]
+  except Exception:
+    ip_local = '127.0.0.1'
+  finally:
+    s.close()
+  return ip_local
+
+# Obtener IP local
+ip_local = obtener_ip_local()
+
 # Configurar el servidor TCP en el puerto 102 (S7comm)
 vSocketServidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 vSocketServidor.bind(("0.0.0.0", 102))
 vSocketServidor.listen(1)
 
-
-print(cColorAzulClaro + "\n  Simulador de PLC Siemens S7-1200 1214c escuchando en el puerto 102...\n" + cFinColor)
+print(cColorAzulClaro + f"\n  Simulador de PLC Siemens S7-1200 1214c escuchando en el puerto 102" + cFinColor)
+print(cColorAzulClaro + f"  IP Local del servidor: {ip_local}\n" + cFinColor)
 
 
 def fGestionarCliente(pSocketConCliente):
