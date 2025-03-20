@@ -50,7 +50,7 @@ def fEncenderPLC2(pHost):
   START7 = START7[:46] + hex(anti)[2] + START7[47:]
   START7 = START7[:47] + hex(anti)[3] + START7[48:]
   data = enviar(START7, s)
-  print("Starting the PLC... Well Done!")
+  print("Encendiendo el PLC...")
   s.close()
 
 
@@ -75,7 +75,7 @@ def fApagarPLC2(pHost):
   STOP7 = STOP7[:47] + hex(anti)[3] + STOP7[48:]
   data = enviar(S7_COMM_ANTI, s)
   data = enviar(STOP7, s)
-  print("Stopping the PLC... Well Done!")
+  print("Apagando el PLC...")
   s.close()
 
 
