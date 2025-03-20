@@ -9,10 +9,10 @@
 # Script de NiPeGun para interactuar con un PLC Siemens S7-1200, versión 1214c
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   wget -q -N --no-cache https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLC-Siemens-DeClase-Simular.py && sudo python3 PLC-Siemens-DeClase-Simular.py
+#   wget -q -N --no-cache https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SegInd/cyber-1214c-sim/sim.py && sudo python3 sim-py
 #
 # Bajar y editar directamente el archivo en nano:
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SegInd/PLC-Siemens-DeClase-Simular.py | nano -
+#   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SegInd/cyber-1214c-sim/sim.py | nano -
 # ----------
 
 
