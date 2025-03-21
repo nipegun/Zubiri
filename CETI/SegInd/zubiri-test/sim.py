@@ -220,19 +220,21 @@ def fGestEncApagSalida(pSocketConCliente, pPrimerPayload):
   except Exception as e:
     print(f"Error en comunicación (encendido/apagado salida): {e}")
 
-# Obtener IP local
-vIPLocal = fObtenerIPLocal()
 
-# Configurar el servidor TCP en el puerto 102 (S7comm)
-vSocketServidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-vSocketServidor.bind(("0.0.0.0", 102))
-vSocketServidor.listen(1)
+if __name__ == "__main__":
+  # Obtener IP local
+  vIPLocal = fObtenerIPLocal()
 
-print(cColorAzulClaro + f"\n  Simulador de PLC Siemens S7-1200 1214c escuchando en el puerto 102" + cFinColor)
-print(cColorAzulClaro + f"  IP Local del servidor: {vIPLocal}\n" + cFinColor)
+  # Configurar el servidor TCP en el puerto 102 (S7comm)
+  vSocketServidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  vSocketServidor.bind(("0.0.0.0", 102))
+  vSocketServidor.listen(1)
 
-# Aceptar conexiones de clientes
-while True:
-  client_socket, addr = vSocketServidor.accept()
-  print(cColorVerde + f"\n    Cliente conectado desde {addr}.\n" + cFinColor)
-  fGestionarCliente(client_socket)
+  print(cColorAzulClaro + f"\n  Simulador de PLC Siemens S7-1200 1214c escuchando en el puerto 102" + cFinColor)
+  print(cColorAzulClaro + f"  IP Local del servidor: {vIPLocal}\n" + cFinColor)
+
+  # Aceptar conexiones de clientes
+  while True:
+    client_socket, addr = vSocketServidor.accept()
+    print(cColorVerde + f"\n    Cliente conectado desde {addr}.\n" + cFinColor)
+    fGestionarCliente(client_socket)
