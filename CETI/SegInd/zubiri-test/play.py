@@ -313,15 +313,25 @@ def fApagarSalida(vHost, salida, nombre):
   vSocketConPLC.close()
 
 
-def print_output(stdscr, message):
-  """Imprimir mensajes en una ventana centrada, adaptando su tamaño dinámicamente."""
+import textwrap
+
+def fImprimirSalida(stdscr, message):
+  """Imprimir mensajes en una ventana centrada con word wrap si la línea es más larga que la ventana."""
   height, width = stdscr.getmaxyx()
   output_lines = message.strip().split("\n")
 
-  # Determinar el alto y ancho necesario
-  output_win_height = min(len(output_lines) + 4, height - 2)
-  output_win_width = min(max(len(line) for line in output_lines) + 4, width - 2)
+  # Ancho máximo del contenido (restando el borde)
+  content_width = min(width - 4, 100)
 
+  # Word wrap manual
+  wrapped_lines = []
+  for line in output_lines:
+    wrapped = textwrap.wrap(line, width=content_width)
+    wrapped_lines.extend(wrapped if wrapped else [""])
+
+  # Altura de ventana
+  output_win_height = min(len(wrapped_lines) + 4, height - 2)
+  output_win_width = content_width + 4
   start_y = max(0, (height - output_win_height) // 2)
   start_x = max(0, (width - output_win_width) // 2)
 
@@ -330,19 +340,17 @@ def print_output(stdscr, message):
   output_win.clear()
   output_win.border()
 
-  # Mostrar el contenido
-  visible_lines = output_lines[-(output_win_height - 4):]
+  # Mostrar líneas ajustadas
+  visible_lines = wrapped_lines[-(output_win_height - 4):]
   for i, line in enumerate(visible_lines):
-    output_win.addstr(i + 1, 2, line[:output_win_width - 4])
+    output_win.addstr(i + 1, 2, line.ljust(content_width)[:content_width])
 
-  # Instrucción para continuar
   output_win.addstr(output_win_height - 2, 2, "Presiona una tecla para continuar...")
 
   output_win.refresh()
   output_win.getch()
   output_win.clear()
   output_win.refresh()
-
 
 
 def fMenu(stdscr, vHost):
@@ -463,7 +471,7 @@ def fMenu(stdscr, vHost):
 
       output_message = sys.stdout.getvalue()
       sys.stdout = old_stdout
-      print_output(stdscr, output_message)
+      fImprimirSalida(stdscr, output_message)
 
   stdscr.clear()
   stdscr.addstr(0, 0, "Saliendo del programa...")
