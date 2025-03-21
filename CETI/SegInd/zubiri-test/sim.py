@@ -15,10 +15,8 @@
 #   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SegInd/zubiri-test/sim.py | nano -
 # ----------
 
-
 import socket
 import struct
-
 
 # Definir constantes para colores
 cColorAzul =      '\033[0;34m'
@@ -41,8 +39,36 @@ def fObtenerIPLocal():
   return vIPLocal
 
 
+# Función principal para gestionar las conexiones de clientes
+def fGestionarCliente(pSocketConCliente):
+  try:
+    # Recibir el primer payload para determinar qué tipo de comunicación es
+    vPrimerPayload = pSocketConCliente.recv(1024)
+    if not vPrimerPayload:
+      return  # Desconexión del cliente
+    
+    vPrimerPayloadHex = vPrimerPayload.hex()
+    
+    # Determinar el tipo de comunicación y derivar a la función correspondiente
+    if vPrimerPayloadHex == '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a':
+      print(cColorAzulClaro + "\n    Iniciando comunicación para encendido/apagado del PLC\n" + cFinColor)
+      fGestEncApagPLC(pSocketConCliente, vPrimerPayload)
+    elif vPrimerPayloadHex == '0300001611e00000cfc400c0010ac1020100c2020101':
+      print(cColorAzulClaro + "\n    Iniciando comunicación para encendido/apagado de salida\n" + cFinColor)
+      fGestEncApagSalida(pSocketConCliente, vPrimerPayload)
+    else:
+      print("      Envió payload desconocido:")
+      print(f"        {vPrimerPayloadHex}")
+      # Aquí se podría añadir lógica para otros tipos de comunicación en el futuro
+
+  except Exception as e:
+    print(f"Error en comunicación: {e}")
+  finally:
+    pSocketConCliente.close()
+    print(cColorRojo + "\n    Cliente desconectado.\n" + cFinColor)
+
 # Función para gestionar el encendido y apagado del PLC
-def fGestEncApagadoPLC(pSocketConCliente, pPrimerPayload):
+def fGestEncApagPLC(pSocketConCliente, pPrimerPayload):
   vEstadoEncendido = 0
   
   # Procesar el primer payload
@@ -193,36 +219,6 @@ def fGestEncApagSalida(pSocketConCliente, pPrimerPayload):
 
   except Exception as e:
     print(f"Error en comunicación (encendido/apagado salida): {e}")
-
-
-# Función principal para gestionar las conexiones de clientes
-def fGestionarCliente(pSocketConCliente):
-  try:
-    # Recibir el primer payload para determinar qué tipo de comunicación es
-    vPrimerPayload = pSocketConCliente.recv(1024)
-    if not vPrimerPayload:
-      return  # Desconexión del cliente
-    
-    vPrimerPayloadHex = vPrimerPayload.hex()
-    
-    # Determinar el tipo de comunicación y derivar a la función correspondiente
-    if vPrimerPayloadHex == '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a':
-      print(cColorAzulClaro + "\n    Iniciando comunicación para encendido/apagado del PLC\n" + cFinColor)
-      fGestEncApagadoPLC(pSocketConCliente, vPrimerPayload)
-    elif vPrimerPayloadHex == '0300001611e00000cfc400c0010ac1020100c2020101':
-      print(cColorAzulClaro + "\n    Iniciando comunicación para encendido/apagado de salida\n" + cFinColor)
-      fGestEncApagSalida(pSocketConCliente, vPrimerPayload)
-    else:
-      print("      Envió payload desconocido:")
-      print(f"        {vPrimerPayloadHex}")
-      # Aquí se podría añadir lógica para otros tipos de comunicación en el futuro
-
-  except Exception as e:
-    print(f"Error en comunicación: {e}")
-  finally:
-    pSocketConCliente.close()
-    print(cColorRojo + "\n    Cliente desconectado.\n" + cFinColor)
-
 
 # Obtener IP local
 vIPLocal = fObtenerIPLocal()
