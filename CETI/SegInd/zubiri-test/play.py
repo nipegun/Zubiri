@@ -122,7 +122,7 @@ def fEncenderPLC(pHost):
       vSocketConPLC.close()
       return
     data_hex = data.hex()
-    print(f"Respuesta a vPayloadEncender: {data_hex}")
+    print(f"Respuesta: {data_hex}")
     # Verificar que la respuesta sea la esperada
     if data_hex != vRespPayloadEncender:
       print("La respuesta a vPayloadEncender no es la esperada. Abortando.")
