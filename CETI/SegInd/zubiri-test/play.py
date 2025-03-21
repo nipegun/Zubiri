@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Pongo a disposición pública este script bajo el término de "software de dominio público".
-# Puedes hacer lo que quieras con él porque es libre de verdad; no libre con condiciones como las licencias GNU y otras patrañas similarevSocketConPLC.
+# Puedes hacer lo que quieras con él porque es libre de verdad; no libre con condiciones como las licencias GNU y otras patrañas similares.
 # Si se te llena la boca hablando de libertad entonces hazlo realmente libre.
 # No tienes que aceptar ningún tipo de términos de uso o licencia para utilizarlo o modificarlo porque va sin CopyLeft.
 
@@ -256,7 +256,7 @@ def fEncenderSalida(vHost, salida, nombre):
 
   vSolCommCOTP = '0300001611e00000cfc400c0010ac1020100c2020101'
   vSolCommS7 =   '0300001902f08032010000000000080000f0000008000803c0'
-  cSalidavSocketConPLC = {
+  cSalidas = {
     '%Q0.0':  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010100',
     '%Q0.1':  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010100',
     '%Q0.2':  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010100',
@@ -288,7 +288,7 @@ def fApagarSalida(vHost, salida, nombre):
 
   vSolCommCOTP = '0300001611e00000cfc400c0010ac1020100c2020101'
   vSolCommS7 = '0300001902f08032010000000000080000f0000008000803c0'
-  comandovSocketConPLC = {
+  comandos = {
     '%Q0.0':  '0300002502f08032010000001f000e00060501120a10010001000082000000000300010000',
     '%Q0.1':  '0300002502f08032010000001f000e00060501120a10010001000082000001000300010000',
     '%Q0.2':  '0300002502f08032010000001f000e00060501120a10010001000082000002000300010000',
@@ -321,11 +321,11 @@ def print_output(stdscr, message):
   start_y = (height // 2) - (output_win_height // 2)
   start_x = (width // 2) - (output_win_width // 2)
 
-  output_win = cursevSocketConPLC.newwin(output_win_height, output_win_width, start_y, start_x)
+  output_win = curses.newwin(output_win_height, output_win_width, start_y, start_x)
   output_win.clear()
   output_win.border()
 
-  output_linevSocketConPLC = message.split("\n")[-(output_win_height - 4):]
+  output_lines = message.split("\n")[-(output_win_height - 4):]
   for i, line in enumerate(output_lines):
     output_win.addstr(i + 1, 2, line[:output_win_width - 4])
 
@@ -339,9 +339,9 @@ def print_output(stdscr, message):
 
 
 def fMenu(stdscr, vHost):
-  cursevSocketConPLC.curs_set(0)
+  curses.curs_set(0)
   stdscr.keypad(True)
-  cursevSocketConPLC.init_pair(1, cursevSocketConPLC.COLOR_BLACK, cursevSocketConPLC.COLOR_WHITE)
+  curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
   menu = [
     "Encender PLC", "  Apagar PLC",
@@ -378,28 +378,28 @@ def fMenu(stdscr, vHost):
       x = width // 2 - len(row) // 2
       y = height // 2 - len(menu) // 2 + idx
       if idx == current_row:
-        stdscr.attron(cursevSocketConPLC.color_pair(1))
+        stdscr.attron(curses.color_pair(1))
         stdscr.addstr(y, x, row)
-        stdscr.attroff(cursevSocketConPLC.color_pair(1))
+        stdscr.attroff(curses.color_pair(1))
       else:
         stdscr.addstr(y, x, row)
 
     stdscr.refresh()
     key = stdscr.getch()
 
-    if key == cursevSocketConPLC.KEY_UP and current_row > 0:
+    if key == curses.KEY_UP and current_row > 0:
       current_row -= 1
-    elif key == cursevSocketConPLC.KEY_DOWN and current_row < len(menu) - 1:
+    elif key == curses.KEY_DOWN and current_row < len(menu) - 1:
       current_row += 1
-    elif key == cursevSocketConPLC.KEY_HOME:
+    elif key == curses.KEY_HOME:
       current_row = 0
-    elif key == cursevSocketConPLC.KEY_END:
+    elif key == curses.KEY_END:
       current_row = len(menu) - 1
-    elif key == cursevSocketConPLC.KEY_PPAGE:
+    elif key == curses.KEY_PPAGE:
       current_row = max(0, current_row - 5)
-    elif key == cursevSocketConPLC.KEY_NPAGE:
+    elif key == curses.KEY_NPAGE:
       current_row = min(len(menu) - 1, current_row + 5)
-    elif key in [cursevSocketConPLC.KEY_ENTER, 10, 13]:
+    elif key in [curses.KEY_ENTER, 10, 13]:
       if menu[current_row] == "Salir":
         break
 
@@ -469,7 +469,7 @@ if __name__ == "__main__":
     if not fDeterminarSiIPoFQDN(vHost):
       print(cColorRojo + "\n  La dirección proporcionada no es una IP válida ni un FQDN.\n" + cFinColor)
       sys.exit(1)
-    cursevSocketConPLC.wrapper(lambda stdscr: fMenu(stdscr, vHost))
+    curses.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
     print(cColorRojo + "\n  No has indicado cual es la IP del PLC.\n" + cFinColor)
     print("  Uso correcto: python3 [RutaAlScript.py] [IPDelPLC] \n")
