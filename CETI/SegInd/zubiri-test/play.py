@@ -314,28 +314,35 @@ def fApagarSalida(vHost, salida, nombre):
 
 
 def print_output(stdscr, message):
-  """ Función para imprimir mensajes en una ventana centrada en la pantalla. """
+  """Imprimir mensajes en una ventana centrada, adaptando su tamaño dinámicamente."""
   height, width = stdscr.getmaxyx()
-  output_win_height = 10
-  output_win_width = width // 2
-  start_y = (height // 2) - (output_win_height // 2)
-  start_x = (width // 2) - (output_win_width // 2)
+  output_lines = message.strip().split("\n")
 
+  # Determinar el alto y ancho necesario
+  output_win_height = min(len(output_lines) + 4, height - 2)
+  output_win_width = min(max(len(line) for line in output_lines) + 4, width - 2)
+
+  start_y = max(0, (height - output_win_height) // 2)
+  start_x = max(0, (width - output_win_width) // 2)
+
+  # Crear ventana
   output_win = curses.newwin(output_win_height, output_win_width, start_y, start_x)
   output_win.clear()
   output_win.border()
 
-  output_lines = message.split("\n")[-(output_win_height - 4):]
-  for i, line in enumerate(output_lines):
+  # Mostrar el contenido
+  visible_lines = output_lines[-(output_win_height - 4):]
+  for i, line in enumerate(visible_lines):
     output_win.addstr(i + 1, 2, line[:output_win_width - 4])
 
-  #output_win.addstr(len(output_lines) + 1, 2, " ")
-  output_win.addstr(len(output_lines) + 2, 2, "Presiona una tecla para continuar...")
+  # Instrucción para continuar
+  output_win.addstr(output_win_height - 2, 2, "Presiona una tecla para continuar...")
 
   output_win.refresh()
   output_win.getch()
   output_win.clear()
   output_win.refresh()
+
 
 
 def fMenu(stdscr, vHost):
