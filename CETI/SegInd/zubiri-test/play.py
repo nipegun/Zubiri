@@ -67,6 +67,7 @@ def fEncenderPLC(pHost):
 
     # 1. Enviar primer payload: vPayloadSolComCOTP
     vSocketConPLC.send(bytearray.fromhex(vPayloadSolComCOTP))
+    print(f"Solicitud: {vPayloadSolComCOTP}")
     data = vSocketConPLC.recv(1024)
     if not data:
       print(f"No se recibió respuesta al enviar {vPayloadSolComCOTP}")
@@ -82,6 +83,7 @@ def fEncenderPLC(pHost):
 
     # 2. Enviar segundo payload: vPayloadSolComS7
     vSocketConPLC.send(bytearray.fromhex(vPayloadSolComS7))
+    print(f"Solicitud: {vPayloadSolComS7}")
     data = vSocketConPLC.recv(1024)
     if not data:
       print(f"No se recibió respuesta al enviar {vPayloadSolComS7}")
@@ -97,6 +99,7 @@ def fEncenderPLC(pHost):
 
     # 3. Enviar tercer payload: vPayloadAntiReplay
     vSocketConPLC.send(bytearray.fromhex(vPayloadAntiReplay))
+    print(f"Solicitud: {vPayloadAntiReplay}")
     data = vSocketConPLC.recv(1024)
     if not data:
       print("No se recibió respuesta al enviar vPayloadAntiReplay")
@@ -112,6 +115,7 @@ def fEncenderPLC(pHost):
 
     # 4. Enviar cuarto payload: vPayloadEncender
     vSocketConPLC.send(bytearray.fromhex(vPayloadEncender))
+    print(f"Solicitud: {vPayloadEncender}")
     data = vSocketConPLC.recv(1024)
     if not data:
       print(f"No se recibió respuesta al enviar {vPayloadEncender}")
