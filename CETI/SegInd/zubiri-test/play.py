@@ -403,8 +403,8 @@ def fMenu(stdscr, vHost):
       if menu[current_row] == "Salir":
         break
 
-      old_stdout = syvSocketConPLC.stdout
-      syvSocketConPLC.stdout = io.StringIO()
+      old_stdout = sys.stdout
+      sys.stdout = io.StringIO()
 
       try:
         if menu[current_row] == "Encender PLC":
@@ -454,8 +454,8 @@ def fMenu(stdscr, vHost):
       except Exception as e:
         print(f"Error: {e}")
 
-      output_message = syvSocketConPLC.stdout.getvalue()
-      syvSocketConPLC.stdout = old_stdout
+      output_message = sys.stdout.getvalue()
+      sys.stdout = old_stdout
       print_output(stdscr, output_message)
 
   stdscr.clear()
@@ -464,11 +464,11 @@ def fMenu(stdscr, vHost):
 
 
 if __name__ == "__main__":
-  if len(syvSocketConPLC.argv) > 1:
-    vHost = syvSocketConPLC.argv[1]
+  if len(sys.argv) > 1:
+    vHost = sys.argv[1]
     if not fDeterminarSiIPoFQDN(vHost):
       print(cColorRojo + "\n  La dirección proporcionada no es una IP válida ni un FQDN.\n" + cFinColor)
-      syvSocketConPLC.exit(1)
+      sys.exit(1)
     cursevSocketConPLC.wrapper(lambda stdscr: fMenu(stdscr, vHost))
   else:
     print(cColorRojo + "\n  No has indicado cual es la IP del PLC.\n" + cFinColor)
