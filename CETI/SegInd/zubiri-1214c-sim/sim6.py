@@ -79,7 +79,7 @@ def fGestEncApagPLC(pSocketConCliente, pPrimerPayload):
     print(f"        Tipo de solicitud: " + vTipoDeSolicitud)
     vRespuesta = bytearray.fromhex('030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553')
     pSocketConCliente.send(vRespuesta)
-    print(f"        Respuesta: " +  str(vRespuesta.hex()))
+    print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
   
   # Continuar recibiendo y procesando los demás payloads
   try:
@@ -96,7 +96,7 @@ def fGestEncApagPLC(pSocketConCliente, pPrimerPayload):
         print(f"        Tipo de solicitud: " + vTipoDeSolicitud)
         vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
         pSocketConCliente.send(vRespuesta)
-        print(f"        Respuesta: " +  str(vRespuesta.hex()))
+        print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
         vRespAlChallenge = pSocketConCliente.recv(1024)
         vRespuestaAlChallengeHEX = vRespAlChallenge.hex()
 
@@ -106,7 +106,7 @@ def fGestEncApagPLC(pSocketConCliente, pPrimerPayload):
           print(f"        Tipo de solicitud: " + vTipoDeSolicitud)
           vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
           pSocketConCliente.send(vRespuesta)
-          print(f"        Respuesta: " +  str(vRespuesta.hex()))
+          print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
 
       elif vPayloadHex == '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000':
         # Respuesta al cuarto payload
@@ -115,7 +115,7 @@ def fGestEncApagPLC(pSocketConCliente, pPrimerPayload):
         print(f"        Tipo de solicitud: " + vTipoDeSolicitud)
         vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
         pSocketConCliente.send(vRespuesta)
-        print(f"        Respuesta: " +  str(vRespuesta.hex()))
+        print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
         print(cColorVerde + "\n      PLC encendido correctamente\n" + cFinColor)
 
       elif vPayloadHex == '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000':
@@ -125,7 +125,7 @@ def fGestEncApagPLC(pSocketConCliente, pPrimerPayload):
         print(f"        Tipo de solicitud: " + vTipoDeSolicitud)
         vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
         pSocketConCliente.send(vRespuesta)
-        print(f"        Respuesta: " +  str(vRespuesta.hex()))
+        print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
         print(cColorVerde + "\n      PLC encendido correctamente\n" + cFinColor)
 
       # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
