@@ -253,7 +253,7 @@ def fEncApPLC(pHostPLC, pAction):
     vRespuestaHEX = vResp.hex()
     print(f"Respuesta: {vRespuestaHEX}")
     # Verificar que la respuesta sea la esperada
-    if vRespuestaHEX != vRespSolComS7ConChallenge:
+    if vRespuestaHEX != vRespSolComCOTP:
       print(f"La respuesta a {vPayloadSolComCOTP} no es la esperada. Abortando...")
       vSocketConPLC.close()
       return
