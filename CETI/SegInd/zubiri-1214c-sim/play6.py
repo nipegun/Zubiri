@@ -243,14 +243,14 @@ def fEncApPLC(pHostPLC, pAction):
     print(f"Solicitud: {vPayloadSolComCOTP}")
     vResp = vSocketConPLC.recv(1024)
     if not vResp:
-      print(f"No se recibió respuesta al enviar {vPayloadSolComCOTP}")
+      print(f"No se recibió respuesta al enviar {vPayloadSolComCOTP} \n")
       vSocketConPLC.close()
       return
     vRespuestaHEX = vResp.hex()
-    print(f"Respuesta: {vRespuestaHEX}")
+    print(f"Respuesta: {vRespuestaHEX} \n")
     # Verificar que la respuesta sea la esperada
     if vRespuestaHEX != vRespSolComCOTP:
-      print(f"La respuesta a {vPayloadSolComCOTP} no es la esperada. Abortando...")
+      print(f"La respuesta a {vPayloadSolComCOTP} no es la esperada. Abortando... \n")
       vSocketConPLC.close()
       return
 
@@ -259,14 +259,14 @@ def fEncApPLC(pHostPLC, pAction):
     print(f"Solicitud: {vPayloadSolComS7}")
     vResp = vSocketConPLC.recv(1024)
     if not vResp:
-      print(f"No se recibió respuesta al enviar {vPayloadSolComS7}")
+      print(f"No se recibió respuesta al enviar {vPayloadSolComS7} \n")
       vSocketConPLC.close()
       return
     vRespuestaHEX = vResp.hex()
-    print(f"Respuesta: {vRespuestaHEX}")
+    print(f"Respuesta: {vRespuestaHEX} \n")
     # Verificar que la respuesta sea la esperada
     if vRespuestaHEX != vRespSolComS7ConChallenge:
-      print(f"La respuesta a {vPayloadSolComS7} no es la esperada. Abortando.")
+      print(f"La respuesta a {vPayloadSolComS7} no es la esperada. Abortando. \n")
       vSocketConPLC.close()
       return
 
@@ -276,14 +276,14 @@ def fEncApPLC(pHostPLC, pAction):
     print(f"Solicitud: {vPayloadConAntiReplay}")
     vResp = vSocketConPLC.recv(1024)
     if not vResp:
-      print(f"No se recibió respuesta al enviar {vPayloadConAntiReplay}")
+      print(f"No se recibió respuesta al enviar {vPayloadConAntiReplay} \n")
       vSocketConPLC.close()
       return
     vRespuestaHEX = vResp.hex()
-    print(f"Respuesta: {vRespuestaHEX}")
+    print(f"Respuesta: {vRespuestaHEX} \n")
     # Verificar que la respuesta sea la esperada
     if vRespuestaHEX != vRespAntiReplayResuelto:
-      print(f"La respuesta a {vPayloadConAntiReplay} no es la esperada. Abortando.")
+      print(f"La respuesta a {vPayloadConAntiReplay} no es la esperada. Abortando. \n")
       vSocketConPLC.close()
       return
 
@@ -294,14 +294,14 @@ def fEncApPLC(pHostPLC, pAction):
       print(f"Solicitud: {vPayloadEncenderConAntiReplay}")
       vResp = vSocketConPLC.recv(1024)
       if not vResp:
-        print(f"No se recibió respuesta al enviar {vPayloadEncenderConAntiReplay}")
+        print(f"No se recibió respuesta al enviar {vPayloadEncenderConAntiReplay} \n")
         vSocketConPLC.close()
         return
       vRespuestaHEX = vResp.hex()
-      print(f"Respuesta: {vRespuestaHEX}")
+      print(f"Respuesta: {vRespuestaHEX} \n")
       # Verificar que la respuesta sea la esperada
       if vRespuestaHEX != vRespEncenderPLC:
-        print(f"La respuesta a {vPayloadEncenderConAntiReplay} no es la esperada. Abortando.")
+        print(f"La respuesta a {vPayloadEncenderConAntiReplay} no es la esperada. Abortando. \n")
         vSocketConPLC.close()
         return
     elif pAction == "Apagar":
@@ -310,18 +310,18 @@ def fEncApPLC(pHostPLC, pAction):
       print(f"Solicitud: {vPayloadApagarConAntiReplay}")
       vResp = vSocketConPLC.recv(1024)
       if not vResp:
-        print(f"No se recibió respuesta al enviar {vPayloadApagarConAntiReplay}")
+        print(f"No se recibió respuesta al enviar {vPayloadApagarConAntiReplay} \n")
         vSocketConPLC.close()
         return
       vRespuestaHEX = vResp.hex()
-      print(f"Respuesta: {vRespuestaHEX}")
+      print(f"Respuesta: {vRespuestaHEX} \n")
       # Verificar que la respuesta sea la esperada
       if vRespuestaHEX != vRespApagarPLC:
-        print(f"La respuesta a {vPayloadApagarConAntiReplay} no es la esperada. Abortando.")
+        print(f"La respuesta a {vPayloadApagarConAntiReplay} no es la esperada. Abortando. \n")
         vSocketConPLC.close()
         return
     else:
-      print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC.")
+      print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC. \n")
       vSocketConPLC.close()
 
   except Exception as e:
