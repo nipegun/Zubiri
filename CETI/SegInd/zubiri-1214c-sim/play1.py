@@ -328,12 +328,8 @@ def fEncApPLC(pHostPLC, pAction):
       print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC.")
       vSocketConPLC.close()
 
-  except:
-    ptin('')
-
-
-
-
+  except Exception as e:
+    print(f"Error: {e}")
 
 
 def fConectar(pHost):
