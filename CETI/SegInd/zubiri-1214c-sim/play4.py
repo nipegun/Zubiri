@@ -208,7 +208,7 @@ def fCalcValorAntiReplay(pPayloadDeRespSolS7Comm):
   return vAntiReplay
 
 def fInyectarAntiReplayEnPayload(pPayload):
-  vPayloadAInyectar = pPayload
+  vPayloadAInyectar = bytearray(pPayload)
   vChallenge = vPayloadAInyectar.hex()[48:50]       # Extraer el challenge
   vAntiReplay = int(vChallenge, 16) + int("80", 16) # Calcular el valor del anti-replay
   vAntiReplayHex = f"{vAntiReplay:02x}"             # Convertir el valor vAntiReplay en un string de 2 caracteres hex con relleno cero
