@@ -51,7 +51,7 @@
   git clone https://github.com/nipegun/Zubiri.git
 
 # Renombar y mover carpetas
-  mv ~/zubiri/CETI/SegInd/zubiri-1214c-sim/ ~/
+  mv ~/zubiri/CETI/SeguridadIndustrial/zubiri-1214c-sim/ ~/
   rm -rf ~/zubiri/
 
 # Asignar permisos de ejecución a los scripts
