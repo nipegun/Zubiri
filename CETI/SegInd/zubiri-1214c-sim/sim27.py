@@ -64,7 +64,7 @@ def fGestionarCliente(pSocketConCliente):
         vTipoDeSolicitud = 'Solicitud de comunicación S7comm para encendido del PLC.'
         print(f"      Envió: {vPayloadEnHex}")
         print(f"        Tipo de payload: " + vTipoDeSolicitud)
-        vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
+        vRespuesta = bytearray.fromhex('0300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
         pSocketConCliente.send(vRespuesta)
         print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
 
@@ -82,11 +82,11 @@ def fGestionarCliente(pSocketConCliente):
           # Procesar payload 4
           vPayload4 = pSocketConCliente.recv(1024)
           vPayloadEnHex = vPayload4.hex()
-          if vPayloadEnHex == '0300004302f0807202003431000004f200000010000003b43400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000':
+          if vPayloadEnHex   == '0300004302f0807202003431000004f200000010000003b43400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000':
             vTipoDeSolicitud = 'Comando S7CommPlus con anti-replay, para encendido del PLC.'
             print(f"      Envió: {vPayloadEnHex}")
             print(f"        Tipo de payload: " + vTipoDeSolicitud)
-            vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
+            vRespuesta = bytearray.fromhex('0300001e02f0807202000f32000004f20000001034000000000072020000')
             pSocketConCliente.send(vRespuesta)
             print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
             print(cColorVerde + "\n      PLC encendido correctamente\n" + cFinColor)
@@ -94,7 +94,7 @@ def fGestionarCliente(pSocketConCliente):
             vTipoDeSolicitud = 'Comando S7CommPlus con anti-replay, para apagado del PLC.'
             print(f"      Envió: {vPayloadEnHex}")
             print(f"        Tipo de payload: " + vTipoDeSolicitud)
-            vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
+            vRespuesta = bytearray.fromhex('0300001e02f0807202000f32000004f20000001034000000000072020000')
             pSocketConCliente.send(vRespuesta)
             print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
             print(cColorVerde + "\n      PLC apagado correctamente\n" + cFinColor)
@@ -106,7 +106,7 @@ def fGestionarCliente(pSocketConCliente):
           vTipoDeSolicitud = 'Comando S7CommPlus con anti-replay, para encendido del PLC.'
           print(f"      Envió: {vPayloadEnHex}")
           print(f"        Tipo de payload: " + vTipoDeSolicitud)
-          vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
+          vRespuesta = bytearray.fromhex('0300001e02f0807202000f32000004f20000001034000000000072020000')
           pSocketConCliente.send(vRespuesta)
           print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
           print(cColorVerde + "\n      PLC encendido correctamente\n" + cFinColor)
@@ -114,7 +114,7 @@ def fGestionarCliente(pSocketConCliente):
           vTipoDeSolicitud = 'Comando S7CommPlus con anti-replay, para apagado del PLC.'
           print(f"      Envió: {vPayloadEnHex}")
           print(f"        Tipo de payload: " + vTipoDeSolicitud)
-          vRespuesta = bytearray.fromhex('0361f89bc8f607501810004f8800000300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
+          vRespuesta = bytearray.fromhex('0300001e02f0807202000f32000004f20000001034000000000072020000')
           pSocketConCliente.send(vRespuesta)
           print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
           print(cColorVerde + "\n      PLC apagado correctamente\n" + cFinColor)
