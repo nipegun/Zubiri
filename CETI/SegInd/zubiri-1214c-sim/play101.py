@@ -252,6 +252,11 @@ def fEncApagPLC(pHostPLC, pAction):
 
   # Preparar payload de respuesta al challenge
   vPayloadParaResponderAlChallenge = fInsertarAntiReplay(vPayloadParaResponderAlChallenge)
+  print(f"Enviando respuesta al challenge: {vPayloadParaResponderAlChallenge.hex()}")
+  vSocketConPLC.send(vPayloadParaResponderAlChallenge)
+  vPayloadDeRespAlChallenge = vSocketConPLC.recv(1024)
+  print(f"Respuesta: {vPayloadDeRespAlChallenge.hex()} \n")
+
   if pAction == "Encender":
     # Inyectar anti-replay al payload de encender y enviarlo 
     vPayloadParaEncenderElPLC = fInsertarAntiReplay(vPayloadParaEncenderElPLC)
