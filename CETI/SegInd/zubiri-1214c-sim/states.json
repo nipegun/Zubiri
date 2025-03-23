@@ -1,0 +1,38 @@
+{
+  "plc": {
+    "power_status": "unknown",
+    "firmware": "4.0"
+  },
+  "outputs": {
+    "%Q0.0": "unknown",
+    "%Q0.1": "unknown",
+    "%Q0.2": "unknown",
+    "%Q0.3": "unknown",
+    "%Q0.4": "unknown",
+    "%Q0.5": "unknown",
+    "%Q0.6": "unknown",
+    "%Q0.7": "unknown",
+    "%Q1.0": "unknown",
+    "%Q1.1": "unknown"
+  },
+  "inputs": {
+    "%I0.0": "unknown",
+    "%I0.1": "unknown",
+    "%I0.2": "unknown",
+    "%I0.3": "unknown",
+    "%I0.4": "unknown",
+    "%I0.5": "unknown",
+    "%I0.6": "unknown",
+    "%I0.7": "unknown",
+    "%I1.0": "unknown",
+    "%I1.1": "unknown",
+    "%I1.2": "unknown",
+    "%I1.3": "unknown",
+    "%I1.4": "unknown",
+    "%I1.5": "unknown"
+  },
+  "analog_inputs": {
+    "%A0.0": "unknown",
+    "%A0.1": "unknown"
+  }
+}
