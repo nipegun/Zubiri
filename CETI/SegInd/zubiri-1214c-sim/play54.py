@@ -238,9 +238,11 @@ def fEncApagPLC(pHostPLC, pAction):
   vSocketConPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   vSocketConPLC.connect((pHostPLC, 102))
   # Enviar payload de solicitud de comunicacion COTP
+  print(f"Enviando solicitud de comunicación COTP: {vPayloadSolComCOTP.hex()}")
   vSocketConPLC.send(vPayloadSolComCOTP)
   vPayloadDeRespSolComCOTP = vSocketConPLC.recv(1024)
   # Enviar payload de solicitud de comunicación S7Comm
+  print(f"Enviando solicitud de comunicación S7Comm: {vPayloadSolComS7.hex()}")
   vSocketConPLC.send(vPayloadSolComS7)
   vPayloadDeRespSolComS7 = vSocketConPLC.recv(1024)
   # Preparar payload de respuesta al challenge
@@ -262,6 +264,9 @@ def fEncApagPLC(pHostPLC, pAction):
   else:
     print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC.")
     vSocketConPLC.close()
+
+
+
 
 
 def fConectar(pHost):
