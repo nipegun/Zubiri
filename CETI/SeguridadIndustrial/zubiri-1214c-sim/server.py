@@ -17,32 +17,32 @@ if os.geteuid() != 0:
   print("Este script necesita privilegios de superusuario (sudo).")
   os.execvp("sudo", ["sudo"] + ["python3"] + sys.argv)
 
-STATES_FILE = "states.json"
-PORT_SOCKET = 102
-PORT_HTTP = 8000
+vArchivoDeEstados = "states.json"
+vPuertoS7 = 102
+vPuertoWeb = 80
 
 # Cerrar cualquier socket abierto previamente
-def close_existing_socket(port):
-  with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+def fCerrarSocketExistente(port):
+  with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as vSocketExistente:
+    vSocketExistente.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     try:
-      s.bind(("0.0.0.0", port))
+      vSocketExistente.bind(("0.0.0.0", port))
     except OSError:
       print(f"Cerrando socket en el puerto {port}...")
       os.system(f"fuser -k {port}/tcp")
       os.system(f"lsof -ti:{port} | xargs kill -9")
 
 # Cerrar sockets abiertos antes de iniciar el servidor
-close_existing_socket(PORT_SOCKET)
-close_existing_socket(PORT_HTTP)
+fCerrarSocketExistente(vPuertoS7)
+fCerrarSocketExistente(vPuertoWeb)
 
 # Cargar estados desde el archivo si existe, si no, crearlo
-if os.path.exists(STATES_FILE):
-  with open(STATES_FILE, "r") as f:
+if os.path.exists(vArchivoDeEstados):
+  with open(vArchivoDeEstados, "r") as f:
     try:
       states = json.load(f)
     except json.JSONDecodeError:
-      print("\n  Error: El archivo states.json no es un JSON válido. Se creará de nuevo.")
+      print(f"\n  Error: El archivo {vArchivoDeEstados} no es un JSON válido. Se creará de nuevo.")
       states = {}
 else:
   states = {}
@@ -59,11 +59,11 @@ states.setdefault("inputs", {
 states.setdefault("analog_inputs", {f"%A0.{i}": "unknown" for i in range(2)})
 
 # Guardar el JSON actualizado si se crearon valores nuevos
-with open(STATES_FILE, "w") as f:
+with open(vArchivoDeEstados, "w") as f:
   json.dump(states, f, indent=2)
 
 # Mapeo de payloads finales a estados SOLO para outputs
-payload_mapping = {
+dPayloadsFinales = {
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000000000300010100'): ("outputs", "%Q0.0", "on"),
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000001000300010100'): ("outputs", "%Q0.1", "on"),
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000002000300010100'): ("outputs", "%Q0.2", "on"),
@@ -104,12 +104,12 @@ def debug_hex(data):
     return f"HEX: {data.hex()}"
 
 # Servidor de sockets mejorado
-def socket_server():
+def fServirS7():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-  s.bind(("0.0.0.0", PORT_SOCKET))
+  s.bind(("0.0.0.0", vPuertoS7))
   s.listen(5)
-  print("\n  Servidor de sockets esperando conexiones en el puerto 102...")
+  print(f"\n  Servidor de sockets esperando conexiones en el puerto {vPuertoS7}...")
 
   while True:
     conn, addr = s.accept()
@@ -129,9 +129,9 @@ def socket_server():
         del client_sessions[cid]
 
     # Manejar la conexión en un hilo separado
-    threading.Thread(target=handle_client, args=(conn, addr)).start()
+    threading.Thread(target=fGestionarCliente, args=(conn, addr)).start()
 
-def handle_client(conn, addr):
+def fGestionarCliente(conn, addr):
   client_id = f"{addr[0]}:{addr[1]}"
   print(f"\n  Nueva conexión desde {client_id}")
 
@@ -174,11 +174,11 @@ def handle_client(conn, addr):
 
       # Tercera posición en la secuencia
       elif sequence_position == 3:
-        if data in payload_mapping:
-          category, key, state = payload_mapping[data]
+        if data in dPayloadsFinales:
+          category, key, state = dPayloadsFinales[data]
           states[category][key] = state
           # Guardar el cambio de estado en el archivo JSON
-          with open(STATES_FILE, "w") as f:
+          with open(vArchivoDeEstados, "w") as f:
             json.dump(states, f, indent=2)
           print(f"  [STATE CHANGE] {category} {key} -> {state}")
           response = data  # Responder con eco para payloads finales
@@ -192,12 +192,12 @@ def handle_client(conn, addr):
         elif data == bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'):
           response = bytes.fromhex('0300001e02f0807202000f32000004f20000001034000000000072020000')
         # También verificar si es un payload que cambia estados
-        elif data in payload_mapping:
-          category, key, state = payload_mapping[data]
+        elif data in dPayloadsFinales:
+          category, key, state = dPayloadsFinales[data]
           states[category][key] = state
 
           # Guardar el cambio de estado en el archivo JSON
-          with open(STATES_FILE, "w") as f:
+          with open(vArchivoDeEstados, "w") as f:
             json.dump(states, f, indent=2)
 
           print(f"  [STATE CHANGE] {category} {key} -> {state}")
@@ -207,12 +207,12 @@ def handle_client(conn, addr):
           response = data  # Echo si no coincide
 
       # Verificar si es un payload final después de la secuencia
-      elif data in payload_mapping:
-        category, key, state = payload_mapping[data]
+      elif data in dPayloadsFinales:
+        category, key, state = dPayloadsFinales[data]
         states[category][key] = state
 
         # Guardar el cambio de estado en el archivo JSON
-        with open(STATES_FILE, "w") as f:
+        with open(vArchivoDeEstados, "w") as f:
           json.dump(states, f, indent=2)
 
         print(f"  [STATE CHANGE] {category} {key} -> {state}")
@@ -240,7 +240,7 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
   def do_GET(self):
     if self.path == "/states" or self.path == "/api/json":
       try:
-        with open(STATES_FILE, "r") as f:
+        with open(vArchivoDeEstados, "r") as f:
           content = f.read()
         self.send_response(200)
         self.send_header("Content-type", "application/json")
@@ -273,9 +273,8 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 # Iniciar servidores
 if __name__ == "__main__":
-  print("\n  Iniciando servidor PLC con manejo de secuencias...")
-  threading.Thread(target=socket_server, daemon=True).start()
-  httpd = http.server.ThreadingHTTPServer(("0.0.0.0", PORT_HTTP), SimpleHTTPRequestHandler)
+  threading.Thread(target=fServirS7, daemon=True).start()
+  httpd = http.server.ThreadingHTTPServer(("0.0.0.0", vPuertoWeb), SimpleHTTPRequestHandler)
   print("\n  Servidor web en http://localhost:8000")
   print("  Para ver estados: http://localhost:8000/states")
   print("  Para ver sesiones activas: http://localhost:8000/sessions\n")
