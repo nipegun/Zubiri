@@ -110,9 +110,9 @@ def fMenu(stdscr, vHost):
 
       try:
         if menu[current_row] == "Encender PLC":
-          fEncApPLC(vHost, "Encender")
+          fEncApagPLC(vHost, "Encender")
         elif menu[current_row] == "  Apagar PLC":
-          fEncApPLC(vHost, "Apagar")
+          fEncApagPLC(vHost, "Apagar")
         elif menu[current_row] == "Encender salida %Q0.0":
           fEncenderSalida(vHost, '%Q0.0', 'Salida %Q0.0')
         elif menu[current_row] == "  Apagar salida %Q0.0":
