@@ -248,11 +248,11 @@ def fEncApagPLC(pHostPLC, pAction):
   print(f"Enviando solicitud de comunicación S7Comm: {vPayloadSolComS7.hex()}")
   vSocketConPLC.send(vPayloadSolComS7)
   vPayloadDeRespSolComS7 = vSocketConPLC.recv(1024)
-  print(f"Respuesta: {vPayloadDeRespSolComS7.hex()} \n")
+  print(f"Respuesta con challenge: {vPayloadDeRespSolComS7.hex()} \n")
 
   # Preparar payload de respuesta al challenge
   vPayloadParaResponderAlChallenge = fInsertarAntiReplay(vPayloadParaResponderAlChallenge)
-  print(f"Enviando respuesta al challenge: {vPayloadParaResponderAlChallenge.hex()}")
+  print(f"Enviando challenge resuelto: {vPayloadParaResponderAlChallenge.hex()}")
   vSocketConPLC.send(vPayloadParaResponderAlChallenge)
   vPayloadDeRespAlChallenge = vSocketConPLC.recv(1024)
   print(f"Respuesta: {vPayloadDeRespAlChallenge.hex()} \n")
