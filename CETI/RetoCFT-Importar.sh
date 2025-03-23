@@ -9,13 +9,13 @@
 # Script de NiPeGun para importar el laboratorio del reto CTF a proxmox
 #
 # Ejecución remota:
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/ceti/RetoCFT-Importar.sh | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/RetoCFT-Importar.sh | bash
 #
 # Ejecución remota con parámetros:
-#   curl sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/ceti/RetoCFT-Importar.sh | bash -s Almacenamiento
+#   curl sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/RetoCFT-Importar.sh | bash -s Almacenamiento
 #
 # Bajar y editar directamente el archivo en nano
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/ceti/RetoCFT-Importar.sh | nano -
+#   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/RetoCFT-Importar.sh | nano -
 # ----------
 
 # Definir el almacenamiento
@@ -224,7 +224,8 @@ vAlmacenamiento=${1:-'local-lvm'} # Si le paso un parámetro, el almacenamiento 
                   echo ""
                   echo -e "${cColorRojo}      El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
                   echo ""
-                  apt-get -y update && apt-get -y install curl
+                  apt-get -y update
+                  apt-get -y install curl
                   echo ""
                 fi
               curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/CyberSecLab/kali.vmdk -o /tmp/kali.vmdk
