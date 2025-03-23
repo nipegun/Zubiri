@@ -121,9 +121,6 @@ def fGestionarCliente(pSocketConCliente):
         else: # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
           print(f"Envió el payload desconocido: {vPayloadEnHex}")
 
-        else: # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
-          print(f"Envió el payload desconocido: {vPayloadEnHex}")
-
       else: # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
         print(f"Envió el payload desconocido: {vPayloadEnHex}")
 
