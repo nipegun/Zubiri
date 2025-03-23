@@ -222,8 +222,7 @@ if __name__ == "__main__":
   vSocketServidor.bind(("0.0.0.0", 102))
   vSocketServidor.listen(1)
 
-  print(cColorAzulClaro + f"\n  Simulador de PLC Siemens S7-1200 1214c escuchando en el puerto 102" + cFinColor)
-  print(cColorAzulClaro + f"  IP Local del servidor: {vIPLocal}\n" + cFinColor)
+  print(cColorAzulClaro + f"\n  Simulador de PLC Siemens S7-1200 1214c escuchando {vIPLocal}:102" + cFinColor)
 
   # Aceptar conexiones de clientes
   while True:
