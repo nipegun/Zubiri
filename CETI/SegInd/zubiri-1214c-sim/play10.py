@@ -202,6 +202,11 @@ def fImprimirSalida(stdscr, message):
   output_win.clear()
   output_win.refresh()
 
+
+
+
+
+
 def fCalcValorAntiReplay(pPayloadDeRespSolS7Comm):
   vChallenge = pPayloadDeRespSolS7Comm.hex()[48:50]
   vAntiReplay = int(vChallenge, 16) + int("80", 16)
