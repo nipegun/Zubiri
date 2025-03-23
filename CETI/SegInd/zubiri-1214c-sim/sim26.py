@@ -205,7 +205,7 @@ def fGestEncApagSalida(pSocketConCliente, pPrimerPayload):
         print("      Se le respondió:")
         print("        " +  str(vRespuesta.hex()))
         print(cColorVerde + f"\n      Salida Q0.{vNumeroSalida} apagada correctamente\n" + cFinColor)
-      
+
       # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
       else:
         print("      Envió payload desconocido:")
