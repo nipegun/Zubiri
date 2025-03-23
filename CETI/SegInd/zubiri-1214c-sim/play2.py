@@ -23,6 +23,13 @@ import sys
 import io
 import re
 
+# Definir constantes para colores
+cColorAzul      = '\033[0;34m'
+cColorAzulClaro = '\033[1;34m'
+cColorVerde     = '\033[1;32m'
+cColorRojo      = '\033[1;31m'
+cFinColor       = '\033[0m'   # Vuelve al color normal
+
 def fDeterminarSiIPoFQDN(pHost):
   # Expresión regular para validar una dirección IP
   vIPRegex = r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
