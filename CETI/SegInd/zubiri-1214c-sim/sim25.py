@@ -42,10 +42,10 @@ def fObtenerIPLocal():
 # Función principal para gestionar las conexiones de clientes
 def fGestionarCliente(pSocketConCliente):
   try:
-    # Recibir el primer payload para determinar qué tipo de comunicación es
+
+    # Procesar payload 1
     vPayload1 = pSocketConCliente.recv(1024)
     vPayloadEnHex = vPayload1.hex()
-
     if vPayloadEnHex == '030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a':
       print(cColorAzulClaro + "\n    Iniciando comunicación para encendido/apagado del PLC\n" + cFinColor)
       # Respuesta al primer payload (COTP_RQ)
@@ -56,9 +56,9 @@ def fGestionarCliente(pSocketConCliente):
       pSocketConCliente.send(vRespuesta)
       print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
 
+      # Procesar payload 2
       vPayload2 = pSocketConCliente.recv(1024)
       vPayloadEnHex = vPayload2.hex()
-      
       if vPayloadEnHex == '030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000':
         vTipoDeSolicitud = 'Solicitud de comunicación S7comm para encendido del PLC.'
         print(f"      Envió: {vPayloadEnHex}")
@@ -67,9 +67,9 @@ def fGestionarCliente(pSocketConCliente):
         pSocketConCliente.send(vRespuesta)
         print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
 
+        # Procesar payload 3
         vPayload3 = pSocketConCliente.recv(1024)
         vPayloadEnHex = vPayload3.hex()
-
         if vPayloadEnHex == '0300008f02f08072020080310000054200000002000003b834000003b8010182320100170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f001500824000151a313b36455337203231342d31414533302d305842303b56322e328241000300030000000004e88969001200000000896a001300896b000400000000000072020000':
           vTipoDeSolicitud = 'Respuesta al challenge, con anti-replay incluido.'
           print(f"      Envió: {vPayloadEnHex}")
@@ -78,11 +78,10 @@ def fGestionarCliente(pSocketConCliente):
           pSocketConCliente.send(vRespuesta)
           print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
 
+          # Procesar payload 4
           vPayload4 = pSocketConCliente.recv(1024)
           vPayloadEnHex = vPayload4.hex()
-        
           if vPayloadEnHex == '0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000':
-            # Respuesta al cuarto payload
             vTipoDeSolicitud = 'Comando S7CommPlus con anti-replay, para encendido del PLC.'
             print(f"      Envió: {vPayloadEnHex}")
             print(f"        Tipo de payload: " + vTipoDeSolicitud)
@@ -91,7 +90,6 @@ def fGestionarCliente(pSocketConCliente):
             print(f"      Respuesta: " +  str(vRespuesta.hex()) + "\n")
             print(cColorVerde + "\n      PLC encendido correctamente\n" + cFinColor)
           elif vPayloadEnHex == '0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000':
-            # Respuesta al cuarto payload
             vTipoDeSolicitud = 'Comando S7CommPlus con anti-replay, para apagado del PLC.'
             print(f"      Envió: {vPayloadEnHex}")
             print(f"        Tipo de payload: " + vTipoDeSolicitud)
@@ -101,15 +99,12 @@ def fGestionarCliente(pSocketConCliente):
             print(cColorVerde + "\n      PLC encendido correctamente\n" + cFinColor)
           else: # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
             print(f"Envió el payload desconocido: {vPayloadEnHex}")
-            # Enviar una respuesta genérica o ninguna respuesta según sea apropiado
 
         else: # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
           print(f"Envió el payload desconocido: {vPayloadEnHex}")
-          # Enviar una respuesta genérica o ninguna respuesta según sea apropiado
 
       else: # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
         print(f"Envió el payload desconocido: {vPayloadEnHex}")
-        # Enviar una respuesta genérica o ninguna respuesta según sea apropiado
 
     elif vPayloadEnHex == '0300001611e00000cfc400c0010ac1020100c2020101':
       print(cColorAzulClaro + "\n    Iniciando comunicación para encendido/apagado de salida\n" + cFinColor)
@@ -117,7 +112,6 @@ def fGestionarCliente(pSocketConCliente):
 
     else: # Si no coincide con ninguno de los patrones conocidos, mostrar información genérica
       print(f"Envió el payload desconocido: {vPayloadEnHex}")
-      # Enviar una respuesta genérica o ninguna respuesta según sea apropiado
 
   except Exception as e:
     print(f"Error en comunicación: {e}")
