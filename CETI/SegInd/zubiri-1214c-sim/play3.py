@@ -22,6 +22,7 @@ import argparse
 import sys
 import io
 import re
+import textwrap
 
 # Definir constantes para colores
 cColorAzul      = '\033[0;34m'
