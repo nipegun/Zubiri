@@ -62,14 +62,28 @@ Payload de solicitud de comuniocación COTP para encendido o apagado del PLC:
 ```
 .
 ```
-Payload de solicitud de comuniocación COTP para modificaciencendido o apagado del PLC:
+Payload de solicitud de comuniocación COTP para encendido o apagado de salida:
 ```
 .
 ```
 
-Payload de solicitud de comunicación S7CommPlus:
+Y sólo respondera a los segundos payloads:
 
-servidor está preparado para recibir los payload típicos de solicitud de comunicacionSi ejecutamos el archivo client.py con la IP del servidor como parámetro, podremos dar órdenes al simulador y ver como los cambios se reflejan en la interfaz web. Para lanzar el cliente, ejecutamos:
+Payload de solicitud de comunicación S7CommPlus para encendido o apagado del PLC:
+```
+.
+```
+
+Payload de solicitud de comunicación S7CommPlus para encendido o apagado de salida:
+```
+.
+```
+
+A partir del tercer payload, como el cliente debe responder al challenge con el anti-replay, los payloads pueden cambiar.
+
+## Cliente gráfico
+
+Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podremos dar órdenes al simulador y ver como los cambios se reflejan en la interfaz web. Para lanzar el cliente, ejecutamos:
 
 ```
 ~/zubiri-1214c-sim/client.py 127.0.0.1
