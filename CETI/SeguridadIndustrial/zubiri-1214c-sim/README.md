@@ -20,6 +20,10 @@ curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/S
 
 Las instrucciones de ejecución aparecerán en la misma terminal una vez finalizada la instalación. Se solicitarán permisos sudo, en el caso de no haberlo ejecutado como root. Una vez instalado, podremos acceder a la web del servidor desde el ordenador donde se ejecuta (con IP http://127.0.0.1:8000), desde la IP del servidor en la subred (por ejemplo: http://172.16.4.200:8000) o desde una IP pública (si tenemos configurado el reenvío de puertos).
 
+<p align="center">
+  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web.png" />
+</p>
+
 ## Re-instalación o actualización
 
 Para reinstalarlo o actualizarlo a la última versión, ejecutamos:
