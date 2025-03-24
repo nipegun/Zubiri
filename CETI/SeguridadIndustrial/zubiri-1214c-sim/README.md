@@ -36,3 +36,6 @@ Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podre
 ~/zubiri-1214c-sim/client.py
 ```
 ![Cliente](./images/client.png "Este es el logo")
+<p align="center">
+  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/client.png" />
+</p>
