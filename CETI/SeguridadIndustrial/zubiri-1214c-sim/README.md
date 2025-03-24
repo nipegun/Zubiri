@@ -14,11 +14,11 @@ curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/S
 
 ### En Windows 
 
-.
+(TODAVÍA NO DISPNIBLE)
 
 ## Ejecución
 
-Las instrucciones de ejecución aparecerán en la terminal una vez finalizada la instalación.
+Las instrucciones de ejecución aparecerán en la misma terminal una vez finalizada la instalación.
 
 ## Re-instalación o actualización
 
