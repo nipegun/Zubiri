@@ -161,7 +161,7 @@ def fGestionarCliente(conn, addr):
         if data   == bytes.fromhex('030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a'):
           response = bytes.fromhex('030000231ed00064000b00c0010ac1020600c20f53494d415449432d524f4f542d4553')
         else:
-          print(f"  [TO {client_id}] Primer payload no coincide con el esperado")
+          print(f"  [TO {client_id}] Payload 1 no reconocido!")
           response = data  # Echo si no coincide
 
       # Segunda posición en la secuencia
@@ -169,7 +169,7 @@ def fGestionarCliente(conn, addr):
         if data   == bytes.fromhex('030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000'):
           response = bytes.fromhex('0300008902f0807201007a32000004ca0000000136110287248711a100000120821f0000a38169001500a3823200170000013a823b00048200823c00048140823d00048480c040823e00048480c040823f00151b313b36455337203231342d31414533302d30584230203b56322e328240001505323b37393482410003000300a20000000072010000')
         else:
-          print(f"  [TO {client_id}] Segundo payload no coincide con el esperado")
+          print(f"  [TO {client_id}] Payload 2 no reconocido!")
           response = data  # Echo si no coincide
 
       # Tercera posición en la secuencia
@@ -203,7 +203,7 @@ def fGestionarCliente(conn, addr):
           print(f"  [STATE CHANGE] {category} {key} -> {state}")
           response = data  # Responder con eco para payloads finales
         else:
-          print(f"  [TO {client_id}] Cuarto payload no coincide con ninguna variante esperada")
+          print(f"  [TO {client_id}] Payload 4 no reconocido.")
           response = data  # Echo si no coincide
 
       # Verificar si es un payload final después de la secuencia
