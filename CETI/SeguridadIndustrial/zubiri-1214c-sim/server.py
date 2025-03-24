@@ -187,12 +187,27 @@ def fGestionarCliente(conn, addr):
 
       # Cuarta posición en la secuencia
       elif sequence_position == 4:
-        if data == bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'):
+
+        if data   == bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000803000004e88969001200000000896a001300896b00040000000000000072020000'):
           response = bytes.fromhex('0300001e02f0807202000f32000004f20000001034000000000072020000')
-        elif data == bytes.fromhex('0300004302f0807202003431000004f200000010000003ca3400000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'):
+
+        elif data == bytes.fromhex('0300004302f0807202003431000004f200000010000003ca00b4000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'):
+          # Apagar todas las entradas y salidas
+          for key in states.get("outputs", {}):
+            states["outputs"][key] = "off"
+          for key in states.get("inputs", {}):
+            states["inputs"][key] = "off"
+          for key in states.get("analog_inputs", {}):
+            states["analog_inputs"][key] = "off"
+          if "plc" in states and "power_status" in states["plc"]:
+            states["plc"]["power_status"] = "off"
+          # Guardar los cambios en el archivo
+          with open(vArchivoDeEstados, "w") as f:
+            json.dump(states, f, indent=2)
+          print("  [STATE RESET] Entradas, salidas y power_status puestas en 'off'")
           response = bytes.fromhex('0300001e02f0807202000f32000004f20000001034000000000072020000')
-        # También verificar si es un payload que cambia estados
-        elif data in dPayloadsFinales:
+
+        elif data in dPayloadsFinales: # También verificar si es un payload que cambia estados
           category, key, state = dPayloadsFinales[data]
           states[category][key] = state
 
