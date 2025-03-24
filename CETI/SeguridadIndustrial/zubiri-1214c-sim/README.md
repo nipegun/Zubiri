@@ -6,7 +6,7 @@ Simulador del PLC Siemens S7-1200 1214c de la clase Cyber Range del instituto de
 
 Para instalarlo, ejecutamos:
 
-### En en la CLI de una distro GNU/Linux basada en Debian:
+### En Linux (distros basadas en Debian):
 
 ```
 curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/install_reinstall_update.sh | bash
