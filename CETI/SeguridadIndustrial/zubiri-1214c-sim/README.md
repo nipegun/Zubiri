@@ -42,3 +42,15 @@ Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podre
 <p align="center">
   <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/client.png" />
 </p>
+
+## API
+
+El servidor pone a disposición de los usuarios dos APIs JSON diferentes:
+
+/api/states
+
+...donde se pueden consultar el estado de las salidas y entradas del PLC simulado y
+
+/api/sessions
+
+...donde se pueden consultar las sesiones activas que mantiene con los clientes y los payloads que estos han enviado.
