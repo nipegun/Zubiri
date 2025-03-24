@@ -1,7 +1,7 @@
 {
   "plc": {
     "power_status": "unknown",
-    "firmware": "4.0"
+    "firmware": "3.0"
   },
   "outputs": {
     "%Q0.0": "unknown",
