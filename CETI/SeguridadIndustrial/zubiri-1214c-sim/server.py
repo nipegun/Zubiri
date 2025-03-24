@@ -63,14 +63,13 @@ with open(vArchivoDeEstados, "w") as f:
   json.dump(states, f, indent=2)
 
 # Payloads finales para encendido o apagado
-dPayloadFinalesOnOff = {
-  bytes.fromhex('00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'): ("plc", "power_status", "on"),
-  bytes.fromhex('0300004302f0807202003431000004f200000010000003ca00b4000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000'): ("plc", "power_status", "off")
-  # '0300001e02f0807202000f32000004f20000001034000000000072020000' < Respuesta que se debe enviar al encender o apagar correctamente el PLC
-}
+vPayloadFinalOn  = bytes.fromhex('00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000')
+vPayloadFinalOff = bytes.fromhex('0300004302f0807202003431000004f200000010000003ca00b4000034019077000801000004e88969001200000000896a001300896b00040000000000000072020000')
+# '0300001e02f0807202000f32000004f20000001034000000000072020000' < Respuesta que se debe enviar al encender o apagar correctamente el PLC
 
 # Mapeo de payloads finales a estados SOLO para outputs
 dPayloadsFinalesOutputs = {
+
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000000000300010100'): ("outputs", "%Q0.0", "on"),
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000001000300010100'): ("outputs", "%Q0.1", "on"),
   bytes.fromhex('0300002502f08032010000001f000e00060501120a10010001000082000002000300010100'): ("outputs", "%Q0.2", "on"),
@@ -181,7 +180,7 @@ def fGestionarCliente(conn, addr):
 
       # Tercera posición en la secuencia
       elif sequence_position == 3:
-        if data in dPayloadFinalesOnOff:
+        if data in vPayloadFinalOff:
           states["plc"]["power_status"] = "off"
           for i in range(8):
             states["outputs"][f"%Q0.{i}"] = "off"
@@ -203,7 +202,7 @@ def fGestionarCliente(conn, addr):
 
       # Cuarta posición en la secuencia
       elif sequence_position == 4:
-        if data in dPayloadFinalesOnOff:
+        if data in vPayloadFinalOff:
           states["plc"]["power_status"] = "off"
           for i in range(8):
             states["outputs"][f"%Q0.{i}"] = "off"
