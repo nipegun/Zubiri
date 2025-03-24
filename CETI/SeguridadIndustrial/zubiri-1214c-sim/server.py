@@ -109,7 +109,7 @@ def fServirS7():
   s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
   s.bind(("0.0.0.0", vPuertoS7))
   s.listen(5)
-  print(f"\n  Servidor de sockets esperando conexiones en el puerto {vPuertoS7}...")
+  print(f"\n  Simulador de PLC esperando conexiones en el puerto {vPuertoS7}...")
 
   while True:
     conn, addr = s.accept()
@@ -275,7 +275,7 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 if __name__ == "__main__":
   threading.Thread(target=fServirS7, daemon=True).start()
   httpd = http.server.ThreadingHTTPServer(("0.0.0.0", vPuertoWeb), SimpleHTTPRequestHandler)
-  print("\n  Servidor web en http://localhost:8000")
-  print("  Para ver estados: http://localhost:8000/states")
-  print("  Para ver sesiones activas: http://localhost:8000/sessions\n")
+  print(f"\n  Servidor web en http://localhost:{vPuertoWeb}")
+  print(f"  Para ver estados: http://localhost:{vPuertoWeb}/states")
+  print(f"  Para ver sesiones activas: http://localhost:{vPuertoWeb}/sessions\n")
   httpd.serve_forever()
