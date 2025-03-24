@@ -42,17 +42,6 @@ Para reinstalarlo o actualizarlo a la última versión, ejecutamos:
 ~/zubiri-1214c-sim/install_reinstall_update.sh
 ```
 
-## Interacción del cliente
-
-Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podremos dar órdenes al simulador y ver como los cambios se reflejan en la interfaz web. Para lanzar el cliente, ejecutamos:
-
-```
-~/zubiri-1214c-sim/client.py 127.0.0.1
-```
-<p align="center">
-  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/client.png" />
-</p>
-
 ## APIs
 
 El servidor pone a disposición de los usuarios dos APIs JSON diferentes:
@@ -64,3 +53,27 @@ El servidor pone a disposición de los usuarios dos APIs JSON diferentes:
 /api/sessions
 
 ...donde se pueden consultar las sesiones activas que mantiene con los clientes y los payloads que estos han enviado. De esta forma es posible diagnosticar los motivos por los cuales un payload pueda no estar provocando los cambios deseados en el simulador.
+
+## Interacción con los clientes
+
+El simulador está preparado para comunicarse con múltimples clientes pero sólo responderá a los siguientes primeros payloads:
+
+Payload de solicitud de comuniocación COTP para encendido o apagado del PLC:
+```
+.
+```
+Payload de solicitud de comuniocación COTP para modificaciencendido o apagado del PLC:
+```
+.
+```
+
+Payload de solicitud de comunicación S7CommPlus:
+
+servidor está preparado para recibir los payload típicos de solicitud de comunicacionSi ejecutamos el archivo client.py con la IP del servidor como parámetro, podremos dar órdenes al simulador y ver como los cambios se reflejan en la interfaz web. Para lanzar el cliente, ejecutamos:
+
+```
+~/zubiri-1214c-sim/client.py 127.0.0.1
+```
+<p align="center">
+  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/client.png" />
+</p>
