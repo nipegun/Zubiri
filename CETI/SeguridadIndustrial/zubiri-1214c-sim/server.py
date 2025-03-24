@@ -19,7 +19,7 @@ if os.geteuid() != 0:
 
 vArchivoDeEstados = "states.json"
 vPuertoS7 = 102
-vPuertoWeb = 80
+vPuertoWeb = 8000
 
 # Cerrar cualquier socket abierto previamente
 def fCerrarSocketExistente(port):
