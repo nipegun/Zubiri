@@ -53,4 +53,4 @@ El servidor pone a disposición de los usuarios dos APIs JSON diferentes:
 
 /api/sessions
 
-...donde se pueden consultar las sesiones activas que mantiene con los clientes y los payloads que estos han enviado.
+...donde se pueden consultar las sesiones activas que mantiene con los clientes y los payloads que estos han enviado. De esta forma es posible diagnosticar los motivos por los cuales un payload pueda no estar provocando los cambios deseados en el simulador.
