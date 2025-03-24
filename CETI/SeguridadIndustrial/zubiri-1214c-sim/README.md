@@ -56,27 +56,27 @@ El servidor pone a disposición de los usuarios dos APIs JSON diferentes:
 
 ## Interacción con los clientes
 
-El simulador está preparado para comunicarse con múltimples clientes pero sólo responderá a los siguientes primeros payloads:
+El simulador está preparado para comunicarse con múltiples clientes, pero sólo responderá a los siguientes primeros payloads:
 
 Payload de solicitud de comuniocación COTP para encendido o apagado del PLC:
 ```
-.
+030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a
 ```
 Payload de solicitud de comuniocación COTP para encendido o apagado de salida:
 ```
-.
+0300001611e00000cfc400c0010ac1020100c2020101
 ```
 
 Y sólo respondera a los segundos payloads:
 
 Payload de solicitud de comunicación S7CommPlus para encendido o apagado del PLC:
 ```
-.
+030000ee02f080720100df31000004ca0000000100000120360000011d00040000000000a1000000d3821f0000a3816900151553657276657253657373696f6e5f31433943333846a38221001532302e302e302e303a305265616c74656b20555342204762452046616d696c7920436f6e74726f6c6c65722e54435049502e33a38228001500a38229001500a3822a0015194445534b544f502d494e414d4455385f313432323331343036a3822b000401a3822c001201c9c38fa3822d001500a1000000d3817f0000a38169001515537562736372697074696f6e436f6e7461696e6572a2a20000000072010000
 ```
 
 Payload de solicitud de comunicación S7CommPlus para encendido o apagado de salida:
 ```
-.
+0300001902f08032010000000000080000f0000008000803c0
 ```
 
 A partir del tercer payload, como el cliente debe responder al challenge con el anti-replay, los payloads pueden cambiar.
