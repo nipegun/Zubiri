@@ -257,7 +257,7 @@ def fGestionarCliente(conn, addr):
 # Servidor HTTP para servir el JSON correctamente
 class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
   def do_GET(self):
-    if self.path == "/states" or self.path == "/api/json":
+    if self.path == "/api/states" or self.path == "/api/json":
       try:
         with open(vArchivoDeEstados, "r") as f:
           content = f.read()
@@ -271,7 +271,7 @@ class SimpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Content-type", "text/plain")
         self.end_headers()
         self.wfile.write(f"\n  Error al leer states.json: {str(e)}".encode())
-    elif self.path == "/sessions":
+    elif self.path == "/api/sessions":
       # Endpoint para mostrar las sesiones activas
       self.send_response(200)
       self.send_header("Content-type", "application/json")
@@ -295,6 +295,4 @@ if __name__ == "__main__":
   threading.Thread(target=fServirS7, daemon=True).start()
   httpd = http.server.ThreadingHTTPServer(("0.0.0.0", vPuertoWeb), SimpleHTTPRequestHandler)
   print(f"\n  Servidor web en http://localhost:{vPuertoWeb}")
-  print(f"  Para ver estados: http://localhost:{vPuertoWeb}/states")
-  print(f"  Para ver sesiones activas: http://localhost:{vPuertoWeb}/sessions\n")
   httpd.serve_forever()
