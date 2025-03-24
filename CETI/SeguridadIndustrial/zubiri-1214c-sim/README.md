@@ -18,7 +18,7 @@ curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/S
 
 ## Ejecución
 
-Las instrucciones de ejecución aparecerán en la misma terminal una vez finalizada la instalación. Se solicitarán permisos sudo, en el caso de no haberlo ejecutado como root.
+Las instrucciones de ejecución aparecerán en la misma terminal una vez finalizada la instalación. Se solicitarán permisos sudo, en el caso de no haberlo ejecutado como root. Una vez instalado, podremos acceder a la web del servidor desde el ordenador donde se ejecuta (con IP http://127.0.0.1:8000), desde la IP del servidor en la subred (por ejemplo: http://172.16.4.200:8000) o desde una IP pública (si tenemos configurado el reenvío de puertos).
 
 ## Re-instalación o actualización
 
