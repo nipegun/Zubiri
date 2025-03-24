@@ -183,9 +183,9 @@ def fGestionarCliente(conn, addr):
         if data in vPayloadFinalOff:
           states["plc"]["power_status"] = "off"
           for i in range(8):
-            states["outputs"][f"%Q0.{i}"] = "off"
+            states["outputs"][f"%Q0.{i}"] = "unknown"
           for i in range(2):
-            states["outputs"][f"%Q1.{i}"] = "off"
+            states["outputs"][f"%Q1.{i}"] = "unknown"
           with open(vArchivoDeEstados, "w") as f:
             json.dump(states, f, indent=2)
           response = data
@@ -205,9 +205,9 @@ def fGestionarCliente(conn, addr):
         if data in vPayloadFinalOff:
           states["plc"]["power_status"] = "off"
           for i in range(8):
-            states["outputs"][f"%Q0.{i}"] = "off"
+            states["outputs"][f"%Q0.{i}"] = "unknown"
           for i in range(2):
-            states["outputs"][f"%Q1.{i}"] = "off"
+            states["outputs"][f"%Q1.{i}"] = "unknown"
           with open(vArchivoDeEstados, "w") as f:
             json.dump(states, f, indent=2)
           response = data
