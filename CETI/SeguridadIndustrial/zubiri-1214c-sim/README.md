@@ -18,7 +18,7 @@ curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/S
 
 ## Ejecución
 
-Las instrucciones de ejecución aparecerán en la misma terminal una vez finalizada la instalación.
+Las instrucciones de ejecución aparecerán en la misma terminal una vez finalizada la instalación. Se solicitarán permisos sudo, en el caso de no haberlo ejecutado como root.
 
 ## Re-instalación o actualización
 
