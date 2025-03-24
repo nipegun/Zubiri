@@ -66,10 +66,10 @@ def fMenu(stdscr, vHost):
     "  Apagar salida %Q0.6",
     "Encender salida %Q0.7",
     "  Apagar salida %Q0.7",
-    "Encender salida %Q0.8",
-    "  Apagar salida %Q0.8",
-    "Encender salida %Q0.9",
-    "  Apagar salida %Q0.9",
+    "Encender salida %Q1.0",
+    "  Apagar salida %Q1.0",
+    "Encender salida %Q1.1",
+    "  Apagar salida %Q1.1",
     "Salir"
   ]
 
@@ -148,14 +148,14 @@ def fMenu(stdscr, vHost):
           fEncenderSalida(vHost, '%Q0.7', 'Salida %Q0.7')
         elif menu[current_row] == "  Apagar salida %Q0.7":
           fApagarSalida(vHost, '%Q0.7', 'Salida %Q0.7')
-        elif menu[current_row] == "Encender salida %Q0.8":
-          fEncenderSalida(vHost, '%Q0.8', 'Salida %Q0.8')
-        elif menu[current_row] == "  Apagar salida %Q0.8":
-          fApagarSalida(vHost, '%Q0.8', 'Salida %Q0.8')
-        elif menu[current_row] == "Encender salida %Q0.9":
-          fEncenderSalida(vHost, '%Q0.9', 'Salida %Q0.9')
-        elif menu[current_row] == "  Apagar salida %Q0.9":
-          fApagarSalida(vHost, '%Q0.9', 'Salida %Q0.9')
+        elif menu[current_row] == "Encender salida %Q1.0":
+          fEncenderSalida(vHost, '%Q1.0', 'Salida %Q1.0')
+        elif menu[current_row] == "  Apagar salida %Q1.0":
+          fApagarSalida(vHost, '%Q1.0', 'Salida %Q1.0')
+        elif menu[current_row] == "Encender salida %Q1.1":
+          fEncenderSalida(vHost, '%Q1.1', 'Salida %Q1.1')
+        elif menu[current_row] == "  Apagar salida %Q1.1":
+          fApagarSalida(vHost, '%Q1.1', 'Salida %Q1.1')
       except Exception as e:
         print(f"Error: {e}")
 
@@ -385,10 +385,6 @@ def fApagarSalida(vHost, salida, nombre):
 
   print(f"\n  Salida {nombre} desactivada correctamente. \n")
   s.close()
-
-
-
-
 
 if __name__ == "__main__":
   if len(sys.argv) > 1:
