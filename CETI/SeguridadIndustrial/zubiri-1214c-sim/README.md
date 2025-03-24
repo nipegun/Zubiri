@@ -24,7 +24,7 @@ Las instrucciones de ejecución aparecerán en la misma terminal una vez finaliz
 cd ~/zubiri-1214c-sim/ && ./server.py
 ```
 
-Es importante que se ejecute desde la misma carpeta donde están el resto de los archivos que conforman el paquete. En el caso de no haberlo ejecutado como root se solicitarán permisos sudo.
+Es importante que se ejecute desde la misma carpeta donde están el resto de los archivos que conforman el paquete. En el caso de no haberlo ejecutado como root, se solicitarán permisos sudo.
 
 ## Web
 
