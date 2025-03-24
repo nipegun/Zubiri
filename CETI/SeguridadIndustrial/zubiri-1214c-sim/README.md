@@ -19,3 +19,10 @@ Para reinstalarlo o actualizarlo a la última versión, ejecutamos:
 ```
 ~/zubiri-1214c-sim/install_reinstall_update.sh
 ```
+## Interacción del cliente
+
+Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podremos dar órdenes al simulador y ver como los cambios se reflejan en la interfaz web. Para lanzar el cliente, ejecutamos:
+
+```
+~/zubiri-1214c-sim/client.py
+```
