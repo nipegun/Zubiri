@@ -35,4 +35,4 @@ Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podre
 ```
 ~/zubiri-1214c-sim/client.py
 ```
-![Mi Logo](./images/logo.png "Este es el logo")
+![Cliente](./images/client.png "Este es el logo")
