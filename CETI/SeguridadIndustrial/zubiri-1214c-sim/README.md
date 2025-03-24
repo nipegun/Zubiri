@@ -58,11 +58,11 @@ El servidor pone a disposición de los usuarios dos APIs JSON diferentes:
 
 El simulador está preparado para comunicarse con múltiples clientes, pero sólo responderá a los siguientes primeros payloads:
 
-Payload de solicitud de comuniocación COTP para encendido o apagado del PLC:
+Payload de solicitud de comunicación COTP para encendido o apagado del PLC:
 ```
 030000231ee00000006400c1020600c20f53494d415449432d524f4f542d4553c0010a
 ```
-Payload de solicitud de comuniocación COTP para encendido o apagado de salida:
+Payload de solicitud de comunicación COTP para encendido o apagado de salida:
 ```
 0300001611e00000cfc400c0010ac1020100c2020101
 ```
