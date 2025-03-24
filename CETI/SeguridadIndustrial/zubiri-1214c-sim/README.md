@@ -43,7 +43,7 @@ Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podre
   <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/client.png" />
 </p>
 
-## API
+## APIs
 
 El servidor pone a disposición de los usuarios dos APIs JSON diferentes:
 
