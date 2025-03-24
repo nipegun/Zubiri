@@ -47,7 +47,7 @@ Para reinstalarlo o actualizarlo a la última versión, ejecutamos:
 Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podremos dar órdenes al simulador y ver como los cambios se reflejan en la interfaz web. Para lanzar el cliente, ejecutamos:
 
 ```
-~/zubiri-1214c-sim/client.py
+~/zubiri-1214c-sim/client.py 127.0.0.1
 ```
 <p align="center">
   <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/client.png" />
