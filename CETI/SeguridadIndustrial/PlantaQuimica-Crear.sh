@@ -134,17 +134,17 @@
                 menu=(dialog --checklist "Marca las opciones que quieras instalar:" 22 70 16)
                   opciones=(
 
-                    1 "Descargar y descomprimir discos duros virtuales"        off
+                    1 "Descargar y descomprimir discos duros virtuales"          off
 
-                    2 "Importar máquina virtual de HMI (ScadaBR)"              off
-                    3 "Importar máquina virtual de Kali"                       off
-                    4 "Importar máquina virtual de pfSense"                    off
-                    5 "Importar máquina virtual de Simulation (ChemicalPlant)" off
-                    6 "Importar máquina virtual de PLC"                        off
-                    7 "Importar máquina virtual de Workstation"                off
+                    2 "Importar máquina virtual de HMI (ScadaBR)"                off
+                    3 "Importar máquina virtual de Kali"                         off
+                    4 "Importar máquina virtual de pfSense"                      off
+                    5 "Importar máquina virtual de 3DSimulation (ChemicalPlant)" off
+                    6 "Importar máquina virtual de PLC"                          off
+                    7 "Importar máquina virtual de Workstation"                  off
                     
-                    8 "Agrupar máquinas virtuales"                             off
-                    9 "Iniciar las máquinas virtuales en orden"                off
+                    8 "Agrupar máquinas virtuales"                               off
+                    9 "Iniciar las máquinas virtuales en orden"                  off
 
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
