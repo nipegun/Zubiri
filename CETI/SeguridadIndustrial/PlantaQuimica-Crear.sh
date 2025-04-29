@@ -297,35 +297,35 @@
                       5)
 
                           echo ""
-                          echo "    Importando máquina virtual de Simulation..."
+                          echo "    Importando máquina virtual de 3DSimulation..."
                           echo ""
-                          VBoxManage createvm --name "pq-Simulation" --ostype "Ubuntu_64" --register
+                          VBoxManage createvm --name "pq-3DSimulation" --ostype "Ubuntu_64" --register
                           # Procesador
-                            VBoxManage modifyvm "pq-Simulation" --cpus 2
+                            VBoxManage modifyvm "pq-3DSimulation" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "pq-Simulation" --memory 2048
+                            VBoxManage modifyvm "pq-3DSimulation" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "pq-Simulation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "pq-3DSimulation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
                           # Audio
-                            VBoxManage modifyvm "pq-Simulation" --audio-driver none
+                            VBoxManage modifyvm "pq-3DSimulation" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "pq-Simulation" --nictype1 virtio
-                              VBoxManage modifyvm "pq-Simulation" --nic1 intnet --intnet1 "RedIntInd"
+                            VBoxManage modifyvm "pq-3DSimulation" --nictype1 virtio
+                              VBoxManage modifyvm "pq-3DSimulation" --nic1 intnet --intnet1 "RedIntInd"
                             # Poner en modo promiscuo
-                              VBoxManage modifyvm "pq-Simulation" --nicpromisc1 allow-all
+                              VBoxManage modifyvm "pq-3DSimulation" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
-                              VBoxManage storagectl "pq-Simulation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+                              VBoxManage storagectl "pq-3DSimulation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storageattach "pq-Simulation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-3DSimulation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "pq-Simulation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-3DSimulation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # Disco duro
-                          mv ~/DiscosPlantaQuim/pq-Simulation.vdi ~/"VirtualBox VMs/pq-Simulation/"
+                          mv ~/DiscosPlantaQuim/pq-3DSimulation.vdi ~/"VirtualBox VMs/pq-3DSimulation/"
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
-                          VBoxManage storageattach "pq-Simulation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi"
+                          VBoxManage storageattach "pq-3DSimulation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-3DSimulation/pq-3DSimulation.vdi"
 
                       ;;
 
@@ -404,12 +404,12 @@
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
                         echo ""
-                        VBoxManage modifyvm "pq-HMIScadaBR"  --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "pq-Kali"        --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "pq-pfSense"     --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "pq-Simulation"  --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "pq-PLC"         --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "pq-Workstation" --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-HMIScadaBR"   --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-Kali"         --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-pfSense"      --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-3DSimulation" --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-PLC"          --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-Workstation"  --groups "/PlantaQuímica" 2> /dev/null
 
                       ;;
 
@@ -420,7 +420,7 @@
                         echo ""
                         VBoxManage startvm "pq-pfSense"
                         sleep 15
-                        VBoxManage startvm "pq-Simulation"
+                        VBoxManage startvm "pq-3DSimulation"
                         sleep 15
                         VBoxManage startvm "pq-PLC"
                         sleep 15
