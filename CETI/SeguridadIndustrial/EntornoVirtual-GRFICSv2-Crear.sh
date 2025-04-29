@@ -6,16 +6,16 @@
 # No tienes que aceptar ningún tipo de términos de uso o licencia para utilizarlo o modificarlo porque va sin CopyLeft.
 
 # ----------
-# Script de NiPeGun para descargar e importar el pack PlantaQuimica para VirtualBox en Debian
+# Script de NiPeGun para descargar e importar el entorno virtual GRFICSv2 para VirtualBox en Debian
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/PlantaQuimica-Crear.sh | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornoVirtual-GRFICSv2-Crear.sh | bash
 #
 # Ejecución remota como root:
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/PlantaQuimica-Crear.sh | sed 's-sudo--g' | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornoVirtual-GRFICSv2-Crear.sh | sed 's-sudo--g' | bash
 #
 # Bajar y editar directamente el archivo en nano
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/PlantaQuimica-Crear.sh | nano -
+#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornoVirtual-GRFICSv2-Crear.sh | nano -
 # ----------
 
 #
@@ -56,7 +56,7 @@
   if [ $cVerSO == "13" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack PlantaQuimica para el VirtualBox de Debian 13 (x)...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno virtual GRFICSv2 para VirtualBox en Debian 13 (x)...${cFinColor}"
     echo ""
 
     echo ""
@@ -66,7 +66,7 @@
   elif [ $cVerSO == "12" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack PlantaQuimica para el VirtualBox de Debian 12 (Bookworm)...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno virtual GRFICSv2 para VirtualBox en Debian 12 (Bookworm)...${cFinColor}"
     echo ""
 
     # Definir fecha de ejecución del script
@@ -445,7 +445,7 @@
   elif [ $cVerSO == "11" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack PlantaQuimica para el VirtualBox de ebian 11 (Bullseye)...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno virtual GRFICSv2 para VirtualBox en Debian 11 (Bullseye)...${cFinColor}"
     echo ""
 
     echo ""
@@ -455,7 +455,7 @@
   elif [ $cVerSO == "10" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack PlantaQuimica para el VirtualBox de ebian 10 (Buster)...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno virtual GRFICSv2 para VirtualBox en Debian 10 (Buster)...${cFinColor}"
     echo ""
 
     echo ""
@@ -465,7 +465,7 @@
   elif [ $cVerSO == "9" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack PlantaQuimica para el VirtualBox de ebian 9 (Stretch)...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno virtual GRFICSv2 para VirtualBox en Debian 9 (Stretch)...${cFinColor}"
     echo ""
 
     echo ""
@@ -475,7 +475,7 @@
   elif [ $cVerSO == "8" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack PlantaQuimica para el VirtualBox de ebian 8 (Jessie)...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno virtual GRFICSv2 para VirtualBox en Debian 8 (Jessie)...${cFinColor}"
     echo ""
 
     echo ""
@@ -485,7 +485,7 @@
   elif [ $cVerSO == "7" ]; then
 
     echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del pack PlantaQuimica para el VirtualBox de ebian 7 (Wheezy)...${cFinColor}"
+    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno virtual GRFICSv2 para VirtualBox en Debian 7 (Wheezy)...${cFinColor}"
     echo ""
 
     echo ""
