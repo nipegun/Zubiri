@@ -115,7 +115,7 @@
             2)
 
               echo ""
-              echo "  Creando laboratorio completo de planta química para VirtualBox..."
+              echo "  Creando entorno vulnerable en VirtualBox..."
               echo ""
 
               # Definir fecha de ejecución del script
@@ -134,17 +134,20 @@
                 menu=(dialog --checklist "Marca las opciones que quieras instalar:" 22 70 16)
                   opciones=(
 
-                    1 "Descargar y descomprimir todos los discos duros virtuales" off
-
-                    2 "  Importar máquina virtual de pfSense"         off
-                    3 "  Importar máquina virtual de 3DChemicalPlant" off
-                    4 "  Importar máquina virtual de PLC"             off
-                    5 "  Importar máquina virtual de Workstation"     off
-                    6 "  Importar máquina virtual de HMIScadaBR"      off
-                    7 "  Importar máquina virtual de Kali"            off
-
-                    8 "    Agrupar máquinas virtuales"              off
-                    9 "    Iniciar las máquinas virtuales en orden" off
+                     1 "  Crear máquina virtual de pfSense"                      on
+                     2 "    Descargar e importar VHD para la MV pfSense"         off
+                     3 "  Crear máquina virtual de 3DChemicalPlant"              on
+                     4 "    Descargar e importar VHD para la MV 3DChemicalPlant" off
+                     5 "  Crear máquina virtual de PLC"                          on
+                     6 "    Descargar e importar VHD para la MV PLC"             off
+                     7 "  Crear máquina virtual de Workstation"                  on
+                     8 "    Descargar e importar VHD para la MV Workstation"     off
+                     9 "  Crear máquina virtual de HMIScadaBR"                   on
+                    10 "    Descargar e importar VHD para la MV HMIScadaBR"      off
+                    11 "  Crear máquina virtual de Kali"                         on
+                    12 "    Descargar e importar VHD para la MV Kali"            off
+                    13 "    Agrupar máquinas virtuales"                          on
+                    14 "    Iniciar las máquinas virtuales en orden"             off
 
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
@@ -154,40 +157,6 @@
                     case $choice in
 
                       1)
-
-                          echo ""
-                          echo "    Descargando y descomprimiendo discos virtuales..."
-                          echo ""
-                          # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
-                            if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
-                              echo ""
-                              echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
-                              echo ""
-                              sudo apt-get -y update
-                              sudo apt-get -y install curl
-                              echo ""
-                            fi
-                          echo ""
-                          echo "      Descargando..."
-                          echo ""
-                          curl -L http://hacks4geeks.com/_/zubiri/DiscosPlantaQuim.tar.xz -o /tmp/DiscosPlantaQuim.tar.xz
-                          # Comprobar si el paquete tar está instalado. Si no lo está, instalarlo.
-                            if [[ $(dpkg-query -s tar 2>/dev/null | grep installed) == "" ]]; then
-                              echo ""
-                              echo -e "${cColorRojo}    El paquete tar no está instalado. Iniciando su instalación...${cFinColor}"
-                              echo ""
-                              sudo apt-get -y update
-                              sudo apt-get -y install tar
-                              echo ""
-                            fi
-                          echo ""
-                          echo "      Descomprimiendo..."
-                          echo ""
-                          tar -xvJf /tmp/DiscosPlantaQuim.tar.xz -C ~/
-
-                      ;;
-
-                      2)
 
                           echo ""
                           echo "    Importando máquina virtual de pfSense..."
@@ -221,6 +190,56 @@
                           mv ~/DiscosPlantaQuim/GRFICSv2-pfSense.vdi ~/"VirtualBox VMs/GRFICSv2-pfSense/"
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-pfSense/GRFICSv2-pfSense.vdi" d2d48e12-6454-41fb-919d-4127f84459e9
                           VBoxManage storageattach "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-pfSense/GRFICSv2-pfSense.vdi"
+
+                      ;;
+
+                      2)
+
+                         echo ""
+                         echo "    Descargando e importando el disco duro virtual para la MV pfSense..."
+                         echo ""
+
+                         # Definir el espacio libre necesario
+                           vGBsLibresNecesarios=4
+                           vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
+
+                         # Obtener el espacio libre de la partición en la que está montada la /tmp
+                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
+
+                         # Comprobar si hay espacio libre disponible
+                           if [ "$vEspacioLibre" -ge "$vEspacioNecesario" ]; then
+                             # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
+                               if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
+                                 echo ""
+                                 echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
+                                 echo ""
+                                 sudo apt-get -y update
+                                 sudo apt-get -y install curl
+                                 echo ""
+                               fi
+                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-pfSense.vmdk.xz -o /tmp/GRFICSv2-pfSense.vmdk.xz
+                             # Descomprimir
+                               echo ""
+                               echo "      Descomprimiendo..."
+                               echo ""
+                               # Comprobar si el paquete tar está instalado. Si no lo está, instalarlo.
+                                 if [[ $(dpkg-query -s tar 2>/dev/null | grep installed) == "" ]]; then
+                                   echo ""
+                                   echo -e "${cColorRojo}    El paquete tar no está instalado. Iniciando su instalación...${cFinColor}"
+                                   echo ""
+                                   sudo apt-get -y update
+                                   sudo apt-get -y install tar
+                                   echo ""
+                                 fi
+                             tar -xvJf /tmp/DiscosPlantaQuim.tar.xz -C ~/
+                           else
+                             echo ""
+                             echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
+                             echo ""
+                             echo -e "${cColorRojo}      Hacen falta $vGBsLibresNecesarios GB y hay sólo $vGBsLibres GB.${cFinColor}"
+                             echo ""
+                           fi
 
                       ;;
 
@@ -259,7 +278,7 @@
 
                       ;;
 
-                      4)
+                      5)
 
                           echo ""
                           echo "    Importando máquina virtual de PLC..."
@@ -294,7 +313,7 @@
 
                       ;;
 
-                      5)
+                      7)
 
                           echo ""
                           echo "    Importando máquina virtual de Workstation..."
@@ -330,7 +349,7 @@
                       ;;
 
 
-                      6)
+                      9)
 
                           echo ""
                           echo "    Importando máquina virtual de HMIScadaBR..."
@@ -365,7 +384,7 @@
 
                       ;;
 
-                      7)
+                     11)
 
                           echo ""
                           echo "    Importando máquina virtual de Kali..."
@@ -401,7 +420,7 @@
                       ;;
 
 
-                      8)
+                     13)
 
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
@@ -415,7 +434,7 @@
 
                       ;;
 
-                      9)
+                     14)
 
                         echo ""
                         echo "  Iniciando máquinas virtuales en el orden correcto..."
