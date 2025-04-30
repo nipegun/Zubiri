@@ -292,7 +292,7 @@
                          echo ""
 
                          # Definir el espacio libre necesario
-                           vGBsLibresNecesarios=2
+                           vGBsLibresNecesarios=4
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
@@ -384,7 +384,7 @@
                          echo ""
 
                          # Definir el espacio libre necesario
-                           vGBsLibresNecesarios=2
+                           vGBsLibresNecesarios=4
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
@@ -476,7 +476,7 @@
                          echo ""
 
                          # Definir el espacio libre necesario
-                           vGBsLibresNecesarios=2
+                           vGBsLibresNecesarios=10
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
@@ -568,7 +568,7 @@
                          echo ""
 
                          # Definir el espacio libre necesario
-                           vGBsLibresNecesarios=2
+                           vGBsLibresNecesarios=3
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
