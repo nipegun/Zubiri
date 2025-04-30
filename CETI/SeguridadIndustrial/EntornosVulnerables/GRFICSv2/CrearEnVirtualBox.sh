@@ -406,12 +406,12 @@
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
                         echo ""
-                        VBoxManage modifyvm "GRFICSv2-HMIScadaBR"      --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-Kali"            --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-PLC"             --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-Workstation"     --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-HMIScadaBR"      --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-Kali"            --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-PLC"             --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-Workstation"     --groups "/GRFICSv2" 2> /dev/null
 
                       ;;
 
