@@ -134,17 +134,17 @@
                 menu=(dialog --checklist "Marca las opciones que quieras instalar:" 22 70 16)
                   opciones=(
 
-                    1 "Descargar y descomprimir discos duros virtuales" off
+                    1 "Descargar y descomprimir todos los discos duros virtuales" off
 
-                    2 "Importar máquina virtual de pfSense"         off
-                    3 "Importar máquina virtual de 3DChemicalPlant" off
-                    4 "Importar máquina virtual de PLC"             off
-                    5 "Importar máquina virtual de Workstation"     off
-                    6 "Importar máquina virtual de HMIScadaBR"      off
-                    7 "Importar máquina virtual de Kali"            off
+                    2 "  Importar máquina virtual de pfSense"         off
+                    3 "  Importar máquina virtual de 3DChemicalPlant" off
+                    4 "  Importar máquina virtual de PLC"             off
+                    5 "  Importar máquina virtual de Workstation"     off
+                    6 "  Importar máquina virtual de HMIScadaBR"      off
+                    7 "  Importar máquina virtual de Kali"            off
 
-                    8 "Agrupar máquinas virtuales"              off
-                    9 "Iniciar las máquinas virtuales en orden" off
+                    8 "    Agrupar máquinas virtuales"              off
+                    9 "    Iniciar las máquinas virtuales en orden" off
 
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
@@ -254,7 +254,7 @@
 
                         # Disco duro
                           mv ~/DiscosPlantaQuim/GRFICSv2-3DChemicalPlant.vdi ~/"VirtualBox VMs/GRFICSv2-3DChemicalPlant/"
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-Simulation/GRFICSv2-Simulation.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
+                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-3DChemicalPlant/GRFICSv2-3DChemicalPlant.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
                           VBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-3DChemicalPlant/GRFICSv2-3DChemicalPlant.vdi"
 
                       ;;
@@ -406,12 +406,12 @@
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
                         echo ""
-                        VBoxManage modifyvm "GRFICSv2-HMIScadaBR"   --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-Kali"         --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-pfSense"      --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-HMIScadaBR"      --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-Kali"            --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-PLC"          --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-Workstation"  --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-PLC"             --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-Workstation"     --groups "/PlantaQuímica" 2> /dev/null
 
                       ;;
 
