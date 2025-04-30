@@ -234,6 +234,12 @@
                                  fi
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-pfSense.vmdk.xz
+                          # Obtener nombre de la carpeta de la máquina virtual
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-pfSense --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                          # Mover el disco
+                            mv -fv /tmp/GRFICSv2-pfSense.vmdk "$vCarpeta"/
+                          # Agregarlo a la máquina
+                            VBoxManage storageattach "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-pfSense.vmdk
                            else
                              echo ""
                              echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
@@ -279,6 +285,63 @@
 
                       ;;
 
+                      4)
+
+                         echo ""
+                         echo "    Descargando e importando el disco duro virtual para la MV 3DChemicalPlant..."
+                         echo ""
+
+                         # Definir el espacio libre necesario
+                           vGBsLibresNecesarios=2
+                           vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
+
+                         # Obtener el espacio libre de la partición en la que está montada la /tmp
+                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
+
+                         # Comprobar si hay espacio libre disponible
+                           if [ "$vEspacioLibre" -ge "$vEspacioNecesario" ]; then
+                             # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
+                               if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
+                                 echo ""
+                                 echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
+                                 echo ""
+                                 sudo apt-get -y update
+                                 sudo apt-get -y install curl
+                                 echo ""
+                               fi
+                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-3DChemicalPlant.vmdk.xz -o /tmp/GRFICSv2-3DChemicalPlant.vmdk.xz
+                             # Descomprimir
+                               echo ""
+                               echo "      Descomprimiendo..."
+                               echo ""
+                               # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
+                                 if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
+                                   echo ""
+                                   echo -e "${cColorRojo}    El paquete xz-utils no está instalado. Iniciando su instalación...${cFinColor}"
+                                   echo ""
+                                   sudo apt-get -y update
+                                   sudo apt-get -y install xz-utils
+                                   echo ""
+                                 fi
+                             cd /tmp
+                             xz -vfdk /tmp/GRFICSv2-3DChemicalPlant.vmdk.xz
+                          # Obtener nombre de la carpeta de la máquina virtual
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-3DChemicalPlant --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                          # Mover el disco
+                            mv -fv /tmp/GRFICSv2-3DChemicalPlant.vmdk "$vCarpeta"/
+                          # Agregarlo a la máquina
+                            VBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-3DChemicalPlant.vmdk
+                           else
+                             echo ""
+                             echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
+                             echo ""
+                             echo -e "${cColorRojo}      Hacen falta $vGBsLibresNecesarios GB y hay sólo $vGBsLibres GB.${cFinColor}"
+                             echo ""
+                           fi
+
+                      ;;
+
                       5)
 
                           echo ""
@@ -311,6 +374,63 @@
                           mv ~/DiscosPlantaQuim/GRFICSv2-PLC.vdi ~/"VirtualBox VMs/GRFICSv2-PLC/"
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-PLC/GRFICSv2-PLC.vdi" df3195b7-7cb0-4848-be56-1e96ebecbc52
                           VBoxManage storageattach "GRFICSv2-PLC" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-PLC/GRFICSv2-PLC.vdi"
+
+                      ;;
+
+                      6)
+
+                         echo ""
+                         echo "    Descargando e importando el disco duro virtual para la MV PLC..."
+                         echo ""
+
+                         # Definir el espacio libre necesario
+                           vGBsLibresNecesarios=2
+                           vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
+
+                         # Obtener el espacio libre de la partición en la que está montada la /tmp
+                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
+
+                         # Comprobar si hay espacio libre disponible
+                           if [ "$vEspacioLibre" -ge "$vEspacioNecesario" ]; then
+                             # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
+                               if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
+                                 echo ""
+                                 echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
+                                 echo ""
+                                 sudo apt-get -y update
+                                 sudo apt-get -y install curl
+                                 echo ""
+                               fi
+                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-PLC.vmdk.xz -o /tmp/GRFICSv2-PLC.vmdk.xz
+                             # Descomprimir
+                               echo ""
+                               echo "      Descomprimiendo..."
+                               echo ""
+                               # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
+                                 if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
+                                   echo ""
+                                   echo -e "${cColorRojo}    El paquete xz-utils no está instalado. Iniciando su instalación...${cFinColor}"
+                                   echo ""
+                                   sudo apt-get -y update
+                                   sudo apt-get -y install xz-utils
+                                   echo ""
+                                 fi
+                             cd /tmp
+                             xz -vfdk /tmp/GRFICSv2-PLC.vmdk.xz
+                          # Obtener nombre de la carpeta de la máquina virtual
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-PLC --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                          # Mover el disco
+                            mv -fv /tmp/GRFICSv2-PLC "$vCarpeta"/
+                          # Agregarlo a la máquina
+                            VBoxManage storageattach "GRFICSv2-PLC" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-PLC.vmdk
+                           else
+                             echo ""
+                             echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
+                             echo ""
+                             echo -e "${cColorRojo}      Hacen falta $vGBsLibresNecesarios GB y hay sólo $vGBsLibres GB.${cFinColor}"
+                             echo ""
+                           fi
 
                       ;;
 
@@ -349,6 +469,62 @@
 
                       ;;
 
+                      8)
+
+                         echo ""
+                         echo "    Descargando e importando el disco duro virtual para la MV WorkStation..."
+                         echo ""
+
+                         # Definir el espacio libre necesario
+                           vGBsLibresNecesarios=2
+                           vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
+
+                         # Obtener el espacio libre de la partición en la que está montada la /tmp
+                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
+
+                         # Comprobar si hay espacio libre disponible
+                           if [ "$vEspacioLibre" -ge "$vEspacioNecesario" ]; then
+                             # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
+                               if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
+                                 echo ""
+                                 echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
+                                 echo ""
+                                 sudo apt-get -y update
+                                 sudo apt-get -y install curl
+                                 echo ""
+                               fi
+                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-WorkStation.vmdk.xz -o /tmp/GRFICSv2-WorkStation.vmdk.xz
+                             # Descomprimir
+                               echo ""
+                               echo "      Descomprimiendo..."
+                               echo ""
+                               # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
+                                 if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
+                                   echo ""
+                                   echo -e "${cColorRojo}    El paquete xz-utils no está instalado. Iniciando su instalación...${cFinColor}"
+                                   echo ""
+                                   sudo apt-get -y update
+                                   sudo apt-get -y install xz-utils
+                                   echo ""
+                                 fi
+                             cd /tmp
+                             xz -vfdk /tmp/GRFICSv2-WorkStation.vmdk.xz
+                          # Obtener nombre de la carpeta de la máquina virtual
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-WorkStation --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                          # Mover el disco
+                            mv -fv /tmp/GRFICSv2-WorkStation "$vCarpeta"/
+                          # Agregarlo a la máquina
+                            VBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-WorkStation.vmdk
+                           else
+                             echo ""
+                             echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
+                             echo ""
+                             echo -e "${cColorRojo}      Hacen falta $vGBsLibresNecesarios GB y hay sólo $vGBsLibres GB.${cFinColor}"
+                             echo ""
+                           fi
+
+                      ;;
 
                       9)
 
@@ -382,6 +558,63 @@
                           mv ~/DiscosPlantaQuim/GRFICSv2-HMIScadaBR.vdi ~/"VirtualBox VMs/GRFICSv2-HMIScadaBR/"
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-HMIScadaBR/GRFICSv2-HMIScadaBR.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
                           VBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-HMIScadaBR/GRFICSv2-HMIScadaBR.vdi"
+
+                      ;;
+
+                     10)
+
+                         echo ""
+                         echo "    Descargando e importando el disco duro virtual para la MV HMIScadaBR..."
+                         echo ""
+
+                         # Definir el espacio libre necesario
+                           vGBsLibresNecesarios=2
+                           vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
+
+                         # Obtener el espacio libre de la partición en la que está montada la /tmp
+                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
+
+                         # Comprobar si hay espacio libre disponible
+                           if [ "$vEspacioLibre" -ge "$vEspacioNecesario" ]; then
+                             # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
+                               if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
+                                 echo ""
+                                 echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
+                                 echo ""
+                                 sudo apt-get -y update
+                                 sudo apt-get -y install curl
+                                 echo ""
+                               fi
+                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-HMIScadaBR.vmdk.xz -o /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
+                             # Descomprimir
+                               echo ""
+                               echo "      Descomprimiendo..."
+                               echo ""
+                               # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
+                                 if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
+                                   echo ""
+                                   echo -e "${cColorRojo}    El paquete xz-utils no está instalado. Iniciando su instalación...${cFinColor}"
+                                   echo ""
+                                   sudo apt-get -y update
+                                   sudo apt-get -y install xz-utils
+                                   echo ""
+                                 fi
+                             cd /tmp
+                             xz -vfdk /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
+                          # Obtener nombre de la carpeta de la máquina virtual
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-HMIScadaBR --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                          # Mover el disco
+                            mv -fv /tmp/GRFICSv2-HMIScadaBR "$vCarpeta"/
+                          # Agregarlo a la máquina
+                            VBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-HMIScadaBR.vmdk
+                           else
+                             echo ""
+                             echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
+                             echo ""
+                             echo -e "${cColorRojo}      Hacen falta $vGBsLibresNecesarios GB y hay sólo $vGBsLibres GB.${cFinColor}"
+                             echo ""
+                           fi
 
                       ;;
 
@@ -420,6 +653,62 @@
 
                       ;;
 
+                     12)
+
+                         echo ""
+                         echo "    Descargando e importando el disco duro virtual para la MV Kali..."
+                         echo ""
+
+                         # Definir el espacio libre necesario
+                           vGBsLibresNecesarios=2
+                           vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
+
+                         # Obtener el espacio libre de la partición en la que está montada la /tmp
+                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
+
+                         # Comprobar si hay espacio libre disponible
+                           if [ "$vEspacioLibre" -ge "$vEspacioNecesario" ]; then
+                             # Comprobar si el paquete curl está instalado. Si no lo está, instalarlo.
+                               if [[ $(dpkg-query -s curl 2>/dev/null | grep installed) == "" ]]; then
+                                 echo ""
+                                 echo -e "${cColorRojo}    El paquete curl no está instalado. Iniciando su instalación...${cFinColor}"
+                                 echo ""
+                                 sudo apt-get -y update
+                                 sudo apt-get -y install curl
+                                 echo ""
+                               fi
+                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-Kali.vmdk.xz -o /tmp/GRFICSv2-Kali.vmdk.xz
+                             # Descomprimir
+                               echo ""
+                               echo "      Descomprimiendo..."
+                               echo ""
+                               # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
+                                 if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
+                                   echo ""
+                                   echo -e "${cColorRojo}    El paquete xz-utils no está instalado. Iniciando su instalación...${cFinColor}"
+                                   echo ""
+                                   sudo apt-get -y update
+                                   sudo apt-get -y install xz-utils
+                                   echo ""
+                                 fi
+                             cd /tmp
+                             xz -vfdk /tmp/GRFICSv2-Kali.vmdk.xz
+                          # Obtener nombre de la carpeta de la máquina virtual
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-Kali --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                          # Mover el disco
+                            mv -fv /tmp/GRFICSv2-Kali "$vCarpeta"/
+                          # Agregarlo a la máquina
+                            VBoxManage storageattach "GRFICSv2-Kali" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-Kali.vmdk
+                           else
+                             echo ""
+                             echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
+                             echo ""
+                             echo -e "${cColorRojo}      Hacen falta $vGBsLibresNecesarios GB y hay sólo $vGBsLibres GB.${cFinColor}"
+                             echo ""
+                           fi
+
+                      ;;
 
                      13)
 
