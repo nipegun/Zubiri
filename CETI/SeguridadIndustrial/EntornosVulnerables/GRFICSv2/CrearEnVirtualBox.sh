@@ -9,13 +9,13 @@
 # Script de NiPeGun para descargar e importar el entorno virtual GRFICSv2 para VirtualBox en Debian
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornoVirtual-GRFICSv2-Crear.sh | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornosVulnerables/GRFICSv2/CrearEnVirtualBox.sh | bash
 #
 # Ejecución remota como root:
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornoVirtual-GRFICSv2-Crear.sh | sed 's-sudo--g' | bash
+#   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornosVulnerables/GRFICSv2/CrearEnVirtualBox.sh | sed 's-sudo--g' | bash
 #
 # Bajar y editar directamente el archivo en nano
-#   curl -sL https://raw.githubusercontent.com/nipegun/zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornoVirtual-GRFICSv2-Crear.sh | nano -
+#   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornosVulnerables/GRFICSv2/CrearEnVirtualBox.sh | nano -
 # ----------
 
 #
@@ -134,17 +134,17 @@
                 menu=(dialog --checklist "Marca las opciones que quieras instalar:" 22 70 16)
                   opciones=(
 
-                    1 "Descargar y descomprimir discos duros virtuales"          off
+                    1 "Descargar y descomprimir discos duros virtuales" off
 
-                    2 "Importar máquina virtual de HMI (ScadaBR)"                off
-                    3 "Importar máquina virtual de Kali"                         off
-                    4 "Importar máquina virtual de pfSense"                      off
-                    5 "Importar máquina virtual de 3DSimulation (ChemicalPlant)" off
-                    6 "Importar máquina virtual de PLC"                          off
-                    7 "Importar máquina virtual de Workstation"                  off
-                    
-                    8 "Agrupar máquinas virtuales"                               off
-                    9 "Iniciar las máquinas virtuales en orden"                  off
+                    2 "Importar máquina virtual de pfSense"         off
+                    3 "Importar máquina virtual de 3DChemicalPlant" off
+                    4 "Importar máquina virtual de PLC"             off
+                    5 "Importar máquina virtual de Workstation"     off
+                    6 "Importar máquina virtual de HMIScadaBR"      off
+                    7 "Importar máquina virtual de Kali"            off
+
+                    8 "Agrupar máquinas virtuales"              off
+                    9 "Iniciar las máquinas virtuales en orden" off
 
                   )
                 choices=$("${menu[@]}" "${opciones[@]}" 2>&1 >/dev/tty)
@@ -297,35 +297,35 @@
                       5)
 
                           echo ""
-                          echo "    Importando máquina virtual de 3DSimulation..."
+                          echo "    Importando máquina virtual de 3DChemicalPlant..."
                           echo ""
-                          VBoxManage createvm --name "pq-3DSimulation" --ostype "Ubuntu_64" --register
+                          VBoxManage createvm --name "pq-3DChemicalPlant" --ostype "Ubuntu_64" --register
                           # Procesador
-                            VBoxManage modifyvm "pq-3DSimulation" --cpus 2
+                            VBoxManage modifyvm "pq-3DChemicalPlant" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "pq-3DSimulation" --memory 2048
+                            VBoxManage modifyvm "pq-3DChemicalPlant" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "pq-3DSimulation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "pq-3DChemicalPlant" --graphicscontroller vmsvga --vram 128 --accelerate3d on
                           # Audio
-                            VBoxManage modifyvm "pq-3DSimulation" --audio-driver none
+                            VBoxManage modifyvm "pq-3DChemicalPlant" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "pq-3DSimulation" --nictype1 virtio
-                              VBoxManage modifyvm "pq-3DSimulation" --nic1 intnet --intnet1 "RedIntInd"
+                            VBoxManage modifyvm "pq-3DChemicalPlant" --nictype1 virtio
+                              VBoxManage modifyvm "pq-3DChemicalPlant" --nic1 intnet --intnet1 "RedIntInd"
                             # Poner en modo promiscuo
-                              VBoxManage modifyvm "pq-3DSimulation" --nicpromisc1 allow-all
+                              VBoxManage modifyvm "pq-3DChemicalPlant" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
-                              VBoxManage storagectl "pq-3DSimulation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+                              VBoxManage storagectl "pq-3DChemicalPlant" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storageattach "pq-3DSimulation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "pq-3DChemicalPlant" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "pq-3DSimulation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "pq-3DChemicalPlant" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                         # Disco duro
-                          mv ~/DiscosPlantaQuim/pq-3DSimulation.vdi ~/"VirtualBox VMs/pq-3DSimulation/"
+                          mv ~/DiscosPlantaQuim/pq-3DChemicalPlant.vdi ~/"VirtualBox VMs/pq-3DChemicalPlant/"
                             #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/pq-Simulation/pq-Simulation.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
-                          VBoxManage storageattach "pq-3DSimulation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-3DSimulation/pq-3DSimulation.vdi"
+                          VBoxManage storageattach "pq-3DChemicalPlant" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/pq-3DChemicalPlant/pq-3DChemicalPlant.vdi"
 
                       ;;
 
@@ -407,7 +407,7 @@
                         VBoxManage modifyvm "pq-HMIScadaBR"   --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-Kali"         --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-pfSense"      --groups "/PlantaQuímica" 2> /dev/null
-                        VBoxManage modifyvm "pq-3DSimulation" --groups "/PlantaQuímica" 2> /dev/null
+                        VBoxManage modifyvm "pq-3DChemicalPlant" --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-PLC"          --groups "/PlantaQuímica" 2> /dev/null
                         VBoxManage modifyvm "pq-Workstation"  --groups "/PlantaQuímica" 2> /dev/null
 
@@ -420,7 +420,7 @@
                         echo ""
                         VBoxManage startvm "pq-pfSense"
                         sleep 15
-                        VBoxManage startvm "pq-3DSimulation"
+                        VBoxManage startvm "pq-3DChemicalPlant"
                         sleep 15
                         VBoxManage startvm "pq-PLC"
                         sleep 15
