@@ -200,7 +200,7 @@
                          echo ""
 
                          # Definir el espacio libre necesario
-                           vGBsLibresNecesarios=4
+                           vGBsLibresNecesarios=2
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
@@ -223,16 +223,17 @@
                                echo ""
                                echo "      Descomprimiendo..."
                                echo ""
-                               # Comprobar si el paquete tar está instalado. Si no lo está, instalarlo.
-                                 if [[ $(dpkg-query -s tar 2>/dev/null | grep installed) == "" ]]; then
+                               # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
+                                 if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
                                    echo ""
-                                   echo -e "${cColorRojo}    El paquete tar no está instalado. Iniciando su instalación...${cFinColor}"
+                                   echo -e "${cColorRojo}    El paquete xz-utils no está instalado. Iniciando su instalación...${cFinColor}"
                                    echo ""
                                    sudo apt-get -y update
-                                   sudo apt-get -y install tar
+                                   sudo apt-get -y install xz-utils
                                    echo ""
                                  fi
-                             tar -xvJf /tmp/DiscosPlantaQuim.tar.xz -C ~/
+                             cd /tmp
+                             xz -vfdk /tmp/GRFICSv2-pfSense.vmdk.xz
                            else
                              echo ""
                              echo -e "${cColorRojo}    No hay suficiente espacio libre en la carpeta /tmp para descargar y descomprimir el disco virtual.${cFinColor}"
