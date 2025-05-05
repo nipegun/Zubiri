@@ -155,7 +155,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                       2)
 
                          echo ""
-                         echo "      Descargando e importando el disco duro virtual para la MV pfSense..."
+                         echo "    Descargando e importando el disco duro virtual para la MV pfSense..."
                          echo ""
 
                          # Definir el espacio libre necesario
@@ -163,7 +163,14 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vDondeMontadoTmp=$(mount | grep '/tmp')
+                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           elif [[ -z "$salida" ]]; then
+                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           else
+                             vEspacioLibre=0
+                           fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -180,7 +187,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              curl -L "$vURLBaseVMDKs"/GRFICSv2-pfSense.vmdk.xz -o /tmp/GRFICSv2-pfSense.vmdk.xz
                              # Descomprimir
                                echo ""
-                               echo "        Descomprimiendo..."
+                               echo "      Descomprimiendo..."
                                echo ""
                                # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
                                  if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
@@ -244,7 +251,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                       4)
 
                          echo ""
-                         echo "      Descargando e importando el disco duro virtual para la MV 3DChemicalPlant..."
+                         echo "    Descargando e importando el disco duro virtual para la MV 3DChemicalPlant..."
                          echo ""
 
                          # Definir el espacio libre necesario
@@ -252,7 +259,14 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vDondeMontadoTmp=$(mount | grep '/tmp')
+                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           elif [[ -z "$salida" ]]; then
+                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           else
+                             vEspacioLibre=0
+                           fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -269,7 +283,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              curl -L "$vURLBaseVMDKs"/GRFICSv2-3DChemicalPlant.vmdk.xz -o /tmp/GRFICSv2-3DChemicalPlant.vmdk.xz
                              # Descomprimir
                                echo ""
-                               echo "        Descomprimiendo..."
+                               echo "      Descomprimiendo..."
                                echo ""
                                # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
                                  if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
@@ -333,7 +347,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                       6)
 
                          echo ""
-                         echo "      Descargando e importando el disco duro virtual para la MV PLC..."
+                         echo "    Descargando e importando el disco duro virtual para la MV PLC..."
                          echo ""
 
                          # Definir el espacio libre necesario
@@ -341,7 +355,14 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vDondeMontadoTmp=$(mount | grep '/tmp')
+                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           elif [[ -z "$salida" ]]; then
+                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           else
+                             vEspacioLibre=0
+                           fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -358,7 +379,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              curl -L "$vURLBaseVMDKs"/GRFICSv2-PLC.vmdk.xz -o /tmp/GRFICSv2-PLC.vmdk.xz
                              # Descomprimir
                                echo ""
-                               echo "        Descomprimiendo..."
+                               echo "      Descomprimiendo..."
                                echo ""
                                # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
                                  if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
@@ -422,7 +443,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                       8)
 
                          echo ""
-                         echo "      Descargando e importando el disco duro virtual para la MV WorkStation..."
+                         echo "    Descargando e importando el disco duro virtual para la MV WorkStation..."
                          echo ""
 
                          # Definir el espacio libre necesario
@@ -430,7 +451,14 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vDondeMontadoTmp=$(mount | grep '/tmp')
+                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           elif [[ -z "$salida" ]]; then
+                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           else
+                             vEspacioLibre=0
+                           fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -447,7 +475,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              curl -L "$vURLBaseVMDKs"/GRFICSv2-WorkStation.vmdk.xz -o /tmp/GRFICSv2-WorkStation.vmdk.xz
                              # Descomprimir
                                echo ""
-                               echo "        Descomprimiendo..."
+                               echo "      Descomprimiendo..."
                                echo ""
                                # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
                                  if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
@@ -511,7 +539,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                      10)
 
                          echo ""
-                         echo "      Descargando e importando el disco duro virtual para la MV HMIScadaBR..."
+                         echo "    Descargando e importando el disco duro virtual para la MV HMIScadaBR..."
                          echo ""
 
                          # Definir el espacio libre necesario
@@ -519,7 +547,14 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vDondeMontadoTmp=$(mount | grep '/tmp')
+                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           elif [[ -z "$salida" ]]; then
+                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           else
+                             vEspacioLibre=0
+                           fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -536,7 +571,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              curl -L "$vURLBaseVMDKs"/GRFICSv2-HMIScadaBR.vmdk.xz -o /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
                              # Descomprimir
                                echo ""
-                               echo "        Descomprimiendo..."
+                               echo "      Descomprimiendo..."
                                echo ""
                                # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
                                  if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
@@ -600,7 +635,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                      12)
 
                          echo ""
-                         echo "      Descargando e importando el disco duro virtual para la MV Kali..."
+                         echo "    Descargando e importando el disco duro virtual para la MV Kali..."
                          echo ""
 
                          # Definir el espacio libre necesario
@@ -608,7 +643,14 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           vDondeMontadoTmp=$(mount | grep '/tmp')
+                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           elif [[ -z "$salida" ]]; then
+                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                           else
+                             vEspacioLibre=0
+                           fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -625,7 +667,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              curl -L "$vURLBaseVMDKs"/GRFICSv2-Kali.vmdk.xz -o /tmp/GRFICSv2-Kali.vmdk.xz
                              # Descomprimir
                                echo ""
-                               echo "        Descomprimiendo..."
+                               echo "      Descomprimiendo..."
                                echo ""
                                # Comprobar si el paquete xz-utils está instalado. Si no lo está, instalarlo.
                                  if [[ $(dpkg-query -s xz-utils 2>/dev/null | grep installed) == "" ]]; then
