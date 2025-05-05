@@ -22,6 +22,8 @@
 #  Referencia: https://github.com/Fortiphyd/GRFICSv2
 #
 
+vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
+
 # Definir constantes de color
   cColorAzul="\033[0;34m"
   cColorAzulClaro="\033[1;34m"
@@ -213,7 +215,7 @@
                                  sudo apt-get -y install curl
                                  echo ""
                                fi
-                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-pfSense.vmdk.xz -o /tmp/GRFICSv2-pfSense.vmdk.xz
+                             curl -L "$vURLBaseVMDKs"/GRFICSv2-pfSense.vmdk.xz -o /tmp/GRFICSv2-pfSense.vmdk.xz
                              # Descomprimir
                                echo ""
                                echo "      Descomprimiendo..."
@@ -300,7 +302,7 @@
                                  sudo apt-get -y install curl
                                  echo ""
                                fi
-                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-3DChemicalPlant.vmdk.xz -o /tmp/GRFICSv2-3DChemicalPlant.vmdk.xz
+                             curl -L "$vURLBaseVMDKs"/GRFICSv2-3DChemicalPlant.vmdk.xz -o /tmp/GRFICSv2-3DChemicalPlant.vmdk.xz
                              # Descomprimir
                                echo ""
                                echo "      Descomprimiendo..."
@@ -387,7 +389,7 @@
                                  sudo apt-get -y install curl
                                  echo ""
                                fi
-                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-PLC.vmdk.xz -o /tmp/GRFICSv2-PLC.vmdk.xz
+                             curl -L "$vURLBaseVMDKs"/GRFICSv2-PLC.vmdk.xz -o /tmp/GRFICSv2-PLC.vmdk.xz
                              # Descomprimir
                                echo ""
                                echo "      Descomprimiendo..."
@@ -406,7 +408,7 @@
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-PLC.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-PLC "$vCarpeta"/
+                            mv -fv /tmp/GRFICSv2-PLC.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-PLC" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-PLC.vmdk
                            else
@@ -474,7 +476,7 @@
                                  sudo apt-get -y install curl
                                  echo ""
                                fi
-                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-WorkStation.vmdk.xz -o /tmp/GRFICSv2-WorkStation.vmdk.xz
+                             curl -L "$vURLBaseVMDKs"/GRFICSv2-WorkStation.vmdk.xz -o /tmp/GRFICSv2-WorkStation.vmdk.xz
                              # Descomprimir
                                echo ""
                                echo "      Descomprimiendo..."
@@ -493,7 +495,7 @@
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-WorkStation.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-WorkStation "$vCarpeta"/
+                            mv -fv /tmp/GRFICSv2-WorkStation.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-WorkStation.vmdk
                            else
@@ -561,7 +563,7 @@
                                  sudo apt-get -y install curl
                                  echo ""
                                fi
-                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-HMIScadaBR.vmdk.xz -o /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
+                             curl -L "$vURLBaseVMDKs"/GRFICSv2-HMIScadaBR.vmdk.xz -o /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
                              # Descomprimir
                                echo ""
                                echo "      Descomprimiendo..."
@@ -580,7 +582,7 @@
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-HMIScadaBR.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-HMIScadaBR "$vCarpeta"/
+                            mv -fv /tmp/GRFICSv2-HMIScadaBR.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-HMIScadaBR.vmdk
                            else
@@ -648,7 +650,7 @@
                                  sudo apt-get -y install curl
                                  echo ""
                                fi
-                             curl -L http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2/GRFICSv2-Kali.vmdk.xz -o /tmp/GRFICSv2-Kali.vmdk.xz
+                             curl -L "$vURLBaseVMDKs"/GRFICSv2-Kali.vmdk.xz -o /tmp/GRFICSv2-Kali.vmdk.xz
                              # Descomprimir
                                echo ""
                                echo "      Descomprimiendo..."
@@ -667,7 +669,7 @@
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-Kali.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-Kali "$vCarpeta"/
+                            mv -fv /tmp/GRFICSv2-Kali.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-Kali" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-Kali.vmdk
                            else
