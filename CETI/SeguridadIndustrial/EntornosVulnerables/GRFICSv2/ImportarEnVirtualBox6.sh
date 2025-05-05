@@ -6,7 +6,7 @@
 # No tienes que aceptar ningún tipo de términos de uso o licencia para utilizarlo o modificarlo porque va sin CopyLeft.
 
 # ----------
-# Script de NiPeGun para descargar e importar el entorno virtual GRFICSv2 para VirtualBox en Debian
+# Script de NiPeGun para descargar e importar el entorno virtual GRFICSv2 para VirtualBox en Debian distros basadas en Debian
 #
 # Ejecución remota (puede requerir permisos sudo):
 #   curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornosVulnerables/GRFICSv2/ImportarEnVirtualBox.sh | bash
@@ -32,44 +32,6 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
   # Para el color rojo también:
     #echo "$(tput setaf 1)Mensaje en color rojo. $(tput sgr 0)"
   cFinColor='\033[0m'
-
-# Determinar la versión de Debian
-  if [ -f /etc/os-release ]; then             # Para systemd y freedesktop.org.
-    . /etc/os-release
-    cNomSO=$NAME
-    cVerSO=$VERSION_ID
-  elif type lsb_release >/dev/null 2>&1; then # Para linuxbase.org.
-    cNomSO=$(lsb_release -si)
-    cVerSO=$(lsb_release -sr)
-  elif [ -f /etc/lsb-release ]; then          # Para algunas versiones de Debian sin el comando lsb_release.
-    . /etc/lsb-release
-    cNomSO=$DISTRIB_ID
-    cVerSO=$DISTRIB_RELEASE
-  elif [ -f /etc/debian_version ]; then       # Para versiones viejas de Debian.
-    cNomSO=Debian
-    cVerSO=$(cat /etc/debian_version)
-  else                                        # Para el viejo uname (También funciona para BSD).
-    cNomSO=$(uname -s)
-    cVerSO=$(uname -r)
-  fi
-
-# Ejecutar comandos dependiendo de la versión de Debian detectada
-
-  if [ $cVerSO == "13" ]; then
-
-    echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno OT vulnerable GRFICSv2 para VirtualBox en Debian 13 (x)...${cFinColor}"
-    echo ""
-
-    echo ""
-    echo -e "${cColorRojo}    Comandos para Debian 13 todavía no preparados. Prueba ejecutarlo en otra versión de Debian.${cFinColor}"
-    echo ""
-
-  elif [ $cVerSO == "12" ]; then
-
-    echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno OT vulnerable GRFICSv2 para VirtualBox en Debian 12 (Bookworm)...${cFinColor}"
-    echo ""
 
     # Definir fecha de ejecución del script
       cFechaDeEjec=$(date +a%Ym%md%d@%T)
@@ -724,55 +686,3 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
         esac
 
     done
-
-  elif [ $cVerSO == "11" ]; then
-
-    echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno OT vulnerable GRFICSv2 para VirtualBox en Debian 11 (Bullseye)...${cFinColor}"
-    echo ""
-
-    echo ""
-    echo -e "${cColorRojo}    Comandos para Debian 11 todavía no preparados. Prueba ejecutarlo en otra versión de Debian.${cFinColor}"
-    echo ""
-
-  elif [ $cVerSO == "10" ]; then
-
-    echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno OT vulnerable GRFICSv2 para VirtualBox en Debian 10 (Buster)...${cFinColor}"
-    echo ""
-
-    echo ""
-    echo -e "${cColorRojo}    Comandos para Debian 10 todavía no preparados. Prueba ejecutarlo en otra versión de Debian.${cFinColor}"
-    echo ""
-
-  elif [ $cVerSO == "9" ]; then
-
-    echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno OT vulnerable GRFICSv2 para VirtualBox en Debian 9 (Stretch)...${cFinColor}"
-    echo ""
-
-    echo ""
-    echo -e "${cColorRojo}    Comandos para Debian 9 todavía no preparados. Prueba ejecutarlo en otra versión de Debian.${cFinColor}"
-    echo ""
-
-  elif [ $cVerSO == "8" ]; then
-
-    echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno OT vulnerable GRFICSv2 para VirtualBox en Debian 8 (Jessie)...${cFinColor}"
-    echo ""
-
-    echo ""
-    echo -e "${cColorRojo}    Comandos para Debian 8 todavía no preparados. Prueba ejecutarlo en otra versión de Debian.${cFinColor}"
-    echo ""
-
-  elif [ $cVerSO == "7" ]; then
-
-    echo ""
-    echo -e "${cColorAzulClaro}  Iniciando el script de importación del entorno OT vulnerable GRFICSv2 para VirtualBox en Debian 7 (Wheezy)...${cFinColor}"
-    echo ""
-
-    echo ""
-    echo -e "${cColorRojo}    Comandos para Debian 7 todavía no preparados. Prueba ejecutarlo en otra versión de Debian.${cFinColor}"
-    echo ""
-
-  fi
