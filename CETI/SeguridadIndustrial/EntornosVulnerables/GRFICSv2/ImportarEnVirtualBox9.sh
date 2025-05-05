@@ -163,14 +163,15 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vDondeMontadoTmp=$(mount | grep '/tmp')
-                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
-                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           elif [[ -z "$salida" ]]; then
-                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           else
-                             vEspacioLibre=0
-                           fi
+                           # Verificar si /tmp está montada en la RAM o sobre la partición raíz
+                             vDondeMontadoTmp=$(mount | grep '/tmp')
+                             if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                               vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             elif [[ -z "$salida" ]]; then
+                               vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             else
+                               vEspacioLibre=0
+                             fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -259,14 +260,15 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vDondeMontadoTmp=$(mount | grep '/tmp')
-                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
-                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           elif [[ -z "$salida" ]]; then
-                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           else
-                             vEspacioLibre=0
-                           fi
+                           # Verificar si /tmp está montada en la RAM o sobre la partición raíz
+                             vDondeMontadoTmp=$(mount | grep '/tmp')
+                             if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                               vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             elif [[ -z "$salida" ]]; then
+                               vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             else
+                               vEspacioLibre=0
+                             fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -355,14 +357,15 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vDondeMontadoTmp=$(mount | grep '/tmp')
-                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
-                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           elif [[ -z "$salida" ]]; then
-                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           else
-                             vEspacioLibre=0
-                           fi
+                           # Verificar si /tmp está montada en la RAM o sobre la partición raíz
+                             vDondeMontadoTmp=$(mount | grep '/tmp')
+                             if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                               vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             elif [[ -z "$salida" ]]; then
+                               vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             else
+                               vEspacioLibre=0
+                             fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -451,14 +454,15 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vDondeMontadoTmp=$(mount | grep '/tmp')
-                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
-                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           elif [[ -z "$salida" ]]; then
-                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           else
-                             vEspacioLibre=0
-                           fi
+                           # Verificar si /tmp está montada en la RAM o sobre la partición raíz
+                             vDondeMontadoTmp=$(mount | grep '/tmp')
+                             if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                               vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             elif [[ -z "$salida" ]]; then
+                               vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             else
+                               vEspacioLibre=0
+                             fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -547,14 +551,15 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vDondeMontadoTmp=$(mount | grep '/tmp')
-                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
-                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           elif [[ -z "$salida" ]]; then
-                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           else
-                             vEspacioLibre=0
-                           fi
+                           # Verificar si /tmp está montada en la RAM o sobre la partición raíz
+                             vDondeMontadoTmp=$(mount | grep '/tmp')
+                             if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                               vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             elif [[ -z "$salida" ]]; then
+                               vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             else
+                               vEspacioLibre=0
+                             fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
@@ -643,14 +648,15 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                            vEspacioNecesario=$(($vGBsLibresNecesarios * 1024 * 1024)) # Convertir a kilobytes (1GB = 1048576KB)
 
                          # Obtener el espacio libre de la partición en la que está montada la /tmp
-                           vDondeMontadoTmp=$(mount | grep '/tmp')
-                           if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
-                             vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           elif [[ -z "$salida" ]]; then
-                             vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
-                           else
-                             vEspacioLibre=0
-                           fi
+                           # Verificar si /tmp está montada en la RAM o sobre la partición raíz
+                             vDondeMontadoTmp=$(mount | grep '/tmp')
+                             if [[ "$vDondeMontadoTmp" == tmpfs\ on\ /tmp\ type\ tmpfs* ]]; then
+                               vEspacioLibre=$(df /tmp | grep '/tmp' | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             elif [[ -z "$salida" ]]; then
+                               vEspacioLibre=$(df /tmp | tail -1 | sed -E 's/\s+/ /g' | cut -d ' ' -f 4)
+                             else
+                               vEspacioLibre=0
+                             fi
                            vGBsLibres=$(echo "scale=2; $vEspacioLibre/1024/1024" | bc)
 
                          # Comprobar si hay espacio libre disponible
