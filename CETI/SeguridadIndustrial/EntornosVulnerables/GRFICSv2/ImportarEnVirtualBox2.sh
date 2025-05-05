@@ -186,11 +186,6 @@
                             # CD
                               VBoxManage storageattach "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
 
-                        # Disco duro
-                          mv ~/DiscosPlantaQuim/GRFICSv2-pfSense.vdi ~/"VirtualBox VMs/GRFICSv2-pfSense/"
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-pfSense/GRFICSv2-pfSense.vdi" d2d48e12-6454-41fb-919d-4127f84459e9
-                          VBoxManage storageattach "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-pfSense/GRFICSv2-pfSense.vdi"
-
                       ;;
 
                       2)
@@ -277,11 +272,6 @@
                               VBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
                               VBoxManage storagectl "GRFICSv2-3DChemicalPlant" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
-
-                        # Disco duro
-                          mv ~/DiscosPlantaQuim/GRFICSv2-3DChemicalPlant.vdi ~/"VirtualBox VMs/GRFICSv2-3DChemicalPlant/"
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-3DChemicalPlant/GRFICSv2-3DChemicalPlant.vdi" 9e5809b5-5f31-43e5-93fa-de514622390d
-                          VBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-3DChemicalPlant/GRFICSv2-3DChemicalPlant.vdi"
 
                       ;;
 
@@ -370,11 +360,6 @@
                             # Controladora de disco duro
                               VBoxManage storagectl "GRFICSv2-PLC" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
-                        # Disco duro
-                          mv ~/DiscosPlantaQuim/GRFICSv2-PLC.vdi ~/"VirtualBox VMs/GRFICSv2-PLC/"
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-PLC/GRFICSv2-PLC.vdi" df3195b7-7cb0-4848-be56-1e96ebecbc52
-                          VBoxManage storageattach "GRFICSv2-PLC" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-PLC/GRFICSv2-PLC.vdi"
-
                       ;;
 
                       6)
@@ -461,11 +446,6 @@
                               VBoxManage storageattach "GRFICSv2-Workstation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
                               VBoxManage storagectl "GRFICSv2-Workstation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
-
-                        # Disco duro
-                          mv ~/DiscosPlantaQuim/GRFICSv2-Workstation.vdi ~/"VirtualBox VMs/GRFICSv2-Workstation/"
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-Workstation/GRFICSv2-Workstation.vdi" 79e7d4fb-1d24-476b-bc12-e4f31554e3e3
-                          VBoxManage storageattach "GRFICSv2-Workstation" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-Workstation/GRFICSv2-Workstation.vdi"
 
                       ;;
 
@@ -554,11 +534,6 @@
                             # Controladora de disco duro
                               VBoxManage storagectl "GRFICSv2-HMIScadaBR" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
-                        # Disco duro
-                          mv ~/DiscosPlantaQuim/GRFICSv2-HMIScadaBR.vdi ~/"VirtualBox VMs/GRFICSv2-HMIScadaBR/"
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-HMIScadaBR/GRFICSv2-HMIScadaBR.vdi" 43606a85-6b4c-420c-99ee-0567adcb16a3
-                          VBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-HMIScadaBR/GRFICSv2-HMIScadaBR.vdi"
-
                       ;;
 
                      10)
@@ -645,11 +620,6 @@
                               VBoxManage storageattach "GRFICSv2-Kali" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
                               VBoxManage storagectl "GRFICSv2-Kali" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
-
-                        # Disco duro
-                          mv ~/DiscosPlantaQuim/GRFICSv2-Kali.vdi ~/"VirtualBox VMs/GRFICSv2-Kali/"
-                            #VBoxManage internalcommands sethduuid ~/"VirtualBox VMs/GRFICSv2-Kali/GRFICSv2-Kali.vdi" 43333a85-6b4c-420c-99ee-0567adcb16a3
-                          VBoxManage storageattach "GRFICSv2-Kali" --storagectl "VirtIO" --port 0 --device 0 --type hdd --medium ~/"VirtualBox VMs/GRFICSv2-Kali/GRFICSv2-Kali.vdi"
 
                       ;;
 
