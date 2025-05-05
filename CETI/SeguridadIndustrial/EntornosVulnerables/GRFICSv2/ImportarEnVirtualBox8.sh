@@ -193,10 +193,12 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                                  fi
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-pfSense.vmdk.xz
+                             # Borrar el archivo comprimido
+                               rm -f  /tmp/GRFICSv2-pfSense.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-pfSense --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-pfSense.vmdk "$vCarpeta"/
+                            mv -f /tmp/GRFICSv2-pfSense.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-pfSense.vmdk
                            else
@@ -280,10 +282,12 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                                  fi
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-3DChemicalPlant.vmdk.xz
+                             # Borrar el archivo comprimido
+                               rm -f  /tmp/GRFICSv2-3DChemicalPlant.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-3DChemicalPlant --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-3DChemicalPlant.vmdk "$vCarpeta"/
+                            mv -f /tmp/GRFICSv2-3DChemicalPlant.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-3DChemicalPlant.vmdk
                            else
@@ -367,10 +371,12 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                                  fi
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-PLC.vmdk.xz
+                             # Borrar el archivo comprimido
+                               rm -f  /tmp/GRFICSv2-PLC.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-PLC --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-PLC.vmdk "$vCarpeta"/
+                            mv -f /tmp/GRFICSv2-PLC.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-PLC" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-PLC.vmdk
                            else
@@ -454,10 +460,12 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                                  fi
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-WorkStation.vmdk.xz
+                             # Borrar el archivo comprimido
+                               rm -f  /tmp/GRFICSv2-WorkStation.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-WorkStation --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-WorkStation.vmdk "$vCarpeta"/
+                            mv -f /tmp/GRFICSv2-WorkStation.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-WorkStation.vmdk
                            else
@@ -541,10 +549,12 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                                  fi
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
+                             # Borrar el archivo comprimido
+                               rm -f  /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-HMIScadaBR --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-HMIScadaBR.vmdk "$vCarpeta"/
+                            mv -f /tmp/GRFICSv2-HMIScadaBR.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-HMIScadaBR.vmdk
                            else
@@ -628,10 +638,12 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                                  fi
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-Kali.vmdk.xz
+                             # Borrar el archivo comprimido
+                               rm -f  /tmp/GRFICSv2-Kali.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
                             vCarpeta=$(VBoxManage showvminfo GRFICSv2-Kali --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
-                            mv -fv /tmp/GRFICSv2-Kali.vmdk "$vCarpeta"/
+                            mv -f /tmp/GRFICSv2-Kali.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
                             VBoxManage storageattach "GRFICSv2-Kali" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium "$vCarpeta"/GRFICSv2-Kali.vmdk
                            else
