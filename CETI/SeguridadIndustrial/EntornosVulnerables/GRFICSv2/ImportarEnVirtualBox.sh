@@ -104,8 +104,8 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                      4 "    Descargar e importar VHD para la MV 3DChemicalPlant" off
                      5 "  Crear máquina virtual de PLC"                          on
                      6 "    Descargar e importar VHD para la MV PLC"             off
-                     7 "  Crear máquina virtual de Workstation"                  on
-                     8 "    Descargar e importar VHD para la MV Workstation"     off
+                     7 "  Crear máquina virtual de WorkStation"                  on
+                     8 "    Descargar e importar VHD para la MV WorkStation"     off
                      9 "  Crear máquina virtual de HMIScadaBR"                   on
                     10 "    Descargar e importar VHD para la MV HMIScadaBR"      off
                     11 "  Crear máquina virtual de Kali"                         on
@@ -416,30 +416,30 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                       7)
 
                           echo ""
-                          echo "    Importando máquina virtual de Workstation..."
+                          echo "    Importando máquina virtual de WorkStation..."
                           echo ""
-                          VBoxManage createvm --name "GRFICSv2-Workstation" --ostype "Ubuntu_64" --register
+                          VBoxManage createvm --name "GRFICSv2-WorkStation" --ostype "Ubuntu_64" --register
                           # Procesador
-                            VBoxManage modifyvm "GRFICSv2-Workstation" --cpus 2
+                            VBoxManage modifyvm "GRFICSv2-WorkStation" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "GRFICSv2-Workstation" --memory 2048
+                            VBoxManage modifyvm "GRFICSv2-WorkStation" --memory 2048
                           # Gráfica
-                            VBoxManage modifyvm "GRFICSv2-Workstation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+                            VBoxManage modifyvm "GRFICSv2-WorkStation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
                           # Audio
-                            VBoxManage modifyvm "GRFICSv2-Workstation" --audio-driver none
+                            VBoxManage modifyvm "GRFICSv2-WorkStation" --audio-driver none
                           # Red
-                            VBoxManage modifyvm "GRFICSv2-Workstation" --nictype1 virtio
-                              VBoxManage modifyvm "GRFICSv2-Workstation" --nic1 intnet --intnet1 "RedIntInd"
+                            VBoxManage modifyvm "GRFICSv2-WorkStation" --nictype1 virtio
+                              VBoxManage modifyvm "GRFICSv2-WorkStation" --nic1 intnet --intnet1 "RedIntInd"
                             # Poner en modo promiscuo
-                              VBoxManage modifyvm "GRFICSv2-Workstation" --nicpromisc1 allow-all
+                              VBoxManage modifyvm "GRFICSv2-WorkStation" --nicpromisc1 allow-all
 
                           # Almacenamiento
                             # Controlador
-                              VBoxManage storagectl "GRFICSv2-Workstation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+                              VBoxManage storagectl "GRFICSv2-WorkStation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
                             # CD
-                              VBoxManage storageattach "GRFICSv2-Workstation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+                              VBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
                             # Controladora de disco duro
-                              VBoxManage storagectl "GRFICSv2-Workstation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+                              VBoxManage storagectl "GRFICSv2-WorkStation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 
                       ;;
 
@@ -714,7 +714,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                         VBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/GRFICSv2" 2> /dev/null
                         VBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/GRFICSv2" 2> /dev/null
                         VBoxManage modifyvm "GRFICSv2-PLC"             --groups "/GRFICSv2" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-Workstation"     --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-WorkStation"     --groups "/GRFICSv2" 2> /dev/null
 
                       ;;
 
@@ -729,7 +729,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                         sleep 15
                         VBoxManage startvm "GRFICSv2-PLC"
                         sleep 15
-                        VBoxManage startvm "GRFICSv2-Workstation"
+                        VBoxManage startvm "GRFICSv2-WorkStation"
                         sleep 15
                         VBoxManage startvm "GRFICSv2-HMIScadaBR"
                         sleep 15
