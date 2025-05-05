@@ -368,7 +368,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-PLC.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
-                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-PLC.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-PLC --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
                             mv -fv /tmp/GRFICSv2-PLC.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
@@ -455,7 +455,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-WorkStation.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
-                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-WorkStation.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-WorkStation --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
                             mv -fv /tmp/GRFICSv2-WorkStation.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
@@ -542,7 +542,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-HMIScadaBR.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
-                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-HMIScadaBR.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-HMIScadaBR --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
                             mv -fv /tmp/GRFICSv2-HMIScadaBR.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
@@ -629,7 +629,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                              cd /tmp
                              xz -vfdk /tmp/GRFICSv2-Kali.vmdk.xz
                           # Obtener nombre de la carpeta de la máquina virtual
-                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-Kali.vmdk --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
+                            vCarpeta=$(VBoxManage showvminfo GRFICSv2-Kali --machinereadable | grep '^CfgFile=' | cut -d'"' -f2 | sed 's|/[^/]*$||')
                           # Mover el disco
                             mv -fv /tmp/GRFICSv2-Kali.vmdk "$vCarpeta"/
                           # Agregarlo a la máquina
