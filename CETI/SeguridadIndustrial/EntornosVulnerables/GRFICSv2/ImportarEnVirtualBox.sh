@@ -616,7 +616,7 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                           # Procesador
                             VBoxManage modifyvm "GRFICSv2-Kali" --cpus 2
                           # RAM
-                            VBoxManage modifyvm "GRFICSv2-Kali" --memory 2048
+                            VBoxManage modifyvm "GRFICSv2-Kali" --memory 4096
                           # Gráfica
                             VBoxManage modifyvm "GRFICSv2-Kali" --graphicscontroller vmsvga --vram 128 --accelerate3d on
                           # Audio
