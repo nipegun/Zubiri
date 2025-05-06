@@ -432,6 +432,8 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                               VBoxManage modifyvm "GRFICSv2-WorkStation" --nic1 intnet --intnet1 "RedIntInd"
                             # Poner en modo promiscuo
                               VBoxManage modifyvm "GRFICSv2-WorkStation" --nicpromisc1 allow-all
+                            # Poner la dirección mac correcta para que pille IP
+                              VBoxManage modifyvm "GRFICSv2-WorkStation" --macaddress1 080027383548
 
                           # Almacenamiento
                             # Controlador
