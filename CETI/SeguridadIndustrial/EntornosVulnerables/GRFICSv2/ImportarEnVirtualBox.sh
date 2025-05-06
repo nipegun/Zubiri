@@ -709,12 +709,13 @@ vURLBaseVMDKs='http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2'
                         echo ""
                         echo "  Agrupando máquinas virtuales..."
                         echo ""
-                        VBoxManage modifyvm "GRFICSv2-HMIScadaBR"      --groups "/GRFICSv2" 2> /dev/null
-                        VBoxManage modifyvm "GRFICSv2-Kali"            --groups "/GRFICSv2" 2> /dev/null
+
                         VBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/GRFICSv2" 2> /dev/null
                         VBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/GRFICSv2" 2> /dev/null
                         VBoxManage modifyvm "GRFICSv2-PLC"             --groups "/GRFICSv2" 2> /dev/null
                         VBoxManage modifyvm "GRFICSv2-WorkStation"     --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-HMIScadaBR"      --groups "/GRFICSv2" 2> /dev/null
+                        VBoxManage modifyvm "GRFICSv2-Kali"            --groups "/GRFICSv2" 2> /dev/null
 
                       ;;
 
