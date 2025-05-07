@@ -131,7 +131,7 @@ if ($choices -match '\b6\b') {
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
   $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-PLC" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
   Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
-  & $vUbicVBoxManage storageattach "GRFICSv2-PLC" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
+  & $vUbicVBoxManage storageattach "GRFICSv2-PLC" --storagectl "VirtIO" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 
