@@ -64,7 +64,8 @@ if ($choices -match '\b2\b') {
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV pfSense..."
   Write-Host ""
   $vNomArchDeDisco = "GRFICSv2-pfSense.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  #Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  Start-BitsTransfer -Source "$vURLBaseVMDKs/$vNomArchDeDisco" -Destination "$tmpDir\$vNomArchDeDisco"
   & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
   Remove-Item "$tmpDir\$vNomArchDeDisco"
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
@@ -93,7 +94,8 @@ if ($choices -match '\b4\b') {
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV 3DChemicalPlant..."
   Write-Host ""
   $vNomArchDeDisco = "GRFICSv2-3DChemicalPlant.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  #Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  Start-BitsTransfer -Source "$vURLBaseVMDKs/$vNomArchDeDisco" -Destination "$tmpDir\$vNomArchDeDisco"
   & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
   Remove-Item "$tmpDir\$vNomArchDeDisco"
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
@@ -122,7 +124,8 @@ if ($choices -match '\b6\b') {
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV PLC..."
   Write-Host ""
   $vNomArchDeDisco = "GRFICSv2-PLC.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  #Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  Start-BitsTransfer -Source "$vURLBaseVMDKs/$vNomArchDeDisco" -Destination "$tmpDir\$vNomArchDeDisco"
   & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
   Remove-Item "$tmpDir\$vNomArchDeDisco"
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
@@ -152,7 +155,8 @@ if ($choices -match '\b8\b') {
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV WorkStation..."
   Write-Host ""
   $vNomArchDeDisco = "GRFICSv2-WorkStation.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  #Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  Start-BitsTransfer -Source "$vURLBaseVMDKs/$vNomArchDeDisco" -Destination "$tmpDir\$vNomArchDeDisco"
   & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
   Remove-Item "$tmpDir\$vNomArchDeDisco"
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
@@ -181,7 +185,8 @@ if ($choices -match '\b10\b') {
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV HMIScadaBR..."
   Write-Host ""
   $vNomArchDeDisco = "GRFICSv2-HMIScadaBR.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  #Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  Start-BitsTransfer -Source "$vURLBaseVMDKs/$vNomArchDeDisco" -Destination "$tmpDir\$vNomArchDeDisco"
   & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
   Remove-Item "$tmpDir\$vNomArchDeDisco"
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
@@ -210,7 +215,8 @@ if ($choices -match '\b12\b') {
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV Kali..."
   Write-Host ""
   $vNomArchDeDisco = "GRFICSv2-Kali.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  #Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  Start-BitsTransfer -Source "$vURLBaseVMDKs/$vNomArchDeDisco" -Destination "$tmpDir\$vNomArchDeDisco"
   & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
   Remove-Item "$tmpDir\$vNomArchDeDisco"
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
