@@ -28,17 +28,17 @@ Write-Host ""
 Write-Host "    Selecciona las acciones que quieras ejecutar (ej. 1 3 5 7 9 11):"
 Write-Host ""
 Write-Host "      1) Crear la máquina virtual pfSense"
-Write-Host "      2)   Descargar, descomprimir e importar VHD para la MV pfSense"
+Write-Host "      2)   Descargar, descomprimir e importar el VMDK de la MV pfSense"
 Write-Host "      3) Crear la máquina virtual 3DChemicalPlant"
-Write-Host "      4)   Descargar, descomprimir e importar VHD para la MV 3DChemicalPlant"
+Write-Host "      4)   Descargar, descomprimir e importar el VMDK de la MV 3DChemicalPlant"
 Write-Host "      5) Crear la máquina virtual PLC"
-Write-Host "      6)   Descargar, descomprimir e importar VHD para la MV PLC"
+Write-Host "      6)   Descargar, descomprimir e importar el VMDK de la MV PLC"
 Write-Host "      7) Crear la máquina virtual WorkStation"
-Write-Host "      8)   Descargar, descomprimir e importar VHD para la MV WorkStation"
+Write-Host "      8)   Descargar, descomprimir e importar el VMDK de la MVV WorkStation"
 Write-Host "      9) Crear la máquina virtual HMIScadaBR"
-Write-Host "     10)   Descargar, descomprimir e importar MV HMIScadaBR"
+Write-Host "     10)   Descargar, descomprimir e importar el VMDK de la MV HMIScadaBR"
 Write-Host "     11) Crear la máquina virtual Kali"
-Write-Host "     12)   Descargar, descomprimir e importar VHD para la MV Kali"
+Write-Host "     12)   Descargar, descomprimir e importar el VMDK de la MV Kali"
 Write-Host "     13) Agrupar MVs"
 Write-Host "     14) Iniciar MVs en orden"
 Write-Host ""
@@ -61,7 +61,7 @@ if ($choices -match '\b1\b') {
 
 if ($choices -match '\b2\b') {
   Write-Host ""
-  Write-Host "  Descargando, descomprimiendo e importando el VMDK para la MV pfSense..."
+  Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV pfSense..."
   Write-Host ""
   $disk = "GRFICSv2-pfSense.vmdk.xz"
   Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
@@ -90,7 +90,7 @@ if ($choices -match '\b3\b') {
 
 if ($choices -match '\b4\b') {
   Write-Host ""
-  Write-Host "  Descargando, descomprimiendo e importando el VMDK para la MV 3DChemicalPlant..."
+  Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV 3DChemicalPlant..."
   Write-Host ""
   $disk = "GRFICSv2-3DChemicalPlant.vmdk.xz"
   Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
@@ -119,7 +119,7 @@ if ($choices -match '\b5\b') {
 
 if ($choices -match '\b6\b') {
   Write-Host ""
-  Write-Host "  Descargando, descomprimiendo e importando el VMDK para la MV PLC..."
+  Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV PLC..."
   Write-Host ""
   $disk = "GRFICSv2-PLC.vmdk.xz"
   Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
@@ -149,7 +149,7 @@ if ($choices -match '\b7\b') {
 
 if ($choices -match '\b8\b') {
   Write-Host ""
-  Write-Host "  Descargando, descomprimiendo e importando el VMDK para la MV WorkStation..."
+  Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV WorkStation..."
   Write-Host ""
   $disk = "GRFICSv2-WorkStation.vmdk.xz"
   Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
@@ -178,7 +178,7 @@ if ($choices -match '\b9\b') {
 
 if ($choices -match '\b10\b') {
   Write-Host ""
-  Write-Host "  Descargando, descomprimiendo e importando el VMDK para la MV HMIScadaBR..."
+  Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV HMIScadaBR..."
   Write-Host ""
   $disk = "GRFICSv2-HMIScadaBR.vmdk.xz"
   Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
@@ -207,7 +207,7 @@ if ($choices -match '\b11\b') {
 
 if ($choices -match '\b12\b') {
   Write-Host ""
-  Write-Host "  Descargando, descomprimiendo e importando el VMDK para la MV Kali..."
+  Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV Kali..."
   Write-Host ""
   $disk = "GRFICSv2-Kali.vmdk.xz"
   Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
