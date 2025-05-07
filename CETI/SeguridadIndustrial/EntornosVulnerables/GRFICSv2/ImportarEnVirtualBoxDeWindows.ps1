@@ -53,8 +53,8 @@ if ($choices -match '\b1\b') {
   & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --memory 2048
   & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --graphicscontroller vmsvga --vram 128 --accelerate3d on
   & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --audio-driver none
-  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --nictype1 82540EM --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
-  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --nictype2 82540EM --nic2 intnet --intnet2 "RedIntInd" --nicpromisc2 allow-all
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --nictype1 82540EM --nic1 intnet --intnet1 "RedIntGRFICSv2DMZ" --nicpromisc1 allow-all
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --nictype2 82540EM --nic2 intnet --intnet2 "RedIntGRFICSv2ICS" --nicpromisc2 allow-all
   & $vUbicVBoxManage storagectl      "GRFICSv2-pfSense" --name "SATA Controller" --add sata --controller IntelAhci --portcount 2
   & $vUbicVBoxManage storageattach   "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
 }
@@ -83,7 +83,7 @@ if ($choices -match '\b3\b') {
   & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --memory 2048
   & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --graphicscontroller vmsvga --vram 128 --accelerate3d on
   & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --audio-driver none
-  & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --nictype1 virtio --nic1 intnet --intnet1 "RedIntGRFICSv2ICS" --nicpromisc1 allow-all
   & $vUbicVBoxManage storagectl      "GRFICSv2-3DChemicalPlant" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
   & $vUbicVBoxManage storageattach   "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
   & $vUbicVBoxManage storagectl      "GRFICSv2-3DChemicalPlant" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
@@ -113,7 +113,7 @@ if ($choices -match '\b5\b') {
   & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --memory 2048
   & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --graphicscontroller vmsvga --vram 128 --accelerate3d on
   & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --audio-driver none
-  & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --nictype1 virtio --nic1 intnet --intnet1 "RedIntGRFICSv2ICS" --nicpromisc1 allow-all
   & $vUbicVBoxManage storagectl      "GRFICSv2-PLC" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
   & $vUbicVBoxManage storageattach   "GRFICSv2-PLC" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
   & $vUbicVBoxManage storagectl      "GRFICSv2-PLC" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
@@ -144,7 +144,7 @@ if ($choices -match '\b7\b') {
   & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --memory 2048
   & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
   & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --audio-driver none
-  & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all --macaddress1 080027383548
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --nictype1 virtio --nic1 intnet --intnet1 "RedIntGRFICSv2ICS" --nicpromisc1 allow-all --macaddress1 080027383548
   & $vUbicVBoxManage storagectl      "GRFICSv2-WorkStation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
   & $vUbicVBoxManage storageattach   "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
   & $vUbicVBoxManage storagectl      "GRFICSv2-WorkStation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
@@ -174,7 +174,7 @@ if ($choices -match '\b9\b') {
   & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --memory 2048
   & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --graphicscontroller vmsvga --vram 128 --accelerate3d on
   & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --audio-driver none
-  & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --nictype1 virtio --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --nictype1 virtio --nic1 intnet --intnet1 "RedIntGRFICSv2DMZ" --nicpromisc1 allow-all
   & $vUbicVBoxManage storagectl      "GRFICSv2-HMIScadaBR" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
   & $vUbicVBoxManage storageattach   "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
   & $vUbicVBoxManage storagectl      "GRFICSv2-HMIScadaBR" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
@@ -204,7 +204,7 @@ if ($choices -match '\b11\b') {
   & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --memory 2048
   & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --graphicscontroller vmsvga --vram 128 --accelerate3d on
   & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --audio-driver none
-  & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --nictype1 virtio --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --nictype1 virtio --nic1 intnet --intnet1 "RedIntGRFICSv2DMZ" --nicpromisc1 allow-all
   & $vUbicVBoxManage storagectl      "GRFICSv2-Kali" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
   & $vUbicVBoxManage storageattach   "GRFICSv2-Kali" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
   & $vUbicVBoxManage storagectl      "GRFICSv2-Kali" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
