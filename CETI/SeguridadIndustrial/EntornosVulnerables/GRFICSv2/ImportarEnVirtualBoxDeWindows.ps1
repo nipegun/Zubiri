@@ -101,7 +101,7 @@ if ($choices -match '\b4\b') {
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
   $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-3DChemicalPlant" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
   Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
-  & $vUbicVBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
+  & $vUbicVBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "VirtIO" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b5\b') {
@@ -162,7 +162,7 @@ if ($choices -match '\b8\b') {
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
   $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-WorkStation" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
   Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
-  & $vUbicVBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
+  & $vUbicVBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "VirtIO" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b9\b') {
@@ -192,7 +192,7 @@ if ($choices -match '\b10\b') {
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
   $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-HMIScadaBR" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
   Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
-  & $vUbicVBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
+  & $vUbicVBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "VirtIO" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b11\b') {
@@ -222,7 +222,7 @@ if ($choices -match '\b12\b') {
   $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
   $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-Kali" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
   Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
-  & $vUbicVBoxManage storageattach "GRFICSv2-Kali" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
+  & $vUbicVBoxManage storageattach "GRFICSv2-Kali" --storagectl "VirtIO" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b13\b') {
