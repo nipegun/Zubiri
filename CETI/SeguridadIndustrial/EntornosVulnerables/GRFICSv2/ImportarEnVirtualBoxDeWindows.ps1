@@ -48,7 +48,7 @@ if ($choices -match '\b1\b') {
   Write-Host ""
   Write-Host "  Creando la máquina virtual pfSense..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-pfSense" --ostype "Linux_64" --register
+  & $VBoxManage createvm --name "GRFICSv2-pfSense" --ostype "FreeBSD_64" --register
   & $VBoxManage modifyvm        "GRFICSv2-pfSense" --cpus 2
   & $VBoxManage modifyvm        "GRFICSv2-pfSense" --memory 2048
   & $VBoxManage modifyvm        "GRFICSv2-pfSense" --graphicscontroller vmsvga --vram 128 --accelerate3d on
