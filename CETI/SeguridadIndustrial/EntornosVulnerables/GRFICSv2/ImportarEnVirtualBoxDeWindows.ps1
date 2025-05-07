@@ -7,7 +7,7 @@
 # Script de NiPeGun para descargar e importar el entorno virtual GRFICSv2 para VirtualBox en Windows
 #
 # Ejecución remota (puede requerir permisos sudo):
-#   iwr '' | iex
+#   iwr 'https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/SeguridadIndustrial/EntornosVulnerables/GRFICSv2/ImportarEnVirtualBoxDeWindows.ps1' | iex
 # ----------
 
 #
