@@ -13,6 +13,7 @@
 #
 #  Referencia: https://github.com/Fortiphyd/GRFICSv2
 #
+
 $vURLBaseVMDKs = "http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2"
 
 $VBoxManage = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
@@ -26,18 +27,18 @@ Write-Host ""
 
 Write-Host "    Selecciona las acciones que quieras ejecutar (ej. 1 3 5 7 9 11):"
 Write-Host ""
-Write-Host "      1) Crear la mÃ¡quina virtual pfSense"
-Write-Host "      2)   Descargar e importar VHD para la MV pfSense"
-Write-Host "      3) Crear la mÃ¡quina virtual 3DChemicalPlant"
-Write-Host "      4)   Descargar e importar VHD para la MV 3DChemicalPlant"
-Write-Host "      5) Crear la mÃ¡quina virtual PLC"
-Write-Host "      6)   Descargar e importar VHD para la MV PLC"
-Write-Host "      7) Crear la mÃ¡quina virtual WorkStation"
-Write-Host "      8)   Descargar e importar VHD para la MV WorkStation"
-Write-Host "      9) Crear la mÃ¡quina virtual HMIScadaBR"
-Write-Host "     10)   Descargar e importar VHD para la MV HMIScadaBR"
-Write-Host "     11) Crear la mÃ¡quina virtual Kali"
-Write-Host "     12)   Descargar e importar VHD para la MV Kali"
+Write-Host "      1) Crear la máquina virtual pfSense"
+Write-Host "      2)   Descargar, descomprimir e importar VHD para la MV pfSense"
+Write-Host "      3) Crear la máquina virtual 3DChemicalPlant"
+Write-Host "      4)   Descargar, descomprimir e importar VHD para la MV 3DChemicalPlant"
+Write-Host "      5) Crear la máquina virtual PLC"
+Write-Host "      6)   Descargar, descomprimir e importar VHD para la MV PLC"
+Write-Host "      7) Crear la máquina virtual WorkStation"
+Write-Host "      8)   Descargar, descomprimir e importar VHD para la MV WorkStation"
+Write-Host "      9) Crear la máquina virtual HMIScadaBR"
+Write-Host "     10)   Descargar, descomprimir e importar MV HMIScadaBR"
+Write-Host "     11) Crear la máquina virtual Kali"
+Write-Host "     12)   Descargar, descomprimir e importar VHD para la MV Kali"
 Write-Host "     13) Agrupar MVs"
 Write-Host "     14) Iniciar MVs en orden"
 Write-Host ""
@@ -45,7 +46,7 @@ $choices = Read-Host "Opciones seleccionadas (Separadas por espacio)"
 
 if ($choices -match '\b1\b') {
   Write-Host ""
-  Write-Host "  Creando la mÃ¡quina virtual pfSense..."
+  Write-Host "  Creando la máquina virtual pfSense..."
   Write-Host ""
   & $VBoxManage createvm --name "GRFICSv2-pfSense" --ostype "Linux_64" --register
   & $VBoxManage modifyvm        "GRFICSv2-pfSense" --cpus 2
@@ -74,7 +75,7 @@ if ($choices -match '\b2\b') {
 
 if ($choices -match '\b3\b') {
   Write-Host ""
-  Write-Host "  Creando la mÃ¡quina virtual 3DChemicalPlant..."
+  Write-Host "  Creando la máquina virtual 3DChemicalPlant..."
   Write-Host ""
   & $VBoxManage createvm --name "GRFICSv2-3DChemicalPlant" --ostype "Ubuntu_64" --register
   & $VBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --cpus 2
@@ -103,7 +104,7 @@ if ($choices -match '\b4\b') {
 
 if ($choices -match '\b5\b') {
   Write-Host ""
-  Write-Host "  Creando la mÃ¡quina virtual PLC..."
+  Write-Host "  Creando la máquina virtual PLC..."
   Write-Host ""
   & $VBoxManage createvm --name "GRFICSv2-PLC" --ostype "Ubuntu" --register
   & $VBoxManage modifyvm        "GRFICSv2-PLC" --cpus 2
@@ -133,7 +134,7 @@ if ($choices -match '\b6\b') {
 
 if ($choices -match '\b7\b') {
   Write-Host ""
-  Write-Host "  Creando la mÃ¡quina virtual WorkStation..."
+  Write-Host "  Creando la máquina virtual WorkStation..."
   Write-Host ""
   & $VBoxManage createvm --name "GRFICSv2-WorkStation" --ostype "Ubuntu_64" --register
   & $VBoxManage modifyvm        "GRFICSv2-WorkStation" --cpus 2
@@ -162,7 +163,7 @@ if ($choices -match '\b8\b') {
 
 if ($choices -match '\b9\b') {
   Write-Host ""
-  Write-Host "  Creando la mÃ¡quina virtual HMIScadaBR..."
+  Write-Host "  Creando la máquina virtual HMIScadaBR..."
   Write-Host ""
   & $VBoxManage createvm --name "GRFICSv2-HMIScadaBR" --ostype "Ubuntu_64" --register
   & $VBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --cpus 2
@@ -191,9 +192,9 @@ if ($choices -match '\b10\b') {
 
 if ($choices -match '\b11\b') {
   Write-Host ""
-  Write-Host "  Creando la mÃ¡quina virtual Kali..."
+  Write-Host "  Creando la máquina virtual Kali..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-Kali" --ostype "Ubuntu_64" --register
+  & $VBoxManage createvm --name "GRFICSv2-Kali" --ostype "Debian_64" --register
   & $VBoxManage modifyvm        "GRFICSv2-Kali" --cpus 2
   & $VBoxManage modifyvm        "GRFICSv2-Kali" --memory 2048
   & $VBoxManage modifyvm        "GRFICSv2-Kali" --graphicscontroller vmsvga --vram 128 --accelerate3d on
@@ -220,7 +221,7 @@ if ($choices -match '\b12\b') {
 
 if ($choices -match '\b13\b') {
   Write-Host ""
-  Write-Host "  Agrupando mÃ¡quinas virtuales..."
+  Write-Host "  Agrupando máquinas virtuales..."
   Write-Host ""
   & $VBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/GRFICSv2"
   & $VBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/GRFICSv2" 2> $null
@@ -232,7 +233,7 @@ if ($choices -match '\b13\b') {
 
 if ($choices -match '\b14\b') {
   Write-Host ""
-  Write-Host "  Iniciando mÃ¡quinas virtuales en orden..."
+  Write-Host "  Iniciando máquinas virtuales en orden..."
   Write-Host ""
   & $VBoxManage startvm "GRFICSv2-pfSense"
   Start-Sleep -Seconds 15
