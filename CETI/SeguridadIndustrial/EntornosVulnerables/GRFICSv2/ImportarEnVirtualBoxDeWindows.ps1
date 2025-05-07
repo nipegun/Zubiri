@@ -16,7 +16,7 @@
 
 $vURLBaseVMDKs = "http://hacks4geeks.com/_/descargas/MVs/Discos/Packs/GRFICSv2"
 
-$VBoxManage = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
+$vUbicVBoxManage = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe"
 $7zip       = "C:\Program Files\7-Zip\7z.exe"
 
 $tmpDir = "$env:TEMP"
@@ -48,87 +48,87 @@ if ($choices -match '\b1\b') {
   Write-Host ""
   Write-Host "  Creando la máquina virtual pfSense..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-pfSense" --ostype "FreeBSD_64" --register
-  & $VBoxManage modifyvm        "GRFICSv2-pfSense" --cpus 2
-  & $VBoxManage modifyvm        "GRFICSv2-pfSense" --memory 2048
-  & $VBoxManage modifyvm        "GRFICSv2-pfSense" --graphicscontroller vmsvga --vram 128 --accelerate3d on
-  & $VBoxManage modifyvm        "GRFICSv2-pfSense" --audio-driver none
-  & $VBoxManage modifyvm        "GRFICSv2-pfSense" --nictype1 82540EM --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
-  & $VBoxManage modifyvm        "GRFICSv2-pfSense" --nictype2 82540EM --nic2 intnet --intnet2 "RedIntInd" --nicpromisc2 allow-all
-  & $VBoxManage storagectl      "GRFICSv2-pfSense" --name "SATA Controller" --add sata --controller IntelAhci --portcount 2
-  & $VBoxManage storageattach   "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+  & $vUbicVBoxManage createvm --name "GRFICSv2-pfSense" --ostype "FreeBSD_64" --register
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --cpus 2
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --memory 2048
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --audio-driver none
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --nictype1 82540EM --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-pfSense" --nictype2 82540EM --nic2 intnet --intnet2 "RedIntInd" --nicpromisc2 allow-all
+  & $vUbicVBoxManage storagectl      "GRFICSv2-pfSense" --name "SATA Controller" --add sata --controller IntelAhci --portcount 2
+  & $vUbicVBoxManage storageattach   "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
 }
 
 if ($choices -match '\b2\b') {
   Write-Host ""
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV pfSense..."
   Write-Host ""
-  $disk = "GRFICSv2-pfSense.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
-  & $7zip e "$tmpDir\$disk" -o"$tmpDir" -y
-  Remove-Item "$tmpDir\$disk"
-  $vmdk = "$tmpDir\\$($disk -replace '\.xz$', '')"
-  $vmDir = (& $VBoxManage showvminfo "GRFICSv2-pfSense" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
-  Move-Item -Path $vmdk -Destination $vmDir -Force
-  & $VBoxManage storageattach "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vmDir (Split-Path $vmdk -Leaf))
+  $vNomArchDeDisco = "GRFICSv2-pfSense.vmdk.xz"
+  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
+  Remove-Item "$tmpDir\$vNomArchDeDisco"
+  $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
+  $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-pfSense" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
+  Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
+  & $vUbicVBoxManage storageattach "GRFICSv2-pfSense" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b3\b') {
   Write-Host ""
   Write-Host "  Creando la máquina virtual 3DChemicalPlant..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-3DChemicalPlant" --ostype "Ubuntu_64" --register
-  & $VBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --cpus 2
-  & $VBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --memory 2048
-  & $VBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --graphicscontroller vmsvga --vram 128 --accelerate3d on
-  & $VBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --audio-driver none
-  & $VBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all
-  & $VBoxManage storagectl      "GRFICSv2-3DChemicalPlant" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-  & $VBoxManage storageattach   "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
-  & $VBoxManage storagectl      "GRFICSv2-3DChemicalPlant" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+  & $vUbicVBoxManage createvm --name "GRFICSv2-3DChemicalPlant" --ostype "Ubuntu_64" --register
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --cpus 2
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --memory 2048
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --audio-driver none
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-3DChemicalPlant" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all
+  & $vUbicVBoxManage storagectl      "GRFICSv2-3DChemicalPlant" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+  & $vUbicVBoxManage storageattach   "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+  & $vUbicVBoxManage storagectl      "GRFICSv2-3DChemicalPlant" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 }
 
 if ($choices -match '\b4\b') {
   Write-Host ""
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV 3DChemicalPlant..."
   Write-Host ""
-  $disk = "GRFICSv2-3DChemicalPlant.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
-  & $7zip e "$tmpDir\$disk" -o"$tmpDir" -y
-  Remove-Item "$tmpDir\$disk"
-  $vmdk = "$tmpDir\\$($disk -replace '\.xz$', '')"
-  $vmDir = (& $VBoxManage showvminfo "GRFICSv2-3DChemicalPlant" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
-  Move-Item -Path $vmdk -Destination $vmDir -Force
-  & $VBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vmDir (Split-Path $vmdk -Leaf))
+  $vNomArchDeDisco = "GRFICSv2-3DChemicalPlant.vmdk.xz"
+  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
+  Remove-Item "$tmpDir\$vNomArchDeDisco"
+  $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
+  $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-3DChemicalPlant" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
+  Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
+  & $vUbicVBoxManage storageattach "GRFICSv2-3DChemicalPlant" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b5\b') {
   Write-Host ""
   Write-Host "  Creando la máquina virtual PLC..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-PLC" --ostype "Ubuntu" --register
-  & $VBoxManage modifyvm        "GRFICSv2-PLC" --cpus 2
-  & $VBoxManage modifyvm        "GRFICSv2-PLC" --memory 2048
-  & $VBoxManage modifyvm        "GRFICSv2-PLC" --graphicscontroller vmsvga --vram 128 --accelerate3d on
-  & $VBoxManage modifyvm        "GRFICSv2-PLC" --audio-driver none
-  & $VBoxManage modifyvm        "GRFICSv2-PLC" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all
-  & $VBoxManage storagectl      "GRFICSv2-PLC" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-  & $VBoxManage storageattach   "GRFICSv2-PLC" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
-  & $VBoxManage storagectl      "GRFICSv2-PLC" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+  & $vUbicVBoxManage createvm --name "GRFICSv2-PLC" --ostype "Ubuntu" --register
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --cpus 2
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --memory 2048
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --audio-driver none
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-PLC" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all
+  & $vUbicVBoxManage storagectl      "GRFICSv2-PLC" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+  & $vUbicVBoxManage storageattach   "GRFICSv2-PLC" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+  & $vUbicVBoxManage storagectl      "GRFICSv2-PLC" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 }
 
 if ($choices -match '\b6\b') {
   Write-Host ""
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV PLC..."
   Write-Host ""
-  $disk = "GRFICSv2-PLC.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
-  & $7zip e "$tmpDir\$disk" -o"$tmpDir" -y
-  Remove-Item "$tmpDir\$disk"
-  $vmdk = "$tmpDir\\$($disk -replace '\.xz$', '')"
-  $vmDir = (& $VBoxManage showvminfo "GRFICSv2-PLC" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
-  Move-Item -Path $vmdk -Destination $vmDir -Force
-  & $VBoxManage storageattach "GRFICSv2-PLC" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vmDir (Split-Path $vmdk -Leaf))
+  $vNomArchDeDisco = "GRFICSv2-PLC.vmdk.xz"
+  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
+  Remove-Item "$tmpDir\$vNomArchDeDisco"
+  $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
+  $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-PLC" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
+  Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
+  & $vUbicVBoxManage storageattach "GRFICSv2-PLC" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 
@@ -136,114 +136,114 @@ if ($choices -match '\b7\b') {
   Write-Host ""
   Write-Host "  Creando la máquina virtual WorkStation..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-WorkStation" --ostype "Ubuntu_64" --register
-  & $VBoxManage modifyvm        "GRFICSv2-WorkStation" --cpus 2
-  & $VBoxManage modifyvm        "GRFICSv2-WorkStation" --memory 2048
-  & $VBoxManage modifyvm        "GRFICSv2-WorkStation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
-  & $VBoxManage modifyvm        "GRFICSv2-WorkStation" --audio-driver none
-  & $VBoxManage modifyvm        "GRFICSv2-WorkStation" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all --macaddress1 080027383548
-  & $VBoxManage storagectl      "GRFICSv2-WorkStation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-  & $VBoxManage storageattach   "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
-  & $VBoxManage storagectl      "GRFICSv2-WorkStation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+  & $vUbicVBoxManage createvm --name "GRFICSv2-WorkStation" --ostype "Ubuntu_64" --register
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --cpus 2
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --memory 2048
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --audio-driver none
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-WorkStation" --nictype1 virtio --nic1 intnet --intnet1 "RedIntInd" --nicpromisc1 allow-all --macaddress1 080027383548
+  & $vUbicVBoxManage storagectl      "GRFICSv2-WorkStation" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+  & $vUbicVBoxManage storageattach   "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+  & $vUbicVBoxManage storagectl      "GRFICSv2-WorkStation" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 }
 
 if ($choices -match '\b8\b') {
   Write-Host ""
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV WorkStation..."
   Write-Host ""
-  $disk = "GRFICSv2-WorkStation.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
-  & $7zip e "$tmpDir\$disk" -o"$tmpDir" -y
-  Remove-Item "$tmpDir\$disk"
-  $vmdk = "$tmpDir\\$($disk -replace '\.xz$', '')"
-  $vmDir = (& $VBoxManage showvminfo "GRFICSv2-WorkStation" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
-  Move-Item -Path $vmdk -Destination $vmDir -Force
-  & $VBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vmDir (Split-Path $vmdk -Leaf))
+  $vNomArchDeDisco = "GRFICSv2-WorkStation.vmdk.xz"
+  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
+  Remove-Item "$tmpDir\$vNomArchDeDisco"
+  $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
+  $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-WorkStation" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
+  Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
+  & $vUbicVBoxManage storageattach "GRFICSv2-WorkStation" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b9\b') {
   Write-Host ""
   Write-Host "  Creando la máquina virtual HMIScadaBR..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-HMIScadaBR" --ostype "Ubuntu_64" --register
-  & $VBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --cpus 2
-  & $VBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --memory 2048
-  & $VBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --graphicscontroller vmsvga --vram 128 --accelerate3d on
-  & $VBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --audio-driver none
-  & $VBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --nictype1 virtio --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
-  & $VBoxManage storagectl      "GRFICSv2-HMIScadaBR" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-  & $VBoxManage storageattach   "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
-  & $VBoxManage storagectl      "GRFICSv2-HMIScadaBR" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+  & $vUbicVBoxManage createvm --name "GRFICSv2-HMIScadaBR" --ostype "Ubuntu_64" --register
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --cpus 2
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --memory 2048
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --audio-driver none
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-HMIScadaBR" --nictype1 virtio --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
+  & $vUbicVBoxManage storagectl      "GRFICSv2-HMIScadaBR" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+  & $vUbicVBoxManage storageattach   "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+  & $vUbicVBoxManage storagectl      "GRFICSv2-HMIScadaBR" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 }
 
 if ($choices -match '\b10\b') {
   Write-Host ""
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV HMIScadaBR..."
   Write-Host ""
-  $disk = "GRFICSv2-HMIScadaBR.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
-  & $7zip e "$tmpDir\$disk" -o"$tmpDir" -y
-  Remove-Item "$tmpDir\$disk"
-  $vmdk = "$tmpDir\\$($disk -replace '\.xz$', '')"
-  $vmDir = (& $VBoxManage showvminfo "GRFICSv2-HMIScadaBR" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
-  Move-Item -Path $vmdk -Destination $vmDir -Force
-  & $VBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vmDir (Split-Path $vmdk -Leaf))
+  $vNomArchDeDisco = "GRFICSv2-HMIScadaBR.vmdk.xz"
+  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
+  Remove-Item "$tmpDir\$vNomArchDeDisco"
+  $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
+  $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-HMIScadaBR" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
+  Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
+  & $vUbicVBoxManage storageattach "GRFICSv2-HMIScadaBR" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b11\b') {
   Write-Host ""
   Write-Host "  Creando la máquina virtual Kali..."
   Write-Host ""
-  & $VBoxManage createvm --name "GRFICSv2-Kali" --ostype "Debian_64" --register
-  & $VBoxManage modifyvm        "GRFICSv2-Kali" --cpus 2
-  & $VBoxManage modifyvm        "GRFICSv2-Kali" --memory 2048
-  & $VBoxManage modifyvm        "GRFICSv2-Kali" --graphicscontroller vmsvga --vram 128 --accelerate3d on
-  & $VBoxManage modifyvm        "GRFICSv2-Kali" --audio-driver none
-  & $VBoxManage modifyvm        "GRFICSv2-Kali" --nictype1 virtio --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
-  & $VBoxManage storagectl      "GRFICSv2-Kali" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
-  & $VBoxManage storageattach   "GRFICSv2-Kali" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
-  & $VBoxManage storagectl      "GRFICSv2-Kali" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
+  & $vUbicVBoxManage createvm --name "GRFICSv2-Kali" --ostype "Debian_64" --register
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --cpus 2
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --memory 2048
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --graphicscontroller vmsvga --vram 128 --accelerate3d on
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --audio-driver none
+  & $vUbicVBoxManage modifyvm        "GRFICSv2-Kali" --nictype1 virtio --nic1 intnet --intnet1 "RedIntOper" --nicpromisc1 allow-all
+  & $vUbicVBoxManage storagectl      "GRFICSv2-Kali" --name "SATA Controller" --add sata --controller IntelAhci --portcount 1
+  & $vUbicVBoxManage storageattach   "GRFICSv2-Kali" --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium emptydrive
+  & $vUbicVBoxManage storagectl      "GRFICSv2-Kali" --name "VirtIO" --add "VirtIO" --bootable on --portcount 1
 }
 
 if ($choices -match '\b12\b') {
   Write-Host ""
   Write-Host "  Descargando, descomprimiendo e importando el VMDK de la MV Kali..."
   Write-Host ""
-  $disk = "GRFICSv2-Kali.vmdk.xz"
-  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$disk" -OutFile "$tmpDir\$disk"
-  & $7zip e "$tmpDir\$disk" -o"$tmpDir" -y
-  Remove-Item "$tmpDir\$disk"
-  $vmdk = "$tmpDir\\$($disk -replace '\.xz$', '')"
-  $vmDir = (& $VBoxManage showvminfo "GRFICSv2-Kali" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
-  Move-Item -Path $vmdk -Destination $vmDir -Force
-  & $VBoxManage storageattach "GRFICSv2-Kali" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vmDir (Split-Path $vmdk -Leaf))
+  $vNomArchDeDisco = "GRFICSv2-Kali.vmdk.xz"
+  Invoke-WebRequest -Uri "$vURLBaseVMDKs/$vNomArchDeDisco" -OutFile "$tmpDir\$vNomArchDeDisco"
+  & $7zip e "$tmpDir\$vNomArchDeDisco" -o"$tmpDir" -y
+  Remove-Item "$tmpDir\$vNomArchDeDisco"
+  $vmdk = "$tmpDir\\$($vNomArchDeDisco -replace '\.xz$', '')"
+  $vCarpetaDeLaMV = (& $vUbicVBoxManage showvminfo "GRFICSv2-Kali" --machinereadable | Select-String '^CfgFile=').ToString().Split('=')[1].Trim('"') | Split-Path
+  Move-Item -Path $vmdk -Destination $vCarpetaDeLaMV -Force
+  & $vUbicVBoxManage storageattach "GRFICSv2-Kali" --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium (Join-Path $vCarpetaDeLaMV (Split-Path $vmdk -Leaf))
 }
 
 if ($choices -match '\b13\b') {
   Write-Host ""
   Write-Host "  Agrupando máquinas virtuales..."
   Write-Host ""
-  & $VBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/GRFICSv2"
-  & $VBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/GRFICSv2" 2> $null
-  & $VBoxManage modifyvm "GRFICSv2-PLC"             --groups "/GRFICSv2" 2> $null
-  & $VBoxManage modifyvm "GRFICSv2-WorkStation"     --groups "/GRFICSv2" 2> $null
-  & $VBoxManage modifyvm "GRFICSv2-HMIScadaBR"      --groups "/GRFICSv2" 2> $null
-  & $VBoxManage modifyvm "GRFICSv2-Kali"            --groups "/GRFICSv2" 2> $null
+  & $vUbicVBoxManage modifyvm "GRFICSv2-pfSense"         --groups "/GRFICSv2"
+  & $vUbicVBoxManage modifyvm "GRFICSv2-3DChemicalPlant" --groups "/GRFICSv2" 2> $null
+  & $vUbicVBoxManage modifyvm "GRFICSv2-PLC"             --groups "/GRFICSv2" 2> $null
+  & $vUbicVBoxManage modifyvm "GRFICSv2-WorkStation"     --groups "/GRFICSv2" 2> $null
+  & $vUbicVBoxManage modifyvm "GRFICSv2-HMIScadaBR"      --groups "/GRFICSv2" 2> $null
+  & $vUbicVBoxManage modifyvm "GRFICSv2-Kali"            --groups "/GRFICSv2" 2> $null
 }
 
 if ($choices -match '\b14\b') {
   Write-Host ""
   Write-Host "  Iniciando máquinas virtuales en orden..."
   Write-Host ""
-  & $VBoxManage startvm "GRFICSv2-pfSense"
+  & $vUbicVBoxManage startvm "GRFICSv2-pfSense"
   Start-Sleep -Seconds 15
-  & $VBoxManage startvm "GRFICSv2-3DChemicalPlant"
+  & $vUbicVBoxManage startvm "GRFICSv2-3DChemicalPlant"
   Start-Sleep -Seconds 15
-  & $VBoxManage startvm "GRFICSv2-PLC"
+  & $vUbicVBoxManage startvm "GRFICSv2-PLC"
   Start-Sleep -Seconds 15
-  & $VBoxManage startvm "GRFICSv2-WorkStation"
+  & $vUbicVBoxManage startvm "GRFICSv2-WorkStation"
   Start-Sleep -Seconds 15
-  & $VBoxManage startvm "GRFICSv2-HMIScadaBR"
+  & $vUbicVBoxManage startvm "GRFICSv2-HMIScadaBR"
   Start-Sleep -Seconds 15
-  & $VBoxManage startvm "GRFICSv2-Kali"
+  & $vUbicVBoxManage startvm "GRFICSv2-Kali"
 }
