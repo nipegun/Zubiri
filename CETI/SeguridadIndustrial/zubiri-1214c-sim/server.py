@@ -200,7 +200,7 @@ def fGestionarCliente(conn, addr):
 
       client_sessions[client_id]["last_activity"] = time.time()
       client_sessions[client_id]["sequence"].append(data)
-      print(f"\n  [FROM {client_id}] {debug_hex(data)}")
+      print(f"\n    [FROM {client_id}] {debug_hex(data)}")
 
       response = None
       if data in dPayloadsFinalesDigitalOutputs:
