@@ -272,6 +272,7 @@ def fGestionarCliente(conn, addr):
   finally:
     conn.close()
     print(f"  Conexión cerrada con {client_id}")
+    print(f"---------------------------------------------")
 
 if __name__ == "__main__":
   threading.Thread(target=fServirS7, daemon=True).start()
