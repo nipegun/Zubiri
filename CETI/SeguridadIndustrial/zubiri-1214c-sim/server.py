@@ -271,7 +271,7 @@ def fGestionarCliente(conn, addr):
     print(f"  [ERROR] Error en la conexión con {client_id}: {str(e)}")
   finally:
     conn.close()
-    print(f"  Conexión cerrada con {client_id}")
+    print(f"  Conexión cerrada con {client_id}\n")
     print(f"---------------------------------------------")
 
 if __name__ == "__main__":
