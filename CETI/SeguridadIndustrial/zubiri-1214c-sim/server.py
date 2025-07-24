@@ -168,7 +168,7 @@ async def fActualizarEstado(tipo, clave, valor):
 
 def debug_hex(data):
   try:
-    return f"HEX: {data.hex()}"
+    return f"{data.hex()}"
   except:
     return str(data)
 
