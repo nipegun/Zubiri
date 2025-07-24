@@ -191,7 +191,7 @@ def fGestionarCliente(conn, addr):
   client_id = f"{addr[0]}:{addr[1]}"
   client_sessions[client_id]["sequence"] = []
   print(f"---------------------------------------------")
-  print(f"\n  Conexión abierta con {client_id}")
+  print(f"  Conexión abierta con {client_id}")
   try:
     while True:
       data = conn.recv(1024)
