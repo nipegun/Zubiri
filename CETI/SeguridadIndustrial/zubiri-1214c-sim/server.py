@@ -198,6 +198,8 @@ def fGestionarCliente(conn, addr):
 
       client_sessions[client_id]["last_activity"] = time.time()
       client_sessions[client_id]["sequence"].append(data)
+      print(f"---------------------------------------------")
+      print(f"\n  Conexión abierta con {client_id}")
       print(f"\n  [FROM {client_id}] {debug_hex(data)}")
 
       response = None
