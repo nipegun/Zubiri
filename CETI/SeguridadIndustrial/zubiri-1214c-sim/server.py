@@ -177,7 +177,7 @@ def fServirS7():
   s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
   s.bind(("0.0.0.0", vPuertoS7))
   s.listen(5)
-  print(f"\n  Simulador de PLC esperando conexiones en el puerto {vPuertoS7}...")
+  print(f"\n  Simulador de PLC esperando conexiones en el puerto {vPuertoS7}...\n")
 
   while True:
     conn, addr = s.accept()
