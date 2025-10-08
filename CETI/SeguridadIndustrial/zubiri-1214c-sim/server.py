@@ -16,6 +16,7 @@ from fastapi import FastAPI, WebSocket
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 import uvicorn
+import psutil # Para comprobar si el puerto está en uso
 
 if os.geteuid() != 0:
   print("Este script necesita privilegios de superusuario (sudo).")
@@ -172,6 +173,15 @@ def debug_hex(data):
   except:
     return str(data)
 
+def fLiberarPuerto(vPuerto):
+  for vConex in psutil.net_connections():
+    if vConex.laddr and vConex.laddr.port == vPuerto:
+      try:
+        os.kill(vConex.pid, 9)
+        print(f"[INFO] Proceso {vConex.pid} que usaba el puerto {vPuerto} finalizado.")
+      except Exception as e:
+        print(f"[WARN] No se pudo finalizar el proceso {vConex.pid}: {e}")
+
 def fServirS7():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -277,5 +287,7 @@ def fGestionarCliente(conn, addr):
     print(f"---------------------------------------------")
 
 if __name__ == "__main__":
+  fLiberarPuerto(vPuertoS7)
+  fLiberarPuerto(vPuertoWeb)
   threading.Thread(target=fServirS7, daemon=True).start()
   uvicorn.run(app, host="0.0.0.0", port=vPuertoWeb)
