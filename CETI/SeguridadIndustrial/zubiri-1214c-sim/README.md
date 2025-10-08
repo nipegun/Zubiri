@@ -16,6 +16,14 @@ curl -sL https://raw.githubusercontent.com/nipegun/Zubiri/refs/heads/main/CETI/S
 
 (TODAVÍA NO DISPNIBLE)
 
+## Re-instalación o actualización
+
+Para reinstalarlo o actualizarlo a la última versión, ejecutamos:
+
+```
+~/zubiri-1214c-sim/install_reinstall_update.sh
+```
+
 ## Ejecución
 
 Las instrucciones de ejecución aparecerán en la misma terminal una vez finalizada la instalación. Pero, para futuras consultas, la forma correcta de ejecutar el simulador es:
@@ -34,13 +42,6 @@ Una vez iniciado, podremos acceder a la web del servidor desde el ordenador dond
   <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web.png" />
 </p>
 
-## Re-instalación o actualización
-
-Para reinstalarlo o actualizarlo a la última versión, ejecutamos:
-
-```
-~/zubiri-1214c-sim/install_reinstall_update.sh
-```
 
 ## APIs
 
