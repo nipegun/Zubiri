@@ -38,8 +38,22 @@ Es importante que se ejecute desde la misma carpeta donde están el resto de los
 
 Una vez iniciado, podremos acceder a la web del servidor desde el ordenador donde se ejecuta (con IP http://127.0.0.1:8000), desde la IP del servidor en la subred (por ejemplo: http://172.16.4.200:8000) o desde una IP pública (si tenemos configurado el reenvío de puertos).
 
+Con el PLC apagado, veremos esta pantalla:
+
 <p align="center">
-  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web.png" />
+  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web1.png" />
+</p>
+
+Con el PLC encendido esta:
+
+<p align="center">
+  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web2.png" />
+</p>
+
+Al empezar a interactuar con las salidas digitales, veremos como estas se ponen en verde cuando reciben la orden de encenderse.
+
+<p align="center">
+  <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web3.png" />
 </p>
 
 
