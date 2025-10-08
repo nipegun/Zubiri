@@ -53,7 +53,8 @@
 # Instalar algunas dependencias de python
   sudo apt-get -y update
   sudo apt-get -y install python3-fastapi
-  
+  sudo apt-get -y install python3-psutil
+
 # Renombar y mover carpetas
   mv ~/Zubiri/CETI/SeguridadIndustrial/zubiri-1214c-sim/ ~/
   rm -rf ~/Zubiri/
