@@ -50,6 +50,10 @@
     fi
   git clone https://github.com/nipegun/Zubiri.git
 
+# Instalar algunas dependencias de python
+  sudo apt-get -y update
+  sudo apt-get -y install python3-fastapi
+  
 # Renombar y mover carpetas
   mv ~/Zubiri/CETI/SeguridadIndustrial/zubiri-1214c-sim/ ~/
   rm -rf ~/Zubiri/
