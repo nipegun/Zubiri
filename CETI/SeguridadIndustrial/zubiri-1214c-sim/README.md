@@ -41,19 +41,19 @@ Una vez iniciado, podremos acceder a la web del servidor desde el ordenador dond
 Con el PLC apagado, veremos esta pantalla:
 
 <p align="center">
-  <img width="50%" src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web1.png" />
+  <img width="70%" src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web1.png" />
 </p>
 
 Con el PLC encendido esta:
 
 <p align="center">
-  <img width="50%" src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web2.png" />
+  <img width="70%" src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web2.png" />
 </p>
 
 Al empezar a interactuar con las salidas digitales, veremos como estas se ponen en verde cuando reciben la orden de encenderse.
 
 <p align="center">
-  <img width="50%" src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web3.png" />
+  <img width="70%" src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/web3.png" />
 </p>
 
 
