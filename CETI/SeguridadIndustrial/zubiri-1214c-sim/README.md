@@ -89,6 +89,15 @@ Si ejecutamos el archivo client.py con la IP del servidor como parámetro, podre
 ```
 ~/zubiri-1214c-sim/client.py 127.0.0.1
 ```
+
+Obtendremos el siguiente menú:
+
 <p align="center">
   <img src="https://github.com/nipegun/Zubiri/blob/main/CETI/SeguridadIndustrial/zubiri-1214c-sim/images/client.png" />
 </p>
+
+Desde él podremos, tanto encender o apagar el PLC simulado, como encender o apagar las salidas digitales.
+
+## Mejoras por venir
+
+En futuras versiones se implementará la funcionalidad de interactuar con las entradas, tanto digitales como analógicas.
