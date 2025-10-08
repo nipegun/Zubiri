@@ -17,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 import uvicorn
 import psutil # Para comprobar si el puerto está en uso
+import signal # Para poder capturar SIGINT
 
 if os.geteuid() != 0:
   print("Este script necesita privilegios de superusuario (sudo).")
@@ -182,6 +183,13 @@ def fLiberarPuerto(vPuerto):
       except Exception as e:
         print(f"[WARN] No se pudo finalizar el proceso {vConex.pid}: {e}")
 
+def fManejarSIGINT(sig, frame):
+  print("\n[INFO] Interrupción detectada (Ctrl+C). Liberando puertos...")
+  fLiberarPuerto(vPuertoS7)
+  fLiberarPuerto(vPuertoWeb)
+  print("[INFO] Puertos liberados. Saliendo.")
+  sys.exit(0)
+
 def fServirS7():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -287,6 +295,7 @@ def fGestionarCliente(conn, addr):
     print(f"---------------------------------------------")
 
 if __name__ == "__main__":
+  signal.signal(signal.SIGINT, fManejarSIGINT)
   fLiberarPuerto(vPuertoS7)
   fLiberarPuerto(vPuertoWeb)
   threading.Thread(target=fServirS7, daemon=True).start()
