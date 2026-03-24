@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador 3D - Siemens S7-1214C</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1a2e; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
+    #canvas3d { display: block; width: 100vw; height: 100vh; }
+    #hud {
+      position: absolute; top: 15px; left: 15px;
+      color: #e0e0e0; background: rgba(0,0,0,0.7);
+      padding: 12px 18px; border-radius: 8px;
+      font-size: 13px; pointer-events: none;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    #hud h2 { margin-bottom: 6px; font-size: 15px; color: #00d4ff; }
+    #hud .status { margin: 3px 0; }
+    #hud .dot {
+      display: inline-block; width: 10px; height: 10px;
+      border-radius: 50%; margin-right: 6px; vertical-align: middle;
+    }
+    #hud .on  { background: #00ff88; box-shadow: 0 0 6px #00ff88; }
+    #hud .off { background: #ff4444; box-shadow: 0 0 6px #ff4444; }
+    #hud .unknown { background: #888; }
+    #controls-info {
+      position: absolute; bottom: 15px; left: 50%;
+      transform: translateX(-50%); color: #888;
+      font-size: 12px; pointer-events: none;
+    }
+    #link-2d {
+      position: absolute; top: 15px; right: 15px;
+      color: #00d4ff; background: rgba(0,0,0,0.7);
+      padding: 8px 16px; border-radius: 6px;
+      text-decoration: none; font-size: 13px;
+      border: 1px solid rgba(0,212,255,0.3);
+    }
+    #link-2d:hover { background: rgba(0,212,255,0.2); }
+  </style>
+</head>
+<body>
+  <canvas id="canvas3d"></canvas>
+ 
+  <div id="hud">
+    <h2>SIEMENS S7-1214C</h2>
+    <div class="status" id="hud-power">
+      <span class="dot unknown"></span> Corriente: --
+    </div>
+    <div class="status" id="hud-outputs">Salidas: --</div>
+    <div class="status" id="hud-inputs">Entradas: --</div>
+  </div>
+ 
+  <a id="link-2d" href="/">Vista 2D</a>
+ 
+  <div id="controls-info">
+    Clic + arrastrar = rotar &nbsp;|&nbsp; Rueda = zoom &nbsp;|&nbsp; Clic derecho + arrastrar = mover
+  </div>
+ 
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="/static/3d.js"></script>
+</body>
+</html>
