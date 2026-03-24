@@ -75,4 +75,3 @@ function fConectarWebSocket() {
 }
 
 window.addEventListener('DOMContentLoaded', fConectarWebSocket);
-
