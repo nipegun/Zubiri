@@ -122,6 +122,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def leer_index():
   return FileResponse("static/index.html")
 
+@app.get("/3d")
+def leer_3d():
+  return FileResponse("static/3d.html")
+
 @app.get("/api/states")
 def obtener_estados():
   return JSONResponse(content=vEstados)
